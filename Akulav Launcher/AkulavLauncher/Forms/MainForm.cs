@@ -66,38 +66,28 @@ namespace AkulavLauncher
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Utility.setRam();
+            Utility.SetRam();
             DataDownloader data = new DataDownloader(this);
-            data.getVersions();
-            data.setUIText();
-            data.setMetadata();
-
-            if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != data.mod_version)
-            {
-                convertToUpdate();
-            }
-
+            data.GetVersions();
+            data.SetUIText();
+            data.SetMetadata();
+            data.CheckLocal();
         }
-
-        private void convertToUpdate()
+        private void LaunchButton_Click(object sender, EventArgs e)
         {
-            repairButton.Text = "Update";
-            launchButton.Enabled = false;
-        }
-
-        private void launchButton_Click(object sender, EventArgs e)
-        {
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
-        private void repairButton_Click(object sender, EventArgs e)
+        private void RepairButton_Click(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
             data.StartDownload();
             data.StartInstall();
         }
 
-        private void ramSlider_ValueChanged(object sender, EventArgs e)
+        private void RamSlider_ValueChanged(object sender, EventArgs e)
         {
             ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
             File.WriteAllText(Paths.ramData, ramSlider.Value.ToString());

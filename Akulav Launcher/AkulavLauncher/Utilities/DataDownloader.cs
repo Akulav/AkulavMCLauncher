@@ -20,15 +20,27 @@ namespace PasswordManager.Utilities
         public string mod_version;
         public string mod_name;
         public string mod_url;
-        private Form mf;
+        readonly private Form mf;
         private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+
+        //References to controls from mainform
+        readonly TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
+        readonly TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
+        readonly Label ramLabel = Application.OpenForms["MainForm"].Controls.Find("ramLabel", true)[0] as Label;
+        readonly ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
+        readonly IconButton repairButton = Application.OpenForms["MainForm"].Controls.Find("repairButton", true)[0] as IconButton;
+        readonly IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
+        readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
+        readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
+        readonly Label gameVersion = Application.OpenForms["MainForm"].Controls.Find("gameVersion", true)[0] as Label;
+        readonly ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
         public DataDownloader(Form mainform)
         {
-            getData();
+            GetData();
             this.mf = mainform;
         }
 
-        private void getData()
+        private void GetData()
         {
             try
             {
@@ -58,12 +70,17 @@ namespace PasswordManager.Utilities
             }
         }
 
-        public void setMetadata()
+        public void CheckLocal()
         {
-            TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
-            TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
-            Label ramLabel = Application.OpenForms["MainForm"].Controls.Find("ramLabel", true)[0] as Label;
+            if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != mod_version)
+            {
+                repairButton.Text = "Update";
+                launchButton.Enabled = false;
+            }
+        }
 
+        public void SetMetadata()
+        {
             if (File.Exists(Paths.localUser))
             {
                 Username.Text = File.ReadAllText(Paths.localUser);
@@ -76,14 +93,11 @@ namespace PasswordManager.Utilities
             }
         }
 
-        public async void getVersions()
+        public async void GetVersions()
         {
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
             MVersionCollection versions = await launcher.GetAllVersionsAsync();
-
-            ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
-
             versionBox.Items.Add("NewEra Ultimate");
             // show all versions
             foreach (MVersionMetadata ver in versions)
@@ -94,12 +108,8 @@ namespace PasswordManager.Utilities
             versionBox.SelectedItem = "NewEra Ultimate";
         }
 
-        public void setUIText()
+        public void SetUIText()
         {
-            Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
-            Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
-            Label gameVersion = Application.OpenForms["MainForm"].Controls.Find("gameVersion", true)[0] as Label;
-
             nameLabel.Text = mod_name;
             packVersion.Text = "Pack Version: " + mod_version;
             gameVersion.Text = "Game Version: " + game_version;
@@ -116,7 +126,6 @@ namespace PasswordManager.Utilities
                 client.DownloadFileAsync(new Uri(mod_url), @"C:\NewEraCache\downloaded.zip");
             });
             thread.Start();
-            IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
             launchButton.Enabled = false;
         }
 
@@ -128,7 +137,6 @@ namespace PasswordManager.Utilities
                 double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
                 double percentage = bytesIn / totalBytes * 100;
                 //progressLabel.Text = e.BytesReceived / 1000 / 1000 + "MB" + " " + " of " + e.TotalBytesToReceive / 1000 / 1000 + "MB";
-                ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
                 downloadBar.Value = int.Parse(Math.Truncate(percentage).ToString());
             });
         }
@@ -139,7 +147,6 @@ namespace PasswordManager.Utilities
             {
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
                 ExtractInstall(mod_version);
-                IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache");
                 Application.Restart();
             });

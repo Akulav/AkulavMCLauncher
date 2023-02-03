@@ -129,7 +129,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V1.0.0";
+            this.leftlabel.Text = "Akulav Launcher V1.0.1";
             // 
             // leftPictureBox
             // 
@@ -188,7 +188,7 @@ namespace AkulavLauncher
             this.ramSlider.Name = "ramSlider";
             this.ramSlider.Size = new System.Drawing.Size(165, 45);
             this.ramSlider.TabIndex = 25;
-            this.ramSlider.ValueChanged += new System.EventHandler(this.ramSlider_ValueChanged);
+            this.ramSlider.ValueChanged += new System.EventHandler(this.RamSlider_ValueChanged);
             // 
             // downloadBar
             // 
@@ -233,7 +233,7 @@ namespace AkulavLauncher
             this.repairButton.TabIndex = 20;
             this.repairButton.Text = "Repair";
             this.repairButton.UseVisualStyleBackColor = false;
-            this.repairButton.Click += new System.EventHandler(this.repairButton_Click);
+            this.repairButton.Click += new System.EventHandler(this.RepairButton_Click);
             // 
             // topPanel
             // 
@@ -285,7 +285,7 @@ namespace AkulavLauncher
             this.launchButton.TabIndex = 15;
             this.launchButton.Text = "Launch";
             this.launchButton.UseVisualStyleBackColor = false;
-            this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
+            this.launchButton.Click += new System.EventHandler(this.LaunchButton_Click);
             // 
             // MainForm
             // 

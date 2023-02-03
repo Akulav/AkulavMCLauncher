@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
@@ -9,10 +8,10 @@ namespace PasswordManager.Utilities
 {
     internal class GameLauncher
     {
-        private int ram;
-        private string username;
-        private string game_version;
-        private Form mf;
+        private readonly int ram;
+        private readonly string username;
+        private readonly string game_version;
+        private readonly Form mf;
 
         public GameLauncher(int ram, string username, string game_version, Form mf)
         {
@@ -21,10 +20,10 @@ namespace PasswordManager.Utilities
             this.game_version = game_version;
             this.mf = mf;
 
-            launchGameAsync();
+            LaunchGameAsync();
         }
 
-        private async void launchGameAsync()
+        private async void LaunchGameAsync()
         {
             IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
             ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
@@ -34,11 +33,6 @@ namespace PasswordManager.Utilities
             File.WriteAllText(Paths.localUser, username);
 
             launchButton.Enabled = false;
-
-            launcher.FileChanged += (p) =>
-            {
-                Console.WriteLine("[{0}] {1} - {2}/{3}", p.FileKind.ToString(), p.FileName, p.ProgressedFileCount, p.TotalFileCount);
-            };
             launcher.ProgressChanged += (s, p) =>
             {
                 downloadBar.Value = p.ProgressPercentage;
@@ -64,10 +58,7 @@ namespace PasswordManager.Utilities
             process.Start();
 
             while (!process.WaitForExit(100)) ;
-
-            launchButton.Enabled = true;
-            mf.Visible = true;
-            mf.ShowInTaskbar = true;
+            Application.Restart();
         }
     }
 }
