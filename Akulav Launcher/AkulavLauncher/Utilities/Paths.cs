@@ -4,12 +4,12 @@ namespace PasswordManager.Utilities
 {
     class Paths
     {
-        public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-        public static string localMetadata = appdata + @"\.minecraft\neweraversion";
-        public static string ramData = appdata + @"\.minecraft\ramsetting";
-        public static string localUser = appdata + @"\.minecraft\username";
-        public static string url = "https://raw.githubusercontent.com/Akulav/MinecraftModpackUpdater/main/NewEraUltimateMetadata";
-        public static string[] deletion_list = {
+        public static readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        public static readonly string localMetadata = appdata + @"\.minecraft\neweraversion";
+        public static readonly string ramData = appdata + @"\.minecraft\ramsetting";
+        public static readonly string localUser = appdata + @"\.minecraft\username";
+        public static readonly string url = "https://raw.githubusercontent.com/Akulav/MinecraftModpackUpdater/main/NewEraUltimateMetadata";
+        public static readonly string[] deletion_list = {
             //appdata + @"\.minecraft\libraries",
             //appdata + @"\.minecraft\webcache2",
             appdata + @"\.minecraft\mods",
@@ -17,6 +17,6 @@ namespace PasswordManager.Utilities
             appdata + @"\.minecraft\config",
             appdata + @"\.minecraft\Flan"
         };
-        public static string temp = "C:\\NewEraCache\\";
+        public static readonly string temp = "C:\\NewEraCache\\";
     }
 }

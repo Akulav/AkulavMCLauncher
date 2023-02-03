@@ -38,11 +38,12 @@ namespace PasswordManager
                 MessageBox.Show(e.Message);
             }
         }
-        public static long getRam()
+        public static void setRam()
         {
             long memKb;
             GetPhysicallyInstalledSystemMemory(out memKb);
-            return memKb / 1024 / 1024;
+            TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
+            ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
         }
     }
 }

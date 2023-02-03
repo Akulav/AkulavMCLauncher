@@ -50,13 +50,11 @@ namespace AkulavLauncher
             this.CloseButton = new System.Windows.Forms.Button();
             this.nameLabel = new System.Windows.Forms.Label();
             this.launchButton = new FontAwesome.Sharp.IconButton();
-            this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
             this.leftpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftPictureBox)).BeginInit();
             this.rightpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.SuspendLayout();
             // 
             // Username
@@ -289,11 +287,6 @@ namespace AkulavLauncher
             this.launchButton.UseVisualStyleBackColor = false;
             this.launchButton.Click += new System.EventHandler(this.launchButton_Click);
             // 
-            // fileSystemWatcher1
-            // 
-            this.fileSystemWatcher1.EnableRaisingEvents = true;
-            this.fileSystemWatcher1.SynchronizingObject = this;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -319,7 +312,6 @@ namespace AkulavLauncher
             this.rightpanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).EndInit();
             this.topPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -341,10 +333,9 @@ namespace AkulavLauncher
         private FontAwesome.Sharp.IconButton repairButton;
         private System.Windows.Forms.Label gameVersion;
         private System.Windows.Forms.Label packVersion;
-        private System.Windows.Forms.ProgressBar downloadBar;
-        private System.IO.FileSystemWatcher fileSystemWatcher1;
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.Label ramLabel;
         private System.Windows.Forms.ComboBox versionBox;
+        private System.Windows.Forms.ProgressBar downloadBar;
     }
 }

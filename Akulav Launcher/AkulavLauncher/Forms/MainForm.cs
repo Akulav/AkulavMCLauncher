@@ -1,14 +1,7 @@
 ﻿using System;
-using System.ComponentModel;
 using System.IO;
-using System.Net;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
-using CmlLib.Core;
-using CmlLib.Core.Auth;
-using CmlLib.Core.Version;
-using CmlLib.Core.VersionMetadata;
 using PasswordManager;
 using PasswordManager.Utilities;
 
@@ -32,6 +25,7 @@ namespace AkulavLauncher
         int nWidthEllipse,
         int nHeightEllipse
     );
+
         //Logic starts here
         public MainForm()
         {
@@ -70,54 +64,17 @@ namespace AkulavLauncher
         }
 
 
-        private async void MainForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
-            ramSlider.Maximum = Convert.ToInt32(Utility.getRam());
-            try
+            Utility.setRam();
+            DataDownloader data = new DataDownloader(this);
+            data.getVersions();
+            data.setUIText();
+            data.setMetadata();
+
+            if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != data.mod_version)
             {
-                MinecraftPath path = new MinecraftPath();
-                CMLauncher launcher = new CMLauncher(path);
-                MVersionCollection versions = await launcher.GetAllVersionsAsync();
-
-                versionBox.Items.Add("NewEra Ultimate");
-                // show all versions
-                foreach (MVersionMetadata ver in versions)
-                {
-                    versionBox.Items.Add(ver.Name);
-                }
-
-                versionBox.SelectedItem = "NewEra Ultimate";
-
-                DataDownloader data = new DataDownloader();
-
-                nameLabel.Text = data.mod_name;
-                packVersion.Text = "Pack Version: " + data.mod_version;
-                gameVersion.Text = "Game Version: " + data.game_version;
-
-                if (File.Exists(Paths.localUser))
-                {
-                    Username.Text = File.ReadAllText(Paths.localUser);
-                }
-
-                if (File.Exists(Paths.ramData))
-                {
-                    ramSlider.Value = Int32.Parse(File.ReadAllText(Paths.ramData).ToString());
-                    ramLabel.Text = File.ReadAllText(Paths.ramData) + " GB of RAM";
-                }
-
-                if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != data.mod_version)
-                {
-                    convertToUpdate();
-                }
-
-                data = null;
-            }
-
-            catch
-            {
-                nameLabel.Text = "Could Not Reach Server";
-                packVersion.Text = "";
-                gameVersion.Text = "";
+                convertToUpdate();
             }
 
         }
@@ -128,100 +85,16 @@ namespace AkulavLauncher
             launchButton.Enabled = false;
         }
 
-        private void convertBackToRepair()
+        private void launchButton_Click(object sender, EventArgs e)
         {
-            repairButton.Text = "Repair";
-            launchButton.Enabled = true;
-        }
-
-        private async void launchButton_Click(object sender, EventArgs e)
-        {
-            MinecraftPath path = new MinecraftPath(); // use default directory
-            CMLauncher launcher = new CMLauncher(path);
-            launchButton.Enabled = false;
-
-            File.WriteAllText(Paths.localUser, Username.Text);
-
-            launcher.FileChanged += (p) =>
-            {
-                Console.WriteLine("[{0}] {1} - {2}/{3}", p.FileKind.ToString(), p.FileName, p.ProgressedFileCount, p.TotalFileCount);
-            };
-            launcher.ProgressChanged += (s, p) =>
-            {
-                downloadBar.Value = p.ProgressPercentage;
-            };
-            var session = MSession.GetOfflineSession(Username.Text);
-            var launchOption = new MLaunchOption
-            {
-                MaximumRamMb = ramSlider.Value * 1024,
-                Session = session,
-            };
-
-            string version = versionBox.SelectedItem.ToString();
-            if (version == "NewEra Ultimate")
-            {
-                version = "1.19.2-forge-43.2.4";
-            }
-
-            var process = await launcher.CreateProcessAsync(version, launchOption);
-
-            this.Visible = false;
-            this.ShowInTaskbar = false;
-
-            process.Start();
-
-            while (!process.WaitForExit(100)) ;
-
-            launchButton.Enabled = true;
-            this.Visible = true;
-            this.ShowInTaskbar = true;
+            GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
 
         private void repairButton_Click(object sender, EventArgs e)
         {
-            DataDownloader data = new DataDownloader();
-            DirectoryLib.CreateFolder(Paths.temp);
-            StartDownload(data.mod_url);
-            data = null;
-            Functionality.StartInstall();
-        }
-
-        private void StartDownload(string url)
-        {
-            Thread thread = new Thread(() =>
-            {
-                WebClient client = new WebClient();
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(url), @"C:\NewEraCache\downloaded.zip");
-            });
-            thread.Start();
-        }
-
-        void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            this.BeginInvoke((MethodInvoker)delegate
-            {
-                double bytesIn = double.Parse(e.BytesReceived.ToString());
-                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                double percentage = bytesIn / totalBytes * 100;
-                //progressLabel.Text = e.BytesReceived / 1000 / 1000 + "MB" + " " + " of " + e.TotalBytesToReceive / 1000 / 1000 + "MB";
-                downloadBar.Value = int.Parse(Math.Truncate(percentage).ToString());
-            });
-        }
-
-        void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
-        {
-            this.BeginInvoke((MethodInvoker)delegate
-            {
-                DataDownloader data = new DataDownloader();
-                DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
-                Functionality.ExtractInstall(data.mod_version);
-                launchButton.Enabled = true;
-                DirectoryLib.DeleteFolder(@"C:\NewEraCache");
-                convertBackToRepair();
-                data = null;
-            });
+            DataDownloader data = new DataDownloader(this);
+            data.StartDownload();
+            data.StartInstall();
         }
 
         private void ramSlider_ValueChanged(object sender, EventArgs e)
