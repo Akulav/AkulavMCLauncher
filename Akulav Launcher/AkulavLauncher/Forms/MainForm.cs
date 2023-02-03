@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
+using CmlLib.Core.Version;
+using CmlLib.Core.VersionMetadata;
 using PasswordManager;
 using PasswordManager.Utilities;
 
@@ -23,7 +23,6 @@ namespace AkulavLauncher
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
 
-
         private static extern IntPtr CreateRoundRectRgn
     (
         int nLeftRect,
@@ -33,9 +32,6 @@ namespace AkulavLauncher
         int nWidthEllipse,
         int nHeightEllipse
     );
-
-        List<string> metadata = new List<string>();
-
         //Logic starts here
         public MainForm()
         {
@@ -74,27 +70,29 @@ namespace AkulavLauncher
         }
 
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private async void MainForm_Load(object sender, EventArgs e)
         {
-
             ramSlider.Maximum = Convert.ToInt32(Utility.getRam());
-
             try
             {
-                using (WebClient client = new WebClient())
+                MinecraftPath path = new MinecraftPath();
+                CMLauncher launcher = new CMLauncher(path);
+                MVersionCollection versions = await launcher.GetAllVersionsAsync();
+
+                versionBox.Items.Add("NewEra Ultimate");
+                // show all versions
+                foreach (MVersionMetadata ver in versions)
                 {
-                    string[] result;
-                    string update_data = client.DownloadString(Paths.url);
-                    result = Regex.Split(update_data, "\r\n|\r|\n");
-                    foreach (string s in result)
-                    {
-                        metadata.Add(s);
-                    }
+                    versionBox.Items.Add(ver.Name);
                 }
 
-                nameLabel.Text = metadata[0].ToString();
-                packVersion.Text = "Pack Version: " + metadata[1].ToString();
-                gameVersion.Text = "Game Version: " + metadata[2].ToString();
+                versionBox.SelectedItem = "NewEra Ultimate";
+
+                DataDownloader data = new DataDownloader();
+
+                nameLabel.Text = data.mod_name;
+                packVersion.Text = "Pack Version: " + data.mod_version;
+                gameVersion.Text = "Game Version: " + data.game_version;
 
                 if (File.Exists(Paths.localUser))
                 {
@@ -106,6 +104,13 @@ namespace AkulavLauncher
                     ramSlider.Value = Int32.Parse(File.ReadAllText(Paths.ramData).ToString());
                     ramLabel.Text = File.ReadAllText(Paths.ramData) + " GB of RAM";
                 }
+
+                if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != data.mod_version)
+                {
+                    convertToUpdate();
+                }
+
+                data = null;
             }
 
             catch
@@ -113,11 +118,6 @@ namespace AkulavLauncher
                 nameLabel.Text = "Could Not Reach Server";
                 packVersion.Text = "";
                 gameVersion.Text = "";
-            }
-
-            if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != metadata[1])
-            {
-                convertToUpdate();
             }
 
         }
@@ -136,10 +136,9 @@ namespace AkulavLauncher
 
         private async void launchButton_Click(object sender, EventArgs e)
         {
+            MinecraftPath path = new MinecraftPath(); // use default directory
+            CMLauncher launcher = new CMLauncher(path);
             launchButton.Enabled = false;
-            var path = new MinecraftPath(); // use default directory
-
-            var launcher = new CMLauncher(path);
 
             File.WriteAllText(Paths.localUser, Username.Text);
 
@@ -154,11 +153,17 @@ namespace AkulavLauncher
             var session = MSession.GetOfflineSession(Username.Text);
             var launchOption = new MLaunchOption
             {
-                MaximumRamMb = ramSlider.Value*1024,
+                MaximumRamMb = ramSlider.Value * 1024,
                 Session = session,
             };
 
-            var process = await launcher.CreateProcessAsync("1.19.2-forge-43.2.4", launchOption);
+            string version = versionBox.SelectedItem.ToString();
+            if (version == "NewEra Ultimate")
+            {
+                version = "1.19.2-forge-43.2.4";
+            }
+
+            var process = await launcher.CreateProcessAsync(version, launchOption);
 
             this.Visible = false;
             this.ShowInTaskbar = false;
@@ -167,17 +172,19 @@ namespace AkulavLauncher
 
             while (!process.WaitForExit(100)) ;
 
+            launchButton.Enabled = true;
             this.Visible = true;
             this.ShowInTaskbar = true;
         }
 
         private void repairButton_Click(object sender, EventArgs e)
         {
-            directoryLib.CreateFolder(Paths.temp);
-            StartDownload(metadata[3]);
+            DataDownloader data = new DataDownloader();
+            DirectoryLib.CreateFolder(Paths.temp);
+            StartDownload(data.mod_url);
+            data = null;
             Functionality.StartInstall();
         }
-
 
         private void StartDownload(string url)
         {
@@ -207,11 +214,13 @@ namespace AkulavLauncher
         {
             this.BeginInvoke((MethodInvoker)delegate
             {
-                directoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
-                Functionality.ExtractInstall(metadata[1]);
+                DataDownloader data = new DataDownloader();
+                DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
+                Functionality.ExtractInstall(data.mod_version);
                 launchButton.Enabled = true;
-                directoryLib.DeleteFolder(@"C:\NewEraCache");
+                DirectoryLib.DeleteFolder(@"C:\NewEraCache");
                 convertBackToRepair();
+                data = null;
             });
         }
 

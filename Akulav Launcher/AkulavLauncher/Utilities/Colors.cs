@@ -1,6 +1,6 @@
-﻿using FontAwesome.Sharp;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
+using FontAwesome.Sharp;
 using static System.Windows.Forms.Control;
 
 namespace PasswordManager.Utilities

@@ -1,0 +1,4 @@
+Move MainForm Code to separate modules
+Separate Settings Page for RAM
+Faster Load
+Redesign

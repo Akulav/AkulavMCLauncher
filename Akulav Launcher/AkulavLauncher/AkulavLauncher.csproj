@@ -120,7 +120,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utilities\directoryLib.cs" />
+    <Compile Include="Utilities\DataDownloader.cs" />
+    <Compile Include="Utilities\DirectoryLib.cs" />
     <Compile Include="Utilities\Functionality.cs" />
     <Compile Include="Utilities\Paths.cs" />
     <Compile Include="Utilities\Utility.cs" />

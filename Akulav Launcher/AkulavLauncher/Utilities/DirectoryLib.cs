@@ -2,7 +2,7 @@
 
 namespace PasswordManager.Utilities
 {
-    class directoryLib
+    class DirectoryLib
     {
         public static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
