@@ -48,11 +48,14 @@ namespace AkulavLauncher
             this.nameLabel = new System.Windows.Forms.Label();
             this.launchButton = new FontAwesome.Sharp.IconButton();
             this.fileSystemWatcher1 = new System.IO.FileSystemWatcher();
+            this.ramSlider = new System.Windows.Forms.TrackBar();
+            this.ramLabel = new System.Windows.Forms.Label();
             this.leftpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftPictureBox)).BeginInit();
             this.rightpanel.SuspendLayout();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // Username
@@ -142,6 +145,8 @@ namespace AkulavLauncher
             // 
             this.rightpanel.BackColor = System.Drawing.SystemColors.Control;
             this.rightpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rightpanel.Controls.Add(this.ramLabel);
+            this.rightpanel.Controls.Add(this.ramSlider);
             this.rightpanel.Controls.Add(this.downloadBar);
             this.rightpanel.Controls.Add(this.gameVersion);
             this.rightpanel.Controls.Add(this.packVersion);
@@ -260,6 +265,25 @@ namespace AkulavLauncher
             this.fileSystemWatcher1.EnableRaisingEvents = true;
             this.fileSystemWatcher1.SynchronizingObject = this;
             // 
+            // ramSlider
+            // 
+            this.ramSlider.Location = new System.Drawing.Point(24, 252);
+            this.ramSlider.Name = "ramSlider";
+            this.ramSlider.Size = new System.Drawing.Size(375, 45);
+            this.ramSlider.TabIndex = 25;
+            this.ramSlider.ValueChanged += new System.EventHandler(this.ramSlider_ValueChanged);
+            // 
+            // ramLabel
+            // 
+            this.ramLabel.AutoSize = true;
+            this.ramLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ramLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.ramLabel.Location = new System.Drawing.Point(173, 222);
+            this.ramLabel.Name = "ramLabel";
+            this.ramLabel.Size = new System.Drawing.Size(71, 27);
+            this.ramLabel.TabIndex = 26;
+            this.ramLabel.Text = "RAM: ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -285,6 +309,7 @@ namespace AkulavLauncher
             this.rightpanel.PerformLayout();
             this.topPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -308,5 +333,7 @@ namespace AkulavLauncher
         private System.Windows.Forms.Label packVersion;
         private System.Windows.Forms.ProgressBar downloadBar;
         private System.IO.FileSystemWatcher fileSystemWatcher1;
+        private System.Windows.Forms.TrackBar ramSlider;
+        private System.Windows.Forms.Label ramLabel;
     }
 }

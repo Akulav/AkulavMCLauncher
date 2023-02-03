@@ -6,6 +6,7 @@ namespace PasswordManager.Utilities
     {
         public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         public static string localMetadata = appdata + @"\.minecraft\neweraversion";
+        public static string ramData = appdata + @"\.minecraft\ramsetting";
         public static string localUser = appdata + @"\.minecraft\username";
         public static string url = "https://raw.githubusercontent.com/Akulav/MinecraftModpackUpdater/main/NewEraUltimateMetadata";
         public static string[] deletion_list = {

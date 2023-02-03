@@ -76,6 +76,9 @@ namespace AkulavLauncher
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+            ramSlider.Maximum = Convert.ToInt32(Utility.getRam());
+
             try
             {
                 using (WebClient client = new WebClient())
@@ -83,11 +86,10 @@ namespace AkulavLauncher
                     string[] result;
                     string update_data = client.DownloadString(Paths.url);
                     result = Regex.Split(update_data, "\r\n|\r|\n");
-                    for (int i = 0; i < result.Length; i++)
+                    foreach (string s in result)
                     {
-                        metadata.Add(result[i]);
+                        metadata.Add(s);
                     }
-                    metadata.Remove("");
                 }
 
                 nameLabel.Text = metadata[0].ToString();
@@ -97,6 +99,12 @@ namespace AkulavLauncher
                 if (File.Exists(Paths.localUser))
                 {
                     Username.Text = File.ReadAllText(Paths.localUser);
+                }
+
+                if (File.Exists(Paths.ramData))
+                {
+                    ramSlider.Value = Int32.Parse(File.ReadAllText(Paths.ramData).ToString());
+                    ramLabel.Text = File.ReadAllText(Paths.ramData) + " GB of RAM";
                 }
             }
 
@@ -146,7 +154,7 @@ namespace AkulavLauncher
             var session = MSession.GetOfflineSession(Username.Text);
             var launchOption = new MLaunchOption
             {
-                MaximumRamMb = 4096,
+                MaximumRamMb = ramSlider.Value*1024,
                 Session = session,
             };
 
@@ -199,18 +207,18 @@ namespace AkulavLauncher
         {
             this.BeginInvoke((MethodInvoker)delegate
             {
-                //progressLabel.Text = "Downloading";
-
                 directoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
                 Functionality.ExtractInstall(metadata[1]);
-
                 launchButton.Enabled = true;
-                //progressLabel.Text = "Success";
                 directoryLib.DeleteFolder(@"C:\NewEraCache");
                 convertBackToRepair();
             });
         }
 
-
+        private void ramSlider_ValueChanged(object sender, EventArgs e)
+        {
+            ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
+            File.WriteAllText(Paths.ramData, ramSlider.Value.ToString());
+        }
     }
 }

@@ -1,16 +1,15 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
-using PasswordManager.Utilities;
-using System;
-using System.IO;
-using System.Text;
+﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace PasswordManager
 {
     class Utility
     {
-
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
         public static void EnforceAdminPrivilegesWorkaround()
         {
             RegistryKey rk;
@@ -39,6 +38,11 @@ namespace PasswordManager
                 MessageBox.Show(e.Message);
             }
         }
-
+        public static long getRam()
+        {
+            long memKb;
+            GetPhysicallyInstalledSystemMemory(out memKb);
+            return memKb / 1024 / 1024;
+        }
     }
 }
