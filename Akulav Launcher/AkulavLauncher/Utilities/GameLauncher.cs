@@ -57,7 +57,11 @@ namespace PasswordManager.Utilities
 
             process.Start();
 
-            while (!process.WaitForExit(100)) ;
+            while (!process.WaitForExit(100))
+            {
+                ;
+            }
+
             Application.Restart();
         }
     }
