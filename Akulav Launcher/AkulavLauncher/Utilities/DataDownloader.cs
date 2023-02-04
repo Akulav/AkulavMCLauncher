@@ -16,10 +16,11 @@ namespace PasswordManager.Utilities
 {
     internal class DataDownloader
     {
-        public string game_version;
-        public string mod_version;
-        public string mod_name;
-        public string mod_url;
+        string game_version;
+        string mod_version;
+        string mod_name;
+        string mod_url;
+
         readonly private Form mf;
         private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -177,8 +178,6 @@ namespace PasswordManager.Utilities
             {
 
             }
-
         }
-
     }
 }

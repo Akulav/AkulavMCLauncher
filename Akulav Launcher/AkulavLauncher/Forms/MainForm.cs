@@ -92,5 +92,10 @@ namespace AkulavLauncher
             ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
             File.WriteAllText(Paths.ramData, ramSlider.Value.ToString());
         }
+
+        private void Username_TextChanged(object sender, EventArgs e)
+        {
+            File.WriteAllText(Paths.localUser, Username.Text);
+        }
     }
 }
