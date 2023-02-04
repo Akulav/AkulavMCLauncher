@@ -7,3 +7,7 @@ V2.1 Planned features
 5. Don't force user to update NewEra Modpack if he wants to play just vanilla
 6. Add auto-updater
 7. Add unit tests for all features
+8. Make Installer more custom
+9. Add option delete whole .minecraft folder
+10. Backup .minecraft folder
+11. Change TaskBar icon to match the project
