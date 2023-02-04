@@ -1,0 +1,9 @@
+V2.1 Planned features
+
+1. Deep code cleanup
+2. Network traffic optimzations
+3. Lower memory footprint
+4. Support for multiple Modpacks
+5. Don't force user to update NewEra Modpack if he wants to play just vanilla
+6. Add auto-updater
+7. Add unit tests for all features
