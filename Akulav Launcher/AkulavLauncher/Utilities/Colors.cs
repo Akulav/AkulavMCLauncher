@@ -42,7 +42,7 @@ namespace PasswordManager.Utilities
                     if (Controls[i] is Label)
                     {
                         Controls[i].ForeColor = Color.Gainsboro;
-                        Controls[i].BackColor = back_dark;
+                        Controls[i].BackColor = back_darker;
                     }
 
                     else if (Controls[i] is IconButton)
@@ -68,7 +68,7 @@ namespace PasswordManager.Utilities
                     if (Controls[i] is Label)
                     {
                         Controls[i].ForeColor = Color.Gainsboro;
-                        Controls[i].BackColor = back_darker;
+                        Controls[i].BackColor = back_dark;
                     }
 
                     else if (Controls[i] is IconButton)

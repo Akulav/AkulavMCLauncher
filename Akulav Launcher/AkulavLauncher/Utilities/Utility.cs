@@ -42,6 +42,7 @@ namespace PasswordManager
         {
             GetPhysicallyInstalledSystemMemory(out long memKb);
             TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
+            ramSlider.Minimum = 1;
             ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
         }
     }

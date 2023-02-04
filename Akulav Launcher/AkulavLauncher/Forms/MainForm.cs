@@ -58,14 +58,18 @@ namespace AkulavLauncher
         private void CheckTheme()
         {
             Colors.ChangeTheme(Controls, this, "dark");
-            Colors.ChangeTheme(rightpanel.Controls, this, "dark");
-            Colors.ChangeTheme(leftpanel.Controls, this, "darker");
-            leftpanel.BackColor = Colors.back_darker;
+            Colors.ChangeTheme(lowerpanel.Controls, this, "darker");
+            Colors.ChangeTheme(topPanel.Controls, this, "darker");
         }
 
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
+            //
+            //centralPanel.Visible = false;
+            //changelogBox.Visible = false;
+            //
             Utility.SetRam();
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
@@ -96,6 +100,22 @@ namespace AkulavLauncher
         private void Username_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Paths.localUser, Username.Text);
+        }
+
+        private void versionBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!(versionBox.SelectedItem.ToString() == "NewEra Ultimate"))
+            {
+                gameVersion.Text = "Game Version: " + versionBox.SelectedItem.ToString();
+                packVersion.Text = "";
+                nameLabel.Text = "";
+            }
+
+            else
+            {
+                DataDownloader data = new DataDownloader(this);
+                data.SetUIText();
+            }
         }
     }
 }

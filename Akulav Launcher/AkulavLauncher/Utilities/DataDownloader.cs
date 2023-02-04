@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Version;
 using CmlLib.Core.VersionMetadata;
+using CmlLib.Utils;
 using FontAwesome.Sharp;
 
 namespace PasswordManager.Utilities
@@ -26,6 +27,7 @@ namespace PasswordManager.Utilities
 
         //References to controls from mainform
         readonly TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
+        //readonly WebBrowser changelogBrowser = Application.OpenForms["MainForm"].Controls.Find("changelogBrowser", true)[0] as WebBrowser;
         readonly TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
         readonly Label ramLabel = Application.OpenForms["MainForm"].Controls.Find("ramLabel", true)[0] as Label;
         readonly ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
@@ -107,6 +109,14 @@ namespace PasswordManager.Utilities
             }
 
             versionBox.SelectedItem = "NewEra Ultimate";
+        }
+
+        public async void GetChangelog()
+        {
+            Changelogs changelogs = await Changelogs.GetChangelogs(); // get changelog informations
+            string[] versions = changelogs.GetAvailableVersions(); // get all available versions
+            string changelogHtml = await changelogs.GetChangelogHtml(versions[0]);
+            //changelogBrowser.DocumentText= changelogHtml;
         }
 
         public void SetUIText()

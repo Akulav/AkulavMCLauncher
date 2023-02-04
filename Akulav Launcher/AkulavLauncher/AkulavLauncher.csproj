@@ -158,6 +158,8 @@
   <ItemGroup>
     <None Include="Resources\leftimage.png" />
     <None Include="bin\Debug\FontAwesome.Sharp.dll" />
+    <None Include="Resources\keoj5led2dw61.png" />
+    <None Include="Resources\mining.png" />
     <Content Include="Resources\shield.ico" />
   </ItemGroup>
   <ItemGroup>
