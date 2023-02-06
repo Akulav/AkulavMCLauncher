@@ -50,6 +50,7 @@ namespace AkulavLauncher
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.optimizationBox = new System.Windows.Forms.CheckBox();
+            this.minimizeButton = new System.Windows.Forms.Button();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -217,6 +218,7 @@ namespace AkulavLauncher
             // topPanel
             // 
             this.topPanel.BackColor = System.Drawing.Color.Transparent;
+            this.topPanel.Controls.Add(this.minimizeButton);
             this.topPanel.Controls.Add(this.CloseButton);
             this.topPanel.Controls.Add(this.leftlabel);
             this.topPanel.Location = new System.Drawing.Point(1, 0);
@@ -283,6 +285,20 @@ namespace AkulavLauncher
             this.optimizationBox.Text = "Enable Experimental Optimizations";
             this.optimizationBox.UseVisualStyleBackColor = true;
             // 
+            // minimizeButton
+            // 
+            this.minimizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.minimizeButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.minimizeButton.Location = new System.Drawing.Point(1151, 5);
+            this.minimizeButton.Margin = new System.Windows.Forms.Padding(0);
+            this.minimizeButton.Name = "minimizeButton";
+            this.minimizeButton.Size = new System.Drawing.Size(40, 40);
+            this.minimizeButton.TabIndex = 17;
+            this.minimizeButton.Text = "_";
+            this.minimizeButton.UseVisualStyleBackColor = true;
+            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -341,5 +357,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Label leftlabel;
         private System.Windows.Forms.Panel centerPanel;
         private System.Windows.Forms.CheckBox optimizationBox;
+        private System.Windows.Forms.Button minimizeButton;
     }
 }

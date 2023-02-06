@@ -14,17 +14,6 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
-
-        private static extern IntPtr CreateRoundRectRgn
-    (
-        int nLeftRect,
-        int nTopRect,
-        int nRightRect,
-        int nBottomRect,
-        int nWidthEllipse,
-        int nHeightEllipse
-    );
 
         //Logic starts here
         public MainForm()
@@ -32,7 +21,6 @@ namespace AkulavLauncher
             Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
             CheckTheme();
-            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 40, 40));
         }
 
 
@@ -116,6 +104,11 @@ namespace AkulavLauncher
                 DataDownloader data = new DataDownloader(this);
                 data.SetUIText();
             }
+        }
+
+        private void minimizeButton_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
