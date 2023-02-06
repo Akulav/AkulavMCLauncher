@@ -49,6 +49,7 @@ namespace AkulavLauncher
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
+            this.optimizationBox = new System.Windows.Forms.CheckBox();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -196,7 +197,7 @@ namespace AkulavLauncher
             this.gameVersion.AutoSize = true;
             this.gameVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.gameVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.gameVersion.Location = new System.Drawing.Point(860, 150);
+            this.gameVersion.Location = new System.Drawing.Point(860, 189);
             this.gameVersion.Name = "gameVersion";
             this.gameVersion.Size = new System.Drawing.Size(194, 27);
             this.gameVersion.TabIndex = 22;
@@ -207,7 +208,7 @@ namespace AkulavLauncher
             this.packVersion.AutoSize = true;
             this.packVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.packVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.packVersion.Location = new System.Drawing.Point(860, 177);
+            this.packVersion.Location = new System.Drawing.Point(860, 216);
             this.packVersion.Name = "packVersion";
             this.packVersion.Size = new System.Drawing.Size(194, 27);
             this.packVersion.TabIndex = 21;
@@ -254,7 +255,7 @@ namespace AkulavLauncher
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.nameLabel.Location = new System.Drawing.Point(860, 204);
+            this.nameLabel.Location = new System.Drawing.Point(860, 243);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(194, 27);
             this.nameLabel.TabIndex = 18;
@@ -268,6 +269,20 @@ namespace AkulavLauncher
             this.centerPanel.Size = new System.Drawing.Size(845, 519);
             this.centerPanel.TabIndex = 29;
             // 
+            // optimizationBox
+            // 
+            this.optimizationBox.AutoSize = true;
+            this.optimizationBox.Checked = true;
+            this.optimizationBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.optimizationBox.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.optimizationBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.optimizationBox.Location = new System.Drawing.Point(865, 153);
+            this.optimizationBox.Name = "optimizationBox";
+            this.optimizationBox.Size = new System.Drawing.Size(372, 31);
+            this.optimizationBox.TabIndex = 30;
+            this.optimizationBox.Text = "Enable Experimental Optimizations";
+            this.optimizationBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +290,7 @@ namespace AkulavLauncher
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
             this.ClientSize = new System.Drawing.Size(1241, 631);
             this.ControlBox = false;
+            this.Controls.Add(this.optimizationBox);
             this.Controls.Add(this.consoleLabel);
             this.Controls.Add(this.ramLabel);
             this.Controls.Add(this.nameLabel);
@@ -324,5 +340,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label leftlabel;
         private System.Windows.Forms.Panel centerPanel;
+        private System.Windows.Forms.CheckBox optimizationBox;
     }
 }

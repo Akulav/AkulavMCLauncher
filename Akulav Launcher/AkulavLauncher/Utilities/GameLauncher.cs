@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
@@ -29,6 +28,7 @@ namespace PasswordManager.Utilities
             IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
             ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
             Label consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
+            CheckBox optimizationBox = Application.OpenForms["MainForm"].Controls.Find("optimizationBox", true)[0] as CheckBox;
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
 
@@ -43,14 +43,23 @@ namespace PasswordManager.Utilities
             launcher.FileChanged += (e) =>
             {
                 //Console.WriteLine("[{0}] {1} - {2}/{3}", e.FileKind.ToString(), e.FileName, e.ProgressedFileCount, e.TotalFileCount);
-                consoleLabel.Text = "[" + e.FileKind.ToString() + "] " + e.FileName + " - " + e.ProgressedFileCount + "//" + e.TotalFileCount; 
+                consoleLabel.Text = "[" + e.FileKind.ToString() + "] " + e.FileName + " - " + e.ProgressedFileCount + "//" + e.TotalFileCount;
             };
 
             var session = MSession.GetOfflineSession(username);
+
+            string[] optimizations = new string[] { };
+
+            if (optimizationBox.Checked)
+            {
+                optimizations = new string[] { "-XX:+UnlockExperimentalVMOptions", "-XX:G1NewSizePercent=20", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=25", "-XX:G1HeapRegionSize=32M" };
+            }
+
             var launchOption = new MLaunchOption
             {
                 MaximumRamMb = ram,
                 Session = session,
+                JVMArguments = optimizations
             };
 
             string version = game_version;
@@ -68,7 +77,7 @@ namespace PasswordManager.Utilities
 
             while (!process.WaitForExit(100))
             {
-                ;
+
             }
 
             Application.Restart();

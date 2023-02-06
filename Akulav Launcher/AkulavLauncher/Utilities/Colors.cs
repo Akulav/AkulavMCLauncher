@@ -10,7 +10,7 @@ namespace PasswordManager.Utilities
         public static readonly Color back_light = Color.FromArgb(41, 128, 185);
         public static readonly Color back_dark = Color.FromArgb(46, 51, 73);
         public static readonly Color back_darker = Color.FromArgb(24, 30, 54);
-
+        public static readonly Color mc_green = Color.FromArgb(27, 49, 33);
         public static void ChangeTheme(ControlCollection Controls, Form parent, string theme)
         {
             if (theme == "light")
