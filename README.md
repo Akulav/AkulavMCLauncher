@@ -23,4 +23,4 @@
 3. Complete Redesign
 4. Other
 
-Icons made by https://www.flaticon.com/authors/freepik from https://www.flaticon.com/
+Icons made by https://www.flaticon.com/authors/smashicons from https://www.flaticon.com/
