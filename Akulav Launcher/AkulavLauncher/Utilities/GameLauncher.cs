@@ -74,23 +74,26 @@ namespace PasswordManager.Utilities
                     goto end;
                 }
                 version = "1.19.2-forge-43.2.4";
-                
             }
 
             var process = await launcher.CreateProcessAsync(version, launchOption);
 
-            mf.Visible = false;
-            mf.ShowInTaskbar = false;
 
             process.Start();
 
-            while (!process.WaitForExit(100))
+            mf.Visible = false;
+            mf.ShowInTaskbar = false;
+
+            while (!process.WaitForExit(1000))
             {
 
             }
 
             Application.Restart();
         end:;
+
+            mf.Visible = false;
+            mf.ShowInTaskbar = false;
         }
     }
 }
