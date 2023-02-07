@@ -54,7 +54,7 @@
     <ApplicationManifest>ProjectSettings\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\shield.ico</ApplicationIcon>
+    <ApplicationIcon>mining.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CmlLib, Version=3.3.6.0, Culture=neutral, processorArchitecture=MSIL">
@@ -157,11 +157,10 @@
     <None Include="ProjectSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\leftimage.png" />
+    <None Include="Resources\mining.ico" />
     <None Include="bin\Debug\FontAwesome.Sharp.dll" />
     <None Include="Resources\keoj5led2dw61.png" />
-    <None Include="Resources\mining.png" />
-    <Content Include="Resources\shield.ico" />
+    <Content Include="mining.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

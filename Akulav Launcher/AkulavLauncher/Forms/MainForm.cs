@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Web.WebSockets;
 using System.Windows.Forms;
 using PasswordManager;
 using PasswordManager.Utilities;
@@ -54,18 +53,11 @@ namespace AkulavLauncher
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
-            //
-            //centralPanel.Visible = false;
-            //changelogBox.Visible = false;
-            //
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
             data.SetUIText();
             Utility.SetRam();
             data.SetMetadata();
-
-            //data.CheckLocal();
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {

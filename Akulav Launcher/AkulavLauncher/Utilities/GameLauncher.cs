@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
@@ -92,8 +91,7 @@ namespace PasswordManager.Utilities
             Application.Restart();
         end:;
 
-            mf.Visible = false;
-            mf.ShowInTaskbar = false;
+
         }
     }
 }
