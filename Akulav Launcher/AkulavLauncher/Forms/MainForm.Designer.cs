@@ -143,7 +143,7 @@ namespace AkulavLauncher
             this.repairButton.Name = "repairButton";
             this.repairButton.Size = new System.Drawing.Size(171, 40);
             this.repairButton.TabIndex = 20;
-            this.repairButton.Text = "Repair";
+            this.repairButton.Text = "Repair  and  Launch";
             this.repairButton.UseVisualStyleBackColor = false;
             this.repairButton.Click += new System.EventHandler(this.RepairButton_Click);
             // 

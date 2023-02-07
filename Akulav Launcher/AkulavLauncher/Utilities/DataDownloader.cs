@@ -158,7 +158,6 @@ namespace PasswordManager.Utilities
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
                 ExtractInstall(mod_version);
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache");
-                //Application.Restart();
                 GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             });
         }
