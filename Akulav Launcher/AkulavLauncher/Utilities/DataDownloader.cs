@@ -73,12 +73,18 @@ namespace PasswordManager.Utilities
             }
         }
 
-        public void CheckLocal()
+        public bool CheckLocal()
         {
             if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != mod_version)
             {
-                repairButton.Text = "Update";
-                launchButton.Enabled = false;
+                //repairButton.Text = "Update";
+                //launchButton.Enabled = false;
+                return false;
+            }
+
+            else
+            {
+                return true;
             }
         }
 
@@ -88,6 +94,7 @@ namespace PasswordManager.Utilities
             {
                 Username.Text = File.ReadAllText(Paths.localUser);
             }
+
 
             if (File.Exists(Paths.ramData))
             {
@@ -109,6 +116,7 @@ namespace PasswordManager.Utilities
             }
 
             versionBox.SelectedItem = "NewEra Ultimate";
+            launchButton.Size = new System.Drawing.Size(518, 40);
         }
 
         public async void GetChangelog()
@@ -159,7 +167,8 @@ namespace PasswordManager.Utilities
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
                 ExtractInstall(mod_version);
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache");
-                Application.Restart();
+                //Application.Restart();
+                GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             });
         }
 

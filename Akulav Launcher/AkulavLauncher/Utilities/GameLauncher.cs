@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
@@ -65,7 +66,15 @@ namespace PasswordManager.Utilities
             string version = game_version;
             if (version == "NewEra Ultimate")
             {
+                DataDownloader data = new DataDownloader(mf);
+                if (!data.CheckLocal())
+                {
+                    data.StartDownload();
+                    data.StartInstall();
+                    goto end;
+                }
                 version = "1.19.2-forge-43.2.4";
+                
             }
 
             var process = await launcher.CreateProcessAsync(version, launchOption);
@@ -81,6 +90,7 @@ namespace PasswordManager.Utilities
             }
 
             Application.Restart();
+        end:;
         }
     }
 }

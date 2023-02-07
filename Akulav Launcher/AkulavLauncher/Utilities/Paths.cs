@@ -10,6 +10,7 @@ namespace PasswordManager.Utilities
         public static readonly string localUser = appdata + @"\.minecraft\username";
         public static readonly string url = "https://raw.githubusercontent.com/Akulav/MinecraftModpackUpdater/main/NewEraUltimateMetadata";
         public static readonly string temp = "C:\\NewEraCache\\";
+        public static readonly string mc = appdata + @"\.minecraft";
         public static readonly string[] deletion_list = {
             appdata + @"\.minecraft\mods",
             appdata + @"\.minecraft\config"

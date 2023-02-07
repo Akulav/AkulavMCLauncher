@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Web.WebSockets;
 using System.Windows.Forms;
 using PasswordManager;
 using PasswordManager.Utilities;
@@ -58,12 +59,13 @@ namespace AkulavLauncher
             //centralPanel.Visible = false;
             //changelogBox.Visible = false;
             //
-            Utility.SetRam();
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
             data.SetUIText();
+            Utility.SetRam();
             data.SetMetadata();
-            data.CheckLocal();
+
+            //data.CheckLocal();
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
@@ -97,12 +99,14 @@ namespace AkulavLauncher
                 gameVersion.Text = "Game Version: " + versionBox.SelectedItem.ToString();
                 packVersion.Text = "";
                 nameLabel.Text = "";
+                launchButton.Size = new System.Drawing.Size(695, 40);
             }
 
             else
             {
                 DataDownloader data = new DataDownloader(this);
                 data.SetUIText();
+                launchButton.Size = new System.Drawing.Size(518, 40);
             }
         }
 

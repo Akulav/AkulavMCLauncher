@@ -1,7 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using PasswordManager.Utilities;
 
 namespace PasswordManager
 {
@@ -44,6 +46,10 @@ namespace PasswordManager
             TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
             ramSlider.Minimum = 1;
             ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
+            if (!File.Exists(Paths.ramData))
+            {
+                ramSlider.Value = Convert.ToInt32(memKb / 1024 / 1024 / 2);
+            }
         }
     }
 }

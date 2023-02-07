@@ -45,12 +45,12 @@ namespace AkulavLauncher
             this.gameVersion = new System.Windows.Forms.Label();
             this.packVersion = new System.Windows.Forms.Label();
             this.topPanel = new System.Windows.Forms.Panel();
+            this.minimizeButton = new System.Windows.Forms.Button();
             this.CloseButton = new System.Windows.Forms.Button();
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.optimizationBox = new System.Windows.Forms.CheckBox();
-            this.minimizeButton = new System.Windows.Forms.Button();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -227,6 +227,20 @@ namespace AkulavLauncher
             this.topPanel.TabIndex = 19;
             this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseDown);
             // 
+            // minimizeButton
+            // 
+            this.minimizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.minimizeButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.minimizeButton.Location = new System.Drawing.Point(1151, 5);
+            this.minimizeButton.Margin = new System.Windows.Forms.Padding(0);
+            this.minimizeButton.Name = "minimizeButton";
+            this.minimizeButton.Size = new System.Drawing.Size(40, 40);
+            this.minimizeButton.TabIndex = 17;
+            this.minimizeButton.Text = "_";
+            this.minimizeButton.UseVisualStyleBackColor = true;
+            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
+            // 
             // CloseButton
             // 
             this.CloseButton.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -277,27 +291,13 @@ namespace AkulavLauncher
             this.optimizationBox.Checked = true;
             this.optimizationBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.optimizationBox.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optimizationBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.optimizationBox.ForeColor = System.Drawing.Color.Gainsboro;
             this.optimizationBox.Location = new System.Drawing.Point(865, 153);
             this.optimizationBox.Name = "optimizationBox";
             this.optimizationBox.Size = new System.Drawing.Size(372, 31);
             this.optimizationBox.TabIndex = 30;
             this.optimizationBox.Text = "Enable Experimental Optimizations";
             this.optimizationBox.UseVisualStyleBackColor = true;
-            // 
-            // minimizeButton
-            // 
-            this.minimizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.minimizeButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.minimizeButton.Location = new System.Drawing.Point(1151, 5);
-            this.minimizeButton.Margin = new System.Windows.Forms.Padding(0);
-            this.minimizeButton.Name = "minimizeButton";
-            this.minimizeButton.Size = new System.Drawing.Size(40, 40);
-            this.minimizeButton.TabIndex = 17;
-            this.minimizeButton.Text = "_";
-            this.minimizeButton.UseVisualStyleBackColor = true;
-            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
             // 
             // MainForm
             // 
