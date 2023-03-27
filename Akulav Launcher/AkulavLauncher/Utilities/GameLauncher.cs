@@ -72,7 +72,7 @@ namespace PasswordManager.Utilities
                     data.StartInstall();
                     goto end;
                 }
-                version = "1.19.2-forge-43.2.4";
+                version = "1.19.2-forge-43.2.8";
             }
 
             var process = await launcher.CreateProcessAsync(version, launchOption);
