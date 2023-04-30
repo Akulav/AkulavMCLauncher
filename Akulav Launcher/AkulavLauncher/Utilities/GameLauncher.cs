@@ -8,7 +8,7 @@ namespace PasswordManager.Utilities
 {
     internal class GameLauncher
     {
-        private readonly int ram;
+        private int ram;
         private readonly string username;
         private readonly string game_version;
         private readonly Form mf;
@@ -59,7 +59,7 @@ namespace PasswordManager.Utilities
             {
                 MaximumRamMb = ram,
                 Session = session,
-                JVMArguments = optimizations
+                JVMArguments = null
             };
 
             string version = game_version;
