@@ -20,7 +20,6 @@ namespace AkulavLauncher
         {
             Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
-            CheckTheme();
         }
 
 
@@ -41,15 +40,6 @@ namespace AkulavLauncher
             ReleaseCapture();
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
-
-
-        private void CheckTheme()
-        {
-            Colors.ChangeTheme(Controls, this, "dark");
-            Colors.ChangeTheme(lowerpanel.Controls, this, "darker");
-            Colors.ChangeTheme(topPanel.Controls, this, "darker");
-        }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {

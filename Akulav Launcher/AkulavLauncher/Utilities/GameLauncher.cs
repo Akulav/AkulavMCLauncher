@@ -8,7 +8,7 @@ namespace PasswordManager.Utilities
 {
     internal class GameLauncher
     {
-        private int ram;
+        private readonly int ram;
         private readonly string username;
         private readonly string game_version;
         private readonly Form mf;

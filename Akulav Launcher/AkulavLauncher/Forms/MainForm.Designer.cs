@@ -69,7 +69,7 @@ namespace AkulavLauncher
             // 
             this.userLabel.AutoSize = true;
             this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.userLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.userLabel.Location = new System.Drawing.Point(103, -1);
             this.userLabel.Name = "userLabel";
             this.userLabel.Size = new System.Drawing.Size(83, 20);
@@ -89,7 +89,7 @@ namespace AkulavLauncher
             // 
             // lowerpanel
             // 
-            this.lowerpanel.BackColor = System.Drawing.SystemColors.Control;
+            this.lowerpanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.lowerpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lowerpanel.Controls.Add(this.versionLabel);
             this.lowerpanel.Controls.Add(this.statusText);
@@ -108,7 +108,7 @@ namespace AkulavLauncher
             // 
             this.versionLabel.AutoSize = true;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.versionLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.versionLabel.Location = new System.Drawing.Point(363, -1);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(111, 20);
@@ -117,7 +117,7 @@ namespace AkulavLauncher
             // 
             // launchButton
             // 
-            this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.launchButton.Font = new System.Drawing.Font("Yu Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.launchButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.launchButton.IconChar = FontAwesome.Sharp.IconChar.None;
@@ -133,7 +133,7 @@ namespace AkulavLauncher
             // 
             // repairButton
             // 
-            this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.repairButton.Font = new System.Drawing.Font("Yu Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.repairButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.repairButton.IconChar = FontAwesome.Sharp.IconChar.None;
@@ -171,7 +171,7 @@ namespace AkulavLauncher
             // 
             this.ramLabel.AutoSize = true;
             this.ramLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ramLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.ramLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.ramLabel.Location = new System.Drawing.Point(860, 72);
             this.ramLabel.Name = "ramLabel";
             this.ramLabel.Size = new System.Drawing.Size(71, 27);
@@ -197,7 +197,7 @@ namespace AkulavLauncher
             // 
             this.gameVersion.AutoSize = true;
             this.gameVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.gameVersion.ForeColor = System.Drawing.Color.Gainsboro;
             this.gameVersion.Location = new System.Drawing.Point(860, 189);
             this.gameVersion.Name = "gameVersion";
             this.gameVersion.Size = new System.Drawing.Size(194, 27);
@@ -208,7 +208,7 @@ namespace AkulavLauncher
             // 
             this.packVersion.AutoSize = true;
             this.packVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.packVersion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.packVersion.ForeColor = System.Drawing.Color.Gainsboro;
             this.packVersion.Location = new System.Drawing.Point(860, 216);
             this.packVersion.Name = "packVersion";
             this.packVersion.Size = new System.Drawing.Size(194, 27);
@@ -217,7 +217,7 @@ namespace AkulavLauncher
             // 
             // topPanel
             // 
-            this.topPanel.BackColor = System.Drawing.Color.Transparent;
+            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.topPanel.Controls.Add(this.minimizeButton);
             this.topPanel.Controls.Add(this.CloseButton);
             this.topPanel.Controls.Add(this.leftlabel);
@@ -264,13 +264,13 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V2.3.0";
+            this.leftlabel.Text = "Akulav Launcher V3.0.0";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.nameLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.nameLabel.Location = new System.Drawing.Point(860, 243);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(194, 27);
@@ -303,7 +303,7 @@ namespace AkulavLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(33)))), ((int)(((byte)(74)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1241, 631);
             this.ControlBox = false;
             this.Controls.Add(this.optimizationBox);
