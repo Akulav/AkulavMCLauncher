@@ -1,9 +1,9 @@
-﻿using System;
+﻿using PasswordManager;
+using PasswordManager.Utilities;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using PasswordManager;
-using PasswordManager.Utilities;
 
 
 namespace AkulavLauncher
@@ -72,18 +72,18 @@ namespace AkulavLauncher
                 DirectoryInfo d = new DirectoryInfo(filepath);
                 foreach (var file in d.GetFiles("*.png"))
                 {
-                    
-                    if (Path.GetFileNameWithoutExtension(file.FullName)!=Username.Text)
+
+                    if (Path.GetFileNameWithoutExtension(file.FullName) != Username.Text)
                     {
                         Directory.Move(file.FullName, filepath + Username.Text + ".png");
                     }
-                    
+
                 }
             }
-            
+
         }
 
-        private void versionBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!(versionBox.SelectedItem.ToString() == "NewEra Ultimate"))
             {
@@ -103,25 +103,27 @@ namespace AkulavLauncher
             }
         }
 
-        private void minimizeButton_Click(object sender, EventArgs e)
+        private void MinimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void skinButton_Click(object sender, EventArgs e)
+        private void SkinButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog choofdlog = new OpenFileDialog();
-            choofdlog.Filter = "All Files (*.*)|*.*";
-            choofdlog.FilterIndex = 1;
+            OpenFileDialog choofdlog = new OpenFileDialog
+            {
+                Filter = "All Files (*.*)|*.*",
+                FilterIndex = 1
+            };
             if (choofdlog.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(Paths.skin + "\\" + Username.Text + ".png"))
                 {
                     File.Delete(Paths.skin + "\\" + Username.Text + ".png");
                 }
-                File.Copy(choofdlog.FileName, Paths.skin+"\\"+Username.Text+".png");
+                File.Copy(choofdlog.FileName, Paths.skin + "\\" + Username.Text + ".png");
             }
-            
+
         }
     }
 }

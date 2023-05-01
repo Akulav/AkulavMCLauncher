@@ -42,7 +42,6 @@ namespace PasswordManager.Utilities
 
             launcher.FileChanged += (e) =>
             {
-                //Console.WriteLine("[{0}] {1} - {2}/{3}", e.FileKind.ToString(), e.FileName, e.ProgressedFileCount, e.TotalFileCount);
                 consoleLabel.Text = "[" + e.FileKind.ToString() + "] " + e.FileName + " - " + e.ProgressedFileCount + "//" + e.TotalFileCount;
             };
 
@@ -59,7 +58,7 @@ namespace PasswordManager.Utilities
             {
                 MaximumRamMb = ram,
                 Session = session,
-                JVMArguments = null
+                JVMArguments = null //curently bugged, set to null
             };
 
             string version = game_version;

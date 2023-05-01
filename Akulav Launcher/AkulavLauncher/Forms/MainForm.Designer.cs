@@ -156,7 +156,7 @@ namespace AkulavLauncher
             this.versionBox.Name = "versionBox";
             this.versionBox.Size = new System.Drawing.Size(221, 21);
             this.versionBox.TabIndex = 27;
-            this.versionBox.SelectedIndexChanged += new System.EventHandler(this.versionBox_SelectedIndexChanged);
+            this.versionBox.SelectedIndexChanged += new System.EventHandler(this.VersionBox_SelectedIndexChanged);
             // 
             // consoleLabel
             // 
@@ -240,7 +240,7 @@ namespace AkulavLauncher
             this.minimizeButton.TabIndex = 17;
             this.minimizeButton.Text = "_";
             this.minimizeButton.UseVisualStyleBackColor = true;
-            this.minimizeButton.Click += new System.EventHandler(this.minimizeButton_Click);
+            this.minimizeButton.Click += new System.EventHandler(this.MinimizeButton_Click);
             // 
             // CloseButton
             // 
@@ -315,7 +315,7 @@ namespace AkulavLauncher
             this.skinButton.Text = "Upload Skin";
             this.skinButton.UseVisualStyleBackColor = false;
             this.skinButton.Visible = false;
-            this.skinButton.Click += new System.EventHandler(this.skinButton_Click);
+            this.skinButton.Click += new System.EventHandler(this.SkinButton_Click);
             // 
             // MainForm
             // 

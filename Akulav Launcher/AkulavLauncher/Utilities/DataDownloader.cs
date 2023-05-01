@@ -32,7 +32,6 @@ namespace PasswordManager.Utilities
         readonly TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
         readonly Label ramLabel = Application.OpenForms["MainForm"].Controls.Find("ramLabel", true)[0] as Label;
         readonly ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
-        readonly IconButton repairButton = Application.OpenForms["MainForm"].Controls.Find("repairButton", true)[0] as IconButton;
         readonly IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
         readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
@@ -44,7 +43,7 @@ namespace PasswordManager.Utilities
             this.mf = mainform;
         }
 
-        private void checkUpdate()
+        private void CheckUpdate()
         {
             try
             {
@@ -64,7 +63,7 @@ namespace PasswordManager.Utilities
                     Thread thread = new Thread(() =>
                     {
                         WebClient client = new WebClient();
-                        client.DownloadProgressChanged += client_DownloadProgressChanged;
+                        client.DownloadProgressChanged += Client_DownloadProgressChangedVersion;
                         client.DownloadFileAsync(new Uri(metadata[1]), @"C:\AkulavLauncher\update.exe");
                     });
                     thread.Start();
@@ -87,7 +86,7 @@ namespace PasswordManager.Utilities
         }
 
 
-        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        void Client_DownloadProgressChangedVersion(object sender, DownloadProgressChangedEventArgs e)
         {
             if (e.ProgressPercentage == 100 && flag == true)
             {
@@ -160,7 +159,7 @@ namespace PasswordManager.Utilities
 
         public async void GetVersions()
         {
-            checkUpdate();
+            CheckUpdate();
             Directory.CreateDirectory(Paths.skin);
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
