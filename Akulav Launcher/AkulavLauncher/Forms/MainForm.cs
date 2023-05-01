@@ -14,7 +14,7 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        public static readonly string client_version = "3.1.0";
+        public static readonly string client_version = "3.1.1";
 
         //Logic starts here
         public MainForm()

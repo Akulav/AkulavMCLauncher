@@ -265,7 +265,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V3.1.0";
+            this.leftlabel.Text = "Akulav Launcher V3.1.1";
             // 
             // nameLabel
             // 
