@@ -50,15 +50,13 @@ namespace SeePassInstaller
             IShellLink link = (IShellLink)new ShellLink();
 
             // setup shortcut information
-            link.SetDescription("My Description");
+            link.SetDescription("A MC Launcher");
             link.SetPath(@"C:\\AkulavLauncher\\AkulavLauncher.exe");
 
             // save it
             IPersistFile file = (IPersistFile)link;
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             file.Save(Path.Combine(desktopPath, "AkulavLauncher.lnk"), false);
-
-            statusLabel.Text = "Installation done.";
 
             var p = new Process();
             p.StartInfo.FileName = @"C:\AkulavLauncher\AkulavLauncher.exe";
