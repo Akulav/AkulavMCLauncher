@@ -1,17 +1,18 @@
-﻿using System;
+﻿using AkulavLauncher;
+using CmlLib.Core;
+using CmlLib.Core.Version;
+using CmlLib.Core.VersionMetadata;
+using FontAwesome.Sharp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using CmlLib.Core;
-using CmlLib.Core.Version;
-using CmlLib.Core.VersionMetadata;
-using CmlLib.Utils;
-using FontAwesome.Sharp;
 
 namespace PasswordManager.Utilities
 {
@@ -24,6 +25,7 @@ namespace PasswordManager.Utilities
 
         readonly private Form mf;
         private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        bool flag = true;
 
         //References to controls from mainform
         readonly TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
@@ -42,8 +44,65 @@ namespace PasswordManager.Utilities
             this.mf = mainform;
         }
 
+        private void checkUpdate()
+        {
+            try
+            {
+                List<string> metadata = new List<string>();
+                using (WebClient client = new WebClient())
+                {
+                    string[] result;
+                    string update_data = client.DownloadString(Paths.versionUrl);
+                    result = Regex.Split(update_data, "\r\n|\r|\n");
+                    foreach (string s in result)
+                    {
+                        metadata.Add(s);
+                    }
+                }
+                if (MainForm.client_version != metadata[0])
+                {
+                    Thread thread = new Thread(() =>
+                    {
+                        WebClient client = new WebClient();
+                        client.DownloadProgressChanged += client_DownloadProgressChanged;
+                        client.DownloadFileAsync(new Uri(metadata[1]), @"C:\AkulavLauncher\update.exe");
+                    });
+                    thread.Start();
+
+                }
+
+                else
+                {
+                    File.Delete(@"C:\AkulavLauncher\update.exe");
+                }
+            }
+
+            catch
+            {
+                mod_name = "SERVER COULD NOT BE REACHED";
+                mod_version = "";
+                game_version = "";
+                mod_url = "";
+            }
+        }
+
+
+        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage == 100 && flag == true)
+            {
+                flag = false;
+                var p = new Process();
+                p.StartInfo.FileName = @"C:\AkulavLauncher\update.exe";
+                p.Start();
+                Application.Exit();
+            }
+        }
+
+
         private void GetData()
         {
+            checkUpdate();
             try
             {
                 List<string> metadata = new List<string>();
@@ -76,8 +135,6 @@ namespace PasswordManager.Utilities
         {
             if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != mod_version)
             {
-                //repairButton.Text = "Update";
-                //launchButton.Enabled = false;
                 return false;
             }
 
