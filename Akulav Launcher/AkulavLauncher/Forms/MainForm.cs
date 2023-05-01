@@ -14,7 +14,7 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        public static readonly string client_version = "3.0.0";
+        public static readonly string client_version = "3.1.0";
 
         //Logic starts here
         public MainForm()
@@ -66,6 +66,21 @@ namespace AkulavLauncher
         private void Username_TextChanged(object sender, EventArgs e)
         {
             File.WriteAllText(Paths.localUser, Username.Text);
+            if (Directory.Exists(Paths.skin))
+            {
+                string filepath = Paths.skin;
+                DirectoryInfo d = new DirectoryInfo(filepath);
+                foreach (var file in d.GetFiles("*.png"))
+                {
+                    
+                    if (Path.GetFileNameWithoutExtension(file.FullName)!=Username.Text)
+                    {
+                        Directory.Move(file.FullName, filepath + Username.Text + ".png");
+                    }
+                    
+                }
+            }
+            
         }
 
         private void versionBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -75,6 +90,7 @@ namespace AkulavLauncher
                 gameVersion.Text = "Game Version: " + versionBox.SelectedItem.ToString();
                 packVersion.Text = "";
                 nameLabel.Text = "";
+                skinButton.Visible = false;
                 launchButton.Size = new System.Drawing.Size(695, 40);
             }
 
@@ -82,6 +98,7 @@ namespace AkulavLauncher
             {
                 DataDownloader data = new DataDownloader(this);
                 data.SetUIText();
+                skinButton.Visible = true;
                 launchButton.Size = new System.Drawing.Size(518, 40);
             }
         }
@@ -89,6 +106,22 @@ namespace AkulavLauncher
         private void minimizeButton_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void skinButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog choofdlog = new OpenFileDialog();
+            choofdlog.Filter = "All Files (*.*)|*.*";
+            choofdlog.FilterIndex = 1;
+            if (choofdlog.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(Paths.skin + "\\" + Username.Text + ".png"))
+                {
+                    File.Delete(Paths.skin + "\\" + Username.Text + ".png");
+                }
+                File.Copy(choofdlog.FileName, Paths.skin+"\\"+Username.Text+".png");
+            }
+            
         }
     }
 }

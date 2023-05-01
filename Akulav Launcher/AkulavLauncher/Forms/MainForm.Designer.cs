@@ -51,6 +51,7 @@ namespace AkulavLauncher
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
             this.optimizationBox = new System.Windows.Forms.CheckBox();
+            this.skinButton = new FontAwesome.Sharp.IconButton();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -264,7 +265,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V3.0.0";
+            this.leftlabel.Text = "Akulav Launcher V3.1.0";
             // 
             // nameLabel
             // 
@@ -299,6 +300,23 @@ namespace AkulavLauncher
             this.optimizationBox.Text = "Enable Experimental Optimizations";
             this.optimizationBox.UseVisualStyleBackColor = true;
             // 
+            // skinButton
+            // 
+            this.skinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.skinButton.Font = new System.Drawing.Font("Yu Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.skinButton.IconChar = FontAwesome.Sharp.IconChar.None;
+            this.skinButton.IconColor = System.Drawing.Color.Black;
+            this.skinButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            this.skinButton.Location = new System.Drawing.Point(857, 524);
+            this.skinButton.Name = "skinButton";
+            this.skinButton.Size = new System.Drawing.Size(372, 40);
+            this.skinButton.TabIndex = 29;
+            this.skinButton.Text = "Upload Skin";
+            this.skinButton.UseVisualStyleBackColor = false;
+            this.skinButton.Visible = false;
+            this.skinButton.Click += new System.EventHandler(this.skinButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,6 +324,7 @@ namespace AkulavLauncher
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1241, 631);
             this.ControlBox = false;
+            this.Controls.Add(this.skinButton);
             this.Controls.Add(this.optimizationBox);
             this.Controls.Add(this.consoleLabel);
             this.Controls.Add(this.ramLabel);
@@ -358,5 +377,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Panel centerPanel;
         private System.Windows.Forms.CheckBox optimizationBox;
         private System.Windows.Forms.Button minimizeButton;
+        private FontAwesome.Sharp.IconButton skinButton;
     }
 }

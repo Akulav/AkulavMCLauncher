@@ -161,6 +161,7 @@ namespace PasswordManager.Utilities
         public async void GetVersions()
         {
             checkUpdate();
+            Directory.CreateDirectory(Paths.skin);
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
             MVersionCollection versions = await launcher.GetAllVersionsAsync();
