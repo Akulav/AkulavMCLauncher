@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Compression;
+using System.Diagnostics;
 
 namespace SeePassInstaller
 {
@@ -19,6 +20,7 @@ namespace SeePassInstaller
         public statusdLbl()
         {
             InitializeComponent();
+            this.CenterToScreen();
         }
 
         private void InstallBtn_Click(object sender, EventArgs e)
@@ -57,7 +59,12 @@ namespace SeePassInstaller
             file.Save(Path.Combine(desktopPath, "AkulavLauncher.lnk"), false);
 
             statusLabel.Text = "Installation done.";
-            
+
+            var p = new Process();
+            p.StartInfo.FileName = @"C:\AkulavLauncher\AkulavLauncher.exe";
+            p.Start();
+
+            Application.Exit();
         }
 
         private void uninstallBtn_Click(object sender, EventArgs e)

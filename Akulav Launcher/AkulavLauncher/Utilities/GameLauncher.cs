@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Windows.Forms;
-using CmlLib.Core;
+﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
 using FontAwesome.Sharp;
+using System.IO;
+using System.Windows.Forms;
 
 namespace PasswordManager.Utilities
 {

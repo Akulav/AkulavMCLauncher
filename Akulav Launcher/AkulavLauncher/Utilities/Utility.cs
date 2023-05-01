@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using PasswordManager.Utilities;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Microsoft.Win32;
-using PasswordManager.Utilities;
 
 namespace PasswordManager
 {

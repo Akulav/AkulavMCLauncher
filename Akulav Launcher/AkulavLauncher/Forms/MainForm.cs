@@ -29,13 +29,6 @@ namespace AkulavLauncher
             Application.Exit();
         }
 
-
-        private void LeftTopPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(Handle, 0x112, 0xf012, 0);
-        }
-
         private void TopPanel_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();

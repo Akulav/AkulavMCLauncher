@@ -102,7 +102,6 @@ namespace PasswordManager.Utilities
 
         private void GetData()
         {
-            checkUpdate();
             try
             {
                 List<string> metadata = new List<string>();
@@ -161,6 +160,7 @@ namespace PasswordManager.Utilities
 
         public async void GetVersions()
         {
+            checkUpdate();
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
             MVersionCollection versions = await launcher.GetAllVersionsAsync();
