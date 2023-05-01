@@ -162,8 +162,8 @@ namespace AkulavLauncher
             // 
             this.consoleLabel.AutoSize = true;
             this.consoleLabel.Font = new System.Drawing.Font("Yu Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.consoleLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.consoleLabel.Location = new System.Drawing.Point(851, 549);
+            this.consoleLabel.ForeColor = System.Drawing.Color.Gainsboro;
+            this.consoleLabel.Location = new System.Drawing.Point(862, 279);
             this.consoleLabel.Name = "consoleLabel";
             this.consoleLabel.Size = new System.Drawing.Size(0, 18);
             this.consoleLabel.TabIndex = 28;
@@ -308,9 +308,9 @@ namespace AkulavLauncher
             this.skinButton.IconChar = FontAwesome.Sharp.IconChar.None;
             this.skinButton.IconColor = System.Drawing.Color.Black;
             this.skinButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.skinButton.Location = new System.Drawing.Point(857, 524);
+            this.skinButton.Location = new System.Drawing.Point(852, 524);
             this.skinButton.Name = "skinButton";
-            this.skinButton.Size = new System.Drawing.Size(372, 40);
+            this.skinButton.Size = new System.Drawing.Size(380, 40);
             this.skinButton.TabIndex = 29;
             this.skinButton.Text = "Upload Skin";
             this.skinButton.UseVisualStyleBackColor = false;
