@@ -64,7 +64,6 @@ namespace AkulavLauncher
             this.Username.Name = "Username";
             this.Username.Size = new System.Drawing.Size(290, 21);
             this.Username.TabIndex = 6;
-            this.Username.TextChanged += new System.EventHandler(this.Username_TextChanged);
             // 
             // userLabel
             // 

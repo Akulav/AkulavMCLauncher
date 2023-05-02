@@ -95,7 +95,6 @@
     <None Include="Resources\files.zip" />
     <None Include="Resources\mining.ico" />
     <Content Include="mining.ico" />
-    <Content Include="shield.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

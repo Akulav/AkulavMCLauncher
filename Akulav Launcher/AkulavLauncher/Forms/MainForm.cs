@@ -14,7 +14,7 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        public static readonly string client_version = "3.1.1";
+        public static readonly string client_version = "3.2.0";
 
         //Logic starts here
         public MainForm()
@@ -45,26 +45,7 @@ namespace AkulavLauncher
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
-            GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
-        }
-
-        private void RepairButton_Click(object sender, EventArgs e)
-        {
-            DataDownloader data = new DataDownloader(this);
-            data.StartDownload();
-            data.StartInstall();
-        }
-
-        private void RamSlider_ValueChanged(object sender, EventArgs e)
-        {
-            ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
             File.WriteAllText(Paths.ramData, ramSlider.Value.ToString());
-        }
-
-        private void Username_TextChanged(object sender, EventArgs e)
-        {
             File.WriteAllText(Paths.localUser, Username.Text);
             if (Directory.Exists(Paths.skin))
             {
@@ -80,7 +61,21 @@ namespace AkulavLauncher
 
                 }
             }
+#pragma warning disable IDE0059 // Unnecessary assignment of a value
+            GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
+#pragma warning restore IDE0059 // Unnecessary assignment of a value
+        }
 
+        private void RepairButton_Click(object sender, EventArgs e)
+        {
+            DataDownloader data = new DataDownloader(this);
+            data.StartDownload();
+            data.StartInstall();
+        }
+
+        private void RamSlider_ValueChanged(object sender, EventArgs e)
+        {
+            ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
         }
 
         private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)

@@ -1,0 +1,6 @@
+Implement versioning, ram, username settings properly stored in json settings file
+Heavy optimizations 
+Faster installation
+Proper user interaction for updating
+properly stored remote location for versioning for custom modpacks
+proper error handling

@@ -52,7 +52,7 @@
             this.uninstallBtn.TabIndex = 1;
             this.uninstallBtn.Text = "Uninstall";
             this.uninstallBtn.UseVisualStyleBackColor = true;
-            this.uninstallBtn.Click += new System.EventHandler(this.uninstallBtn_Click);
+            this.uninstallBtn.Click += new System.EventHandler(this.UninstallBtn_Click);
             // 
             // statusLabel
             // 

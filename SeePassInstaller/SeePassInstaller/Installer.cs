@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.IO.Compression;
-using System.Diagnostics;
 
 namespace SeePassInstaller
 {
@@ -13,9 +13,6 @@ namespace SeePassInstaller
     {
         readonly static string location = "C:\\AkulavLauncher\\";
         readonly string fileLocation = "C:\\AkulavLauncher\\file.zip";
-        public static string[] deletion_list = {
-            location + @"\",
-        };
 
         public statusdLbl()
         {
@@ -27,7 +24,7 @@ namespace SeePassInstaller
         {
 
             Directory.CreateDirectory(location);
-            
+
             File.WriteAllBytes(fileLocation, Properties.Resources.files);
 
             using (ZipArchive source = ZipFile.Open(fileLocation, ZipArchiveMode.Read, null))
@@ -41,11 +38,10 @@ namespace SeePassInstaller
                         Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                         // The boolean parameter determines whether an existing file that has the same name as the destination file should be overwritten
                         entry.ExtractToFile(fullPath, true);
+                        File.Delete(fileLocation);
                     }
                 }
             }
-            
-            File.Delete(fileLocation);
 
             IShellLink link = (IShellLink)new ShellLink();
 
@@ -65,7 +61,7 @@ namespace SeePassInstaller
             Application.Exit();
         }
 
-        private void uninstallBtn_Click(object sender, EventArgs e)
+        private void UninstallBtn_Click(object sender, EventArgs e)
         {
             try
             {
@@ -124,6 +120,6 @@ namespace SeePassInstaller
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
         }
 
-     
+
     }
 }
