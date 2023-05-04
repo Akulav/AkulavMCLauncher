@@ -111,6 +111,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ModpackData.cs" />
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,7 +124,7 @@
     <Compile Include="Utilities\DirectoryLib.cs" />
     <Compile Include="Utilities\GameLauncher.cs" />
     <Compile Include="Utilities\Paths.cs" />
-    <Compile Include="Utilities\UserData.cs" />
+    <Compile Include="Data\UserData.cs" />
     <Compile Include="Utilities\Utility.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -1,8 +1,10 @@
-﻿using AkulavLauncher.Utilities;
+﻿using AkulavLauncher.Data;
+using AkulavLauncher.Utilities;
 using Newtonsoft.Json;
 using PasswordManager;
 using PasswordManager.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -99,6 +101,33 @@ namespace AkulavLauncher
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
             data.SetUIText();
+
+
+            //
+            ModpackData mp = new ModpackData
+            {
+                Name = "NewEraUltimate",
+                Version = "8.0.0",
+                API = "1.19.2-forge-43.2.8",
+                URL = "https://www.dropbox.com/s/7g0lh5c404ctz0s/NewEraU8.zip?dl=1"
+            };
+
+            ModpackData mp1 = new ModpackData
+            {
+                Name = "NewEraUltimate TEST",
+                Version = "9.0.0",
+                API = "1.19.2-forge-43.2.8",
+                URL = "https://www.dropbox.com/s/7g0lh5c404ctz0s/NewEraU8.zip?dl=1"
+            };
+
+            List<ModpackData> products = new List<ModpackData>();
+            products.Add(mp);
+            products.Add(mp1);
+
+            string json = JsonConvert.SerializeObject(products, Formatting.Indented);
+            File.WriteAllText(Paths.mc + "\\modpacks.json", json);
+
+            //
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
