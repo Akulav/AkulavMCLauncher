@@ -12,3 +12,4 @@ V4.0.0
 10. Support for multiple custom modpacks
 11. Proper support for extensions (other modpacks, settings)
 12. Deep cleanup and optimizations
+13. Add checks for skins only if a supported modpack is started

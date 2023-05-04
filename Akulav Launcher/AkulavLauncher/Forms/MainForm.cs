@@ -29,6 +29,8 @@ namespace AkulavLauncher
             GetUserData();
         }
 
+
+        //Sets the user data to the json settings file
         private void SetUserData()
         {
             var ud = new UserData
@@ -38,8 +40,24 @@ namespace AkulavLauncher
             };
             string jsonString = JsonConvert.SerializeObject(ud, Formatting.Indented);
             File.WriteAllText(Paths.settings, jsonString);
+
+            if (Directory.Exists(Paths.skin))
+            {
+                string filepath = Paths.skin;
+                DirectoryInfo d = new DirectoryInfo(filepath);
+                foreach (var file in d.GetFiles("*.png"))
+                {
+
+                    if (Path.GetFileNameWithoutExtension(file.FullName) != Username.Text)
+                    {
+                        Directory.Move(file.FullName, filepath + Username.Text + ".png");
+                    }
+
+                }
+            }
         }
 
+        //Sets the UI using the json settings file, if doesnt exists sets default
         private void GetUserData()
         {
             try
@@ -75,6 +93,7 @@ namespace AkulavLauncher
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
+        //needs improvement
         private void MainForm_Load(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
@@ -84,25 +103,10 @@ namespace AkulavLauncher
         private void LaunchButton_Click(object sender, EventArgs e)
         {
             SetUserData();
-            if (Directory.Exists(Paths.skin))
-            {
-                string filepath = Paths.skin;
-                DirectoryInfo d = new DirectoryInfo(filepath);
-                foreach (var file in d.GetFiles("*.png"))
-                {
-
-                    if (Path.GetFileNameWithoutExtension(file.FullName) != Username.Text)
-                    {
-                        Directory.Move(file.FullName, filepath + Username.Text + ".png");
-                    }
-
-                }
-            }
-#pragma warning disable IDE0059 // Unnecessary assignment of a value
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
-#pragma warning restore IDE0059 // Unnecessary assignment of a value
         }
 
+        //needs improvement
         private void RepairButton_Click(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
@@ -115,6 +119,7 @@ namespace AkulavLauncher
             ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
         }
 
+        //needs improvement
         private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!(versionBox.SelectedItem.ToString() == "NewEra Ultimate"))

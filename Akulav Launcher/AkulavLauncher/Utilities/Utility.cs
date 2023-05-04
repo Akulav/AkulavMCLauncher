@@ -1,9 +1,5 @@
-﻿using AkulavLauncher.Utilities;
-using Microsoft.Win32;
-using Newtonsoft.Json;
-using PasswordManager.Utilities;
+﻿using Microsoft.Win32;
 using System;
-using System.IO;
 using System.Windows.Forms;
 
 namespace PasswordManager
@@ -37,13 +33,6 @@ namespace PasswordManager
             {
                 MessageBox.Show(e.Message);
             }
-        }
-
-        public UserData GetUserJson()
-        {
-            string userdata = File.ReadAllText(Paths.settings);
-            UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
-            return ud;
         }
     }
 }
