@@ -1,4 +1,6 @@
-﻿using PasswordManager;
+﻿using AkulavLauncher.Utilities;
+using Newtonsoft.Json;
+using PasswordManager;
 using PasswordManager.Utilities;
 using System;
 using System.IO;
@@ -14,13 +16,51 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        public static readonly string client_version = "3.2.0";
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
+        public static readonly string client_version = "3.1.1";
 
         //Logic starts here
         public MainForm()
         {
             Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
+            GetUserData();
+        }
+
+        private void SetUserData()
+        {
+            var ud = new UserData
+            {
+                UserName = Username.Text,
+                Ram = ramSlider.Value.ToString()
+            };
+            string jsonString = JsonConvert.SerializeObject(ud, Formatting.Indented);
+            File.WriteAllText(Paths.settings, jsonString);
+        }
+
+        private void GetUserData()
+        {
+            try
+            {
+                string userdata = File.ReadAllText(Paths.settings);
+                UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
+                Username.Text = ud.UserName;
+                GetPhysicallyInstalledSystemMemory(out long memKb);
+                ramSlider.Minimum = 1;
+                ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
+                ramSlider.Value = Int32.Parse(ud.Ram);
+                ramLabel.Text = ud.Ram + " GB of RAM";
+            }
+            catch (IOException)
+            {
+                GetPhysicallyInstalledSystemMemory(out long memKb);
+                ramSlider.Minimum = 1;
+                ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
+                ramSlider.Value = ramSlider.Maximum / 2;
+                ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
+            }
         }
 
 
@@ -40,13 +80,10 @@ namespace AkulavLauncher
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
             data.SetUIText();
-            Utility.SetRam();
-            data.SetMetadata();
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
-            File.WriteAllText(Paths.ramData, ramSlider.Value.ToString());
-            File.WriteAllText(Paths.localUser, Username.Text);
+            SetUserData();
             if (Directory.Exists(Paths.skin))
             {
                 string filepath = Paths.skin;
@@ -98,11 +135,13 @@ namespace AkulavLauncher
             }
         }
 
+        //Optimized
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            WindowState = FormWindowState.Minimized;
         }
 
+        //Optimized
         private void SkinButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog choofdlog = new OpenFileDialog

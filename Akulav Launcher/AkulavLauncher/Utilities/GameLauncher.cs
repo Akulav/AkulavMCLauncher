@@ -32,8 +32,6 @@ namespace PasswordManager.Utilities
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
 
-            File.WriteAllText(Paths.localUser, username);
-
             launchButton.Enabled = false;
             launcher.ProgressChanged += (s, p) =>
             {

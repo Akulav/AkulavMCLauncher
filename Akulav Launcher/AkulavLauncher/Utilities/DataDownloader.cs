@@ -30,7 +30,6 @@ namespace PasswordManager.Utilities
         //References to controls from mainform
         readonly TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
         readonly TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
-        readonly Label ramLabel = Application.OpenForms["MainForm"].Controls.Find("ramLabel", true)[0] as Label;
         readonly ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
         readonly IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
@@ -40,7 +39,7 @@ namespace PasswordManager.Utilities
         public DataDownloader(Form mainform)
         {
             GetData();
-            this.mf = mainform;
+            mf = mainform;
         }
 
         private void CheckUpdate()
@@ -139,21 +138,6 @@ namespace PasswordManager.Utilities
             else
             {
                 return true;
-            }
-        }
-
-        public void SetMetadata()
-        {
-            if (File.Exists(Paths.localUser))
-            {
-                Username.Text = File.ReadAllText(Paths.localUser);
-            }
-
-
-            if (File.Exists(Paths.ramData))
-            {
-                ramSlider.Value = Int32.Parse(File.ReadAllText(Paths.ramData).ToString());
-                ramLabel.Text = File.ReadAllText(Paths.ramData) + " GB of RAM";
             }
         }
 

@@ -1,17 +1,15 @@
-﻿using Microsoft.Win32;
+﻿using AkulavLauncher.Utilities;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using PasswordManager.Utilities;
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace PasswordManager
 {
     class Utility
     {
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
         public static void EnforceAdminPrivilegesWorkaround()
         {
             RegistryKey rk;
@@ -40,16 +38,12 @@ namespace PasswordManager
                 MessageBox.Show(e.Message);
             }
         }
-        public static void SetRam()
+
+        public UserData GetUserJson()
         {
-            GetPhysicallyInstalledSystemMemory(out long memKb);
-            TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
-            ramSlider.Minimum = 1;
-            ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
-            if (!File.Exists(Paths.ramData))
-            {
-                ramSlider.Value = Convert.ToInt32(memKb / 1024 / 1024 / 2);
-            }
+            string userdata = File.ReadAllText(Paths.settings);
+            UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
+            return ud;
         }
     }
 }

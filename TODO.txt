@@ -1,6 +1,14 @@
-Implement versioning, ram, username settings properly stored in json settings file
-Heavy optimizations 
-Faster installation
-Proper user interaction for updating
-properly stored remote location for versioning for custom modpacks
-proper error handling
+V4.0.0
+
+1. Implement versioning, ram, username properly stored in json settings file
+2. Proper UI/UX for auto-update
+3. Properly stored remote location for versioning for custom modpacks
+4. Proper error handling
+5. Add logging
+6. Change Installer Project Names to match the launcher
+7. Lower footprint for installer/launcher
+8. Add caching
+9. Add unit tests
+10. Support for multiple custom modpacks
+11. Proper support for extensions (other modpacks, settings)
+12. Deep cleanup and optimizations

@@ -15,7 +15,7 @@
 3. Easy-to-use UI. :heavy_check_mark:
 4. Easy control over memory allocation. :heavy_check_mark:
 5. Low system requirements. :heavy_check_mark:
-6. No Logs or any form of Telemetry :heavy_check_mark:
+6. Doesn't send any Logs or any form of Telemetry :heavy_check_mark:
 
 # Upcoming Features & Bug Fixes
 1. Integrated Launcher update
