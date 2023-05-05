@@ -1,6 +1,8 @@
-﻿using CmlLib.Core;
+﻿using AkulavLauncher.Data;
+using CmlLib.Core;
 using CmlLib.Core.Auth;
 using FontAwesome.Sharp;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PasswordManager.Utilities
@@ -59,16 +61,22 @@ namespace PasswordManager.Utilities
             };
 
             string version = game_version;
-            if (version == "NewEra Ultimate")
+
+            DataDownloader data = new DataDownloader(mf);
+            List<ModpackData> json = data.GetModpacks();
+
+            foreach(var modpack in json)
             {
-                DataDownloader data = new DataDownloader(mf);
-                if (!data.CheckLocal())
+                if(version == modpack.Name)
                 {
-                    data.StartDownload();
-                    data.StartInstall();
-                    goto end;
+                    if (!data.CheckLocal())
+                    {
+                        data.StartDownload();
+                        data.StartInstall();
+                        goto end;
+                    }
+                    version = modpack.API;
                 }
-                version = "1.19.2-forge-43.2.8";
             }
 
             var process = await launcher.CreateProcessAsync(version, launchOption);

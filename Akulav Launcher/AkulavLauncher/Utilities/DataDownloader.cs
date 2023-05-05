@@ -1,8 +1,10 @@
 ﻿using AkulavLauncher;
+using AkulavLauncher.Data;
 using CmlLib.Core;
 using CmlLib.Core.Version;
 using CmlLib.Core.VersionMetadata;
 using FontAwesome.Sharp;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +14,7 @@ using System.IO.Compression;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace PasswordManager.Utilities
@@ -40,6 +43,10 @@ namespace PasswordManager.Utilities
         {
             GetData();
             mf = mainform;
+        }
+
+        public DataDownloader()
+        {
         }
 
         private void CheckUpdate()
@@ -130,8 +137,21 @@ namespace PasswordManager.Utilities
 
         public bool CheckLocal()
         {
-            if (!File.Exists(Paths.localMetadata) || File.ReadAllText(Paths.localMetadata) != mod_version)
+            if (!File.Exists(Paths.localMetadata))
             {
+                List<ModpackData> data = GetModpacks();
+                foreach (ModpackData modpack in data)
+                {
+                    if (modpack.Name == versionBox.Text)
+                    {
+                        if(modpack.Version != modpack.Version)
+                        {
+                            return false;
+                        }
+                    }
+
+                    return false;
+                }
                 return false;
             }
 
@@ -148,15 +168,48 @@ namespace PasswordManager.Utilities
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
             MVersionCollection versions = await launcher.GetAllVersionsAsync();
-            versionBox.Items.Add("NewEra Ultimate");
-            // show all versions
+
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+
+                    List<ModpackData> data = GetModpacks();
+                    foreach (var s in data)
+                    {
+                        versionBox.Items.Add(s.Name);
+                    }
+                }
+            }
+
+            catch
+            {
+
+            }
+
             foreach (MVersionMetadata ver in versions)
             {
                 versionBox.Items.Add(ver.Name);
             }
+        }
 
-            versionBox.SelectedItem = "NewEra Ultimate";
-            launchButton.Size = new System.Drawing.Size(518, 40);
+        public List<ModpackData> GetModpacks()
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+
+                    string json = client.DownloadString(Paths.modpackList);
+                    List<ModpackData> data = JsonConvert.DeserializeObject<List<ModpackData>>(json);
+                    return data;
+                }
+            }
+
+            catch
+            {
+                return null;
+            }
         }
 
         public void SetUIText()
@@ -168,16 +221,25 @@ namespace PasswordManager.Utilities
 
         public void StartDownload()
         {
-            DirectoryLib.CreateFolder(Paths.temp);
-            Thread thread = new Thread(() =>
+            string url;
+            List<ModpackData> json = GetModpacks();
+            foreach (var s in json)
             {
-                WebClient client = new WebClient();
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(mod_url), @"C:\NewEraCache\downloaded.zip");
-            });
-            thread.Start();
-            launchButton.Enabled = false;
+                if (versionBox.Text == s.Name)
+                {
+                    url = s.URL;
+                    DirectoryLib.CreateFolder(Paths.temp);
+                    Thread thread = new Thread(() =>
+                    {
+                        WebClient client = new WebClient();
+                        client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
+                        client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
+                        client.DownloadFileAsync(new Uri(url), @"C:\NewEraCache\downloaded.zip");
+                    });
+                    thread.Start();
+                    launchButton.Enabled = false;
+                }
+            }
         }
 
         void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
@@ -216,13 +278,22 @@ namespace PasswordManager.Utilities
             thread.Start();
         }
 
-        public void ExtractInstall(string version)
+        public void ExtractInstall(string name)
         {
             try
             {
                 ZipFile.ExtractToDirectory(@"C:\NewEraCache\downloaded.zip", @"C:\NewEraCache\extracted\");
                 DirectoryLib.CopyFilesRecursively(@"C:\NewEraCache\extracted\", appdata + @"\.minecraft\");
-                File.WriteAllText(Paths.localMetadata, version);
+                List<ModpackData> local = GetModpacks();
+                foreach (ModpackData modpack in local)
+                {
+                    if (name!=modpack.Name)
+                    {
+                        modpack.Version = "0.0.0";
+                    }
+                }
+                string json = JsonConvert.SerializeObject(local, Formatting.Indented);
+                File.WriteAllText(Paths.localMetadata, json);
             }
             catch (IOException)
             {
