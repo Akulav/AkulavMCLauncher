@@ -1,10 +1,8 @@
-﻿using AkulavLauncher.Data;
-using AkulavLauncher.Utilities;
+﻿using AkulavLauncher.Utilities;
 using Newtonsoft.Json;
 using PasswordManager;
 using PasswordManager.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -21,7 +19,7 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "3.1.1";
+        public static readonly string client_version = "4.0.0";
 
         //Logic starts here
         public MainForm()
@@ -100,7 +98,7 @@ namespace AkulavLauncher
         {
             DataDownloader data = new DataDownloader(this);
             data.GetVersions();
-            data.SetUIText();
+            data.GetData();
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
@@ -124,22 +122,8 @@ namespace AkulavLauncher
         //needs improvement
         private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!(versionBox.SelectedItem.ToString() == "NewEra Ultimate"))
-            {
-                gameVersion.Text = "Game Version: " + versionBox.SelectedItem.ToString();
-                packVersion.Text = "";
-                nameLabel.Text = "";
-                skinButton.Visible = false;
-                launchButton.Size = new System.Drawing.Size(695, 40);
-            }
-
-            else
-            {
-                DataDownloader data = new DataDownloader(this);
-                data.SetUIText();
-                skinButton.Visible = true;
-                launchButton.Size = new System.Drawing.Size(518, 40);
-            }
+            DataDownloader data = new DataDownloader(this);
+            data.GetData();
         }
 
         //Optimized

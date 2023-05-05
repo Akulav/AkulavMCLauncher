@@ -42,7 +42,6 @@ namespace AkulavLauncher
             this.ramLabel = new System.Windows.Forms.Label();
             this.ramSlider = new System.Windows.Forms.TrackBar();
             this.downloadBar = new System.Windows.Forms.ProgressBar();
-            this.gameVersion = new System.Windows.Forms.Label();
             this.packVersion = new System.Windows.Forms.Label();
             this.topPanel = new System.Windows.Forms.Panel();
             this.minimizeButton = new System.Windows.Forms.Button();
@@ -193,23 +192,12 @@ namespace AkulavLauncher
             this.downloadBar.Size = new System.Drawing.Size(1240, 10);
             this.downloadBar.TabIndex = 24;
             // 
-            // gameVersion
-            // 
-            this.gameVersion.AutoSize = true;
-            this.gameVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gameVersion.ForeColor = System.Drawing.Color.Gainsboro;
-            this.gameVersion.Location = new System.Drawing.Point(860, 189);
-            this.gameVersion.Name = "gameVersion";
-            this.gameVersion.Size = new System.Drawing.Size(194, 27);
-            this.gameVersion.TabIndex = 22;
-            this.gameVersion.Text = "NewEra - Ultimate";
-            // 
             // packVersion
             // 
             this.packVersion.AutoSize = true;
             this.packVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.packVersion.ForeColor = System.Drawing.Color.Gainsboro;
-            this.packVersion.Location = new System.Drawing.Point(860, 216);
+            this.packVersion.Location = new System.Drawing.Point(860, 187);
             this.packVersion.Name = "packVersion";
             this.packVersion.Size = new System.Drawing.Size(194, 27);
             this.packVersion.TabIndex = 21;
@@ -264,14 +252,14 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V3.1.1";
+            this.leftlabel.Text = "Akulav Launcher V4.0.0";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.nameLabel.Location = new System.Drawing.Point(860, 243);
+            this.nameLabel.Location = new System.Drawing.Point(860, 214);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(194, 27);
             this.nameLabel.TabIndex = 18;
@@ -329,7 +317,6 @@ namespace AkulavLauncher
             this.Controls.Add(this.ramLabel);
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.ramSlider);
-            this.Controls.Add(this.gameVersion);
             this.Controls.Add(this.packVersion);
             this.Controls.Add(this.centerPanel);
             this.Controls.Add(this.topPanel);
@@ -364,7 +351,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Panel topPanel;
         private System.Windows.Forms.Button CloseButton;
         private FontAwesome.Sharp.IconButton repairButton;
-        private System.Windows.Forms.Label gameVersion;
         private System.Windows.Forms.Label packVersion;
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.Label ramLabel;

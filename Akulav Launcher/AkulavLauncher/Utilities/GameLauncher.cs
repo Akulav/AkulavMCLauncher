@@ -65,9 +65,9 @@ namespace PasswordManager.Utilities
             DataDownloader data = new DataDownloader(mf);
             List<ModpackData> json = data.GetModpacks();
 
-            foreach(var modpack in json)
+            foreach (var modpack in json)
             {
-                if(version == modpack.Name)
+                if (version == modpack.Name)
                 {
                     if (!data.CheckLocal())
                     {

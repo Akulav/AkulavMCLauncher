@@ -1,8 +1,5 @@
 ﻿using AkulavLauncher;
 using AkulavLauncher.Data;
-using CmlLib.Core;
-using CmlLib.Core.Version;
-using CmlLib.Core.VersionMetadata;
 using FontAwesome.Sharp;
 using Newtonsoft.Json;
 using System;
@@ -14,18 +11,12 @@ using System.IO.Compression;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Windows.Documents;
 using System.Windows.Forms;
 
 namespace PasswordManager.Utilities
 {
     internal sealed class DataDownloader
     {
-        string game_version;
-        string mod_version;
-        string mod_name;
-        string mod_url;
-
         readonly private Form mf;
         private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         bool flag = true;
@@ -37,16 +28,10 @@ namespace PasswordManager.Utilities
         readonly IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
         readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
-        readonly Label gameVersion = Application.OpenForms["MainForm"].Controls.Find("gameVersion", true)[0] as Label;
         readonly ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
         public DataDownloader(Form mainform)
         {
-            GetData();
             mf = mainform;
-        }
-
-        public DataDownloader()
-        {
         }
 
         private void CheckUpdate()
@@ -64,6 +49,7 @@ namespace PasswordManager.Utilities
                         metadata.Add(s);
                     }
                 }
+
                 if (MainForm.client_version != metadata[0])
                 {
                     Thread thread = new Thread(() =>
@@ -84,10 +70,8 @@ namespace PasswordManager.Utilities
 
             catch
             {
-                mod_name = "SERVER COULD NOT BE REACHED";
-                mod_version = "";
-                game_version = "";
-                mod_url = "";
+                nameLabel.Text = "Server could not be reached.";
+                packVersion.Text = "";
             }
         }
 
@@ -105,69 +89,65 @@ namespace PasswordManager.Utilities
         }
 
 
-        private void GetData()
+        public void GetData()
         {
             try
-            {
-                List<string> metadata = new List<string>();
-                using (WebClient client = new WebClient())
-                {
-                    string[] result;
-                    string update_data = client.DownloadString(Paths.url);
-                    result = Regex.Split(update_data, "\r\n|\r|\n");
-                    foreach (string s in result)
-                    {
-                        metadata.Add(s);
-                    }
-                }
-                mod_name = metadata[0];
-                mod_version = metadata[1];
-                game_version = metadata[2];
-                mod_url = metadata[3];
-            }
-
-            catch
-            {
-                mod_name = "SERVER COULD NOT BE REACHED";
-                mod_version = "";
-                game_version = "";
-                mod_url = "";
-            }
-        }
-
-        public bool CheckLocal()
-        {
-            if (!File.Exists(Paths.localMetadata))
             {
                 List<ModpackData> data = GetModpacks();
                 foreach (ModpackData modpack in data)
                 {
-                    if (modpack.Name == versionBox.Text)
+                    if (versionBox.Text == modpack.Name)
                     {
-                        if(modpack.Version != modpack.Version)
-                        {
-                            return false;
-                        }
+                        nameLabel.Text = "Modpack: " + modpack.Name;
+                        packVersion.Text = "Pack Version: " + modpack.Version;
                     }
-
-                    return false;
                 }
-                return false;
             }
 
-            else
+            catch
             {
-                return true;
+                nameLabel.Text = "Server could not be reached.";
+                packVersion.Text = "";
             }
+
         }
 
-        public async void GetVersions()
+        public bool CheckLocal()
+        {
+            if (File.Exists(Paths.localMetadata))
+            {
+                List<ModpackData> data = GetModpacks();
+                List<ModpackData> local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
+
+                if (local[GetListIndex(local, versionBox.Text)].Version != data[GetListIndex(data, versionBox.Text)].Version)
+                {
+                    return false;
+                }
+
+            }
+
+            return true;
+
+        }
+
+        private int GetListIndex(List<ModpackData> list, string name)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Name == name)
+                    return i;
+            }
+
+            return 999;
+        }
+
+        public void GetVersions()
         {
             CheckUpdate();
             Directory.CreateDirectory(Paths.skin);
-            MinecraftPath path = new MinecraftPath();
-            CMLauncher launcher = new CMLauncher(path);
-            MVersionCollection versions = await launcher.GetAllVersionsAsync();
+            //MinecraftPath path = new MinecraftPath();
+            //CMLauncher launcher = new CMLauncher(path);
+            //MVersionCollection versions = await launcher.GetAllVersionsAsync();
 
             try
             {
@@ -179,6 +159,9 @@ namespace PasswordManager.Utilities
                     {
                         versionBox.Items.Add(s.Name);
                     }
+                    versionBox.SelectedIndex = 0;
+                    GetData();
+
                 }
             }
 
@@ -186,11 +169,12 @@ namespace PasswordManager.Utilities
             {
 
             }
-
+            /*
             foreach (MVersionMetadata ver in versions)
             {
                 versionBox.Items.Add(ver.Name);
             }
+            */
         }
 
         public List<ModpackData> GetModpacks()
@@ -210,13 +194,6 @@ namespace PasswordManager.Utilities
             {
                 return null;
             }
-        }
-
-        public void SetUIText()
-        {
-            nameLabel.Text = mod_name;
-            packVersion.Text = "Pack Version: " + mod_version;
-            gameVersion.Text = "Game Version: " + game_version;
         }
 
         public void StartDownload()
@@ -259,7 +236,16 @@ namespace PasswordManager.Utilities
             mf.BeginInvoke((MethodInvoker)delegate
             {
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
-                ExtractInstall(mod_version);
+                List<ModpackData> data = GetModpacks();
+                string name = "";
+                foreach (ModpackData modpack in data)
+                {
+                    if (modpack.Name == versionBox.Text)
+                    {
+                        name = modpack.Name;
+                    }
+                }
+                ExtractInstall(name);
                 DirectoryLib.DeleteFolder(@"C:\NewEraCache");
                 GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             });
@@ -287,7 +273,7 @@ namespace PasswordManager.Utilities
                 List<ModpackData> local = GetModpacks();
                 foreach (ModpackData modpack in local)
                 {
-                    if (name!=modpack.Name)
+                    if (name != modpack.Name)
                     {
                         modpack.Version = "0.0.0";
                     }
