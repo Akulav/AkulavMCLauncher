@@ -1,7 +1,4 @@
-﻿using AkulavLauncher.Utilities;
-using Newtonsoft.Json;
-using PasswordManager;
-using PasswordManager.Utilities;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -27,34 +24,6 @@ namespace AkulavLauncher
             Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
             GetUserData();
-        }
-
-
-        //Sets the user data to the json settings file
-        private void SetUserData()
-        {
-            var ud = new UserData
-            {
-                UserName = Username.Text,
-                Ram = ramSlider.Value.ToString()
-            };
-            string jsonString = JsonConvert.SerializeObject(ud, Formatting.Indented);
-            File.WriteAllText(Paths.settings, jsonString);
-
-            if (Directory.Exists(Paths.skin))
-            {
-                string filepath = Paths.skin;
-                DirectoryInfo d = new DirectoryInfo(filepath);
-                foreach (var file in d.GetFiles("*.png"))
-                {
-
-                    if (Path.GetFileNameWithoutExtension(file.FullName) != Username.Text)
-                    {
-                        Directory.Move(file.FullName, filepath + Username.Text + ".png");
-                    }
-
-                }
-            }
         }
 
         //Sets the UI using the json settings file, if doesnt exists sets default
@@ -102,7 +71,7 @@ namespace AkulavLauncher
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
-            SetUserData();
+            UserSettings.SetUserData(Username.Text, ramSlider.Value.ToString());
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
 
@@ -130,25 +99,6 @@ namespace AkulavLauncher
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
-        }
-
-        //Optimized
-        private void SkinButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog choofdlog = new OpenFileDialog
-            {
-                Filter = "All Files (*.*)|*.*",
-                FilterIndex = 1
-            };
-            if (choofdlog.ShowDialog() == DialogResult.OK)
-            {
-                if (File.Exists(Paths.skin + "\\" + Username.Text + ".png"))
-                {
-                    File.Delete(Paths.skin + "\\" + Username.Text + ".png");
-                }
-                File.Copy(choofdlog.FileName, Paths.skin + "\\" + Username.Text + ".png");
-            }
-
         }
     }
 }

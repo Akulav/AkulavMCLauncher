@@ -49,8 +49,6 @@ namespace AkulavLauncher
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
-            this.optimizationBox = new System.Windows.Forms.CheckBox();
-            this.skinButton = new FontAwesome.Sharp.IconButton();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -98,7 +96,7 @@ namespace AkulavLauncher
             this.lowerpanel.Controls.Add(this.repairButton);
             this.lowerpanel.Controls.Add(this.versionBox);
             this.lowerpanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lowerpanel.Location = new System.Drawing.Point(0, 576);
+            this.lowerpanel.Location = new System.Drawing.Point(0, 574);
             this.lowerpanel.Name = "lowerpanel";
             this.lowerpanel.Size = new System.Drawing.Size(1241, 55);
             this.lowerpanel.TabIndex = 17;
@@ -161,7 +159,7 @@ namespace AkulavLauncher
             this.consoleLabel.AutoSize = true;
             this.consoleLabel.Font = new System.Drawing.Font("Yu Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.consoleLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.consoleLabel.Location = new System.Drawing.Point(862, 279);
+            this.consoleLabel.Location = new System.Drawing.Point(862, 204);
             this.consoleLabel.Name = "consoleLabel";
             this.consoleLabel.Size = new System.Drawing.Size(0, 18);
             this.consoleLabel.TabIndex = 28;
@@ -197,7 +195,7 @@ namespace AkulavLauncher
             this.packVersion.AutoSize = true;
             this.packVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.packVersion.ForeColor = System.Drawing.Color.Gainsboro;
-            this.packVersion.Location = new System.Drawing.Point(860, 187);
+            this.packVersion.Location = new System.Drawing.Point(860, 150);
             this.packVersion.Name = "packVersion";
             this.packVersion.Size = new System.Drawing.Size(194, 27);
             this.packVersion.TabIndex = 21;
@@ -259,7 +257,7 @@ namespace AkulavLauncher
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.nameLabel.Location = new System.Drawing.Point(860, 214);
+            this.nameLabel.Location = new System.Drawing.Point(860, 177);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(194, 27);
             this.nameLabel.TabIndex = 18;
@@ -273,46 +271,13 @@ namespace AkulavLauncher
             this.centerPanel.Size = new System.Drawing.Size(845, 519);
             this.centerPanel.TabIndex = 29;
             // 
-            // optimizationBox
-            // 
-            this.optimizationBox.AutoSize = true;
-            this.optimizationBox.Checked = true;
-            this.optimizationBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.optimizationBox.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.optimizationBox.ForeColor = System.Drawing.Color.Gainsboro;
-            this.optimizationBox.Location = new System.Drawing.Point(865, 153);
-            this.optimizationBox.Name = "optimizationBox";
-            this.optimizationBox.Size = new System.Drawing.Size(372, 31);
-            this.optimizationBox.TabIndex = 30;
-            this.optimizationBox.Text = "Enable Experimental Optimizations";
-            this.optimizationBox.UseVisualStyleBackColor = true;
-            // 
-            // skinButton
-            // 
-            this.skinButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.skinButton.Font = new System.Drawing.Font("Yu Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.skinButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.skinButton.IconChar = FontAwesome.Sharp.IconChar.None;
-            this.skinButton.IconColor = System.Drawing.Color.Black;
-            this.skinButton.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            this.skinButton.Location = new System.Drawing.Point(852, 524);
-            this.skinButton.Name = "skinButton";
-            this.skinButton.Size = new System.Drawing.Size(380, 40);
-            this.skinButton.TabIndex = 29;
-            this.skinButton.Text = "Upload Skin";
-            this.skinButton.UseVisualStyleBackColor = false;
-            this.skinButton.Visible = false;
-            this.skinButton.Click += new System.EventHandler(this.SkinButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(1241, 631);
+            this.ClientSize = new System.Drawing.Size(1241, 629);
             this.ControlBox = false;
-            this.Controls.Add(this.skinButton);
-            this.Controls.Add(this.optimizationBox);
             this.Controls.Add(this.consoleLabel);
             this.Controls.Add(this.ramLabel);
             this.Controls.Add(this.nameLabel);
@@ -360,8 +325,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label leftlabel;
         private System.Windows.Forms.Panel centerPanel;
-        private System.Windows.Forms.CheckBox optimizationBox;
         private System.Windows.Forms.Button minimizeButton;
-        private FontAwesome.Sharp.IconButton skinButton;
     }
 }

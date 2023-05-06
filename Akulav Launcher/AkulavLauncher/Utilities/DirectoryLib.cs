@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace PasswordManager.Utilities
+namespace AkulavLauncher
 {
     class DirectoryLib
     {

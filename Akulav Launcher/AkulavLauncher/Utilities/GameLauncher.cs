@@ -5,7 +5,7 @@ using FontAwesome.Sharp;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace PasswordManager.Utilities
+namespace AkulavLauncher
 {
     internal class GameLauncher
     {
@@ -29,7 +29,6 @@ namespace PasswordManager.Utilities
             IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
             ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
             Label consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
-            CheckBox optimizationBox = Application.OpenForms["MainForm"].Controls.Find("optimizationBox", true)[0] as CheckBox;
             MinecraftPath path = new MinecraftPath();
             CMLauncher launcher = new CMLauncher(path);
 
@@ -46,13 +45,6 @@ namespace PasswordManager.Utilities
 
             var session = MSession.GetOfflineSession(username);
 
-            string[] optimizations = new string[] { };
-
-            if (optimizationBox.Checked)
-            {
-                optimizations = new string[] { "-XX:+UnlockExperimentalVMOptions", "-XX:G1NewSizePercent=20", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=25", "-XX:G1HeapRegionSize=32M" };
-            }
-
             var launchOption = new MLaunchOption
             {
                 MaximumRamMb = ram,
@@ -63,13 +55,13 @@ namespace PasswordManager.Utilities
             string version = game_version;
 
             DataDownloader data = new DataDownloader(mf);
-            List<ModpackData> json = data.GetModpacks();
-
+            List<ModpackData> json = Utility.GetModpacks();
             foreach (var modpack in json)
             {
+
                 if (version == modpack.Name)
                 {
-                    if (!data.CheckLocal())
+                    if (data.CheckLocal())
                     {
                         data.StartDownload();
                         data.StartInstall();

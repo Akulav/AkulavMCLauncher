@@ -1,8 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using AkulavLauncher.Data;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Net;
 using System.Windows.Forms;
 
-namespace PasswordManager
+namespace AkulavLauncher
 {
     class Utility
     {
@@ -34,5 +38,25 @@ namespace PasswordManager
                 MessageBox.Show(e.Message);
             }
         }
+
+        public static List<ModpackData> GetModpacks()
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+
+                    string json = client.DownloadString(Paths.modpackList);
+                    List<ModpackData> data = JsonConvert.DeserializeObject<List<ModpackData>>(json);
+                    return data;
+                }
+            }
+
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }

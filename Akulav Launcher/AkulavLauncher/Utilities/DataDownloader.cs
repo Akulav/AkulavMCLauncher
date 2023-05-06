@@ -1,5 +1,4 @@
-﻿using AkulavLauncher;
-using AkulavLauncher.Data;
+﻿using AkulavLauncher.Data;
 using FontAwesome.Sharp;
 using Newtonsoft.Json;
 using System;
@@ -13,7 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace PasswordManager.Utilities
+namespace AkulavLauncher
 {
     internal sealed class DataDownloader
     {
@@ -93,7 +92,7 @@ namespace PasswordManager.Utilities
         {
             try
             {
-                List<ModpackData> data = GetModpacks();
+                List<ModpackData> data = Utility.GetModpacks();
                 foreach (ModpackData modpack in data)
                 {
                     if (versionBox.Text == modpack.Name)
@@ -116,17 +115,20 @@ namespace PasswordManager.Utilities
         {
             if (File.Exists(Paths.localMetadata))
             {
-                List<ModpackData> data = GetModpacks();
+                List<ModpackData> data = Utility.GetModpacks();
                 List<ModpackData> local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
+
 
                 if (local[GetListIndex(local, versionBox.Text)].Version != data[GetListIndex(data, versionBox.Text)].Version)
                 {
-                    return false;
+                    return true;
                 }
+
+                return false;
 
             }
 
-            return true;
+            return false;
 
         }
 
@@ -154,7 +156,7 @@ namespace PasswordManager.Utilities
                 using (WebClient client = new WebClient())
                 {
 
-                    List<ModpackData> data = GetModpacks();
+                    List<ModpackData> data = Utility.GetModpacks();
                     foreach (var s in data)
                     {
                         versionBox.Items.Add(s.Name);
@@ -177,29 +179,14 @@ namespace PasswordManager.Utilities
             */
         }
 
-        public List<ModpackData> GetModpacks()
-        {
-            try
-            {
-                using (WebClient client = new WebClient())
-                {
-
-                    string json = client.DownloadString(Paths.modpackList);
-                    List<ModpackData> data = JsonConvert.DeserializeObject<List<ModpackData>>(json);
-                    return data;
-                }
-            }
-
-            catch
-            {
-                return null;
-            }
-        }
+        /// <summary>
+        /// DOWNLOAD BLOCK FOR MODPACKS
+        /// </summary>
 
         public void StartDownload()
         {
             string url;
-            List<ModpackData> json = GetModpacks();
+            List<ModpackData> json = Utility.GetModpacks();
             foreach (var s in json)
             {
                 if (versionBox.Text == s.Name)
@@ -211,7 +198,7 @@ namespace PasswordManager.Utilities
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
                         client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
-                        client.DownloadFileAsync(new Uri(url), @"C:\NewEraCache\downloaded.zip");
+                        client.DownloadFileAsync(new Uri(url), @"C:\AkulavLauncherCache\downloaded.zip");
                     });
                     thread.Start();
                     launchButton.Enabled = false;
@@ -235,8 +222,8 @@ namespace PasswordManager.Utilities
         {
             mf.BeginInvoke((MethodInvoker)delegate
             {
-                DirectoryLib.DeleteFolder(@"C:\NewEraCache\extracted");
-                List<ModpackData> data = GetModpacks();
+                DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache\extracted");
+                List<ModpackData> data = Utility.GetModpacks();
                 string name = "";
                 foreach (ModpackData modpack in data)
                 {
@@ -246,10 +233,18 @@ namespace PasswordManager.Utilities
                     }
                 }
                 ExtractInstall(name);
-                DirectoryLib.DeleteFolder(@"C:\NewEraCache");
+                DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache");
                 GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             });
         }
+
+        /// <summary>
+        /// END OF DOWNLOAD BLOCK FOR MODPACKS
+        /// </summary>
+
+        ///
+        ///START OF INSTALLATION BLOCK FOR MODPACKS
+        ///
 
         public void StartInstall()
         {
@@ -268,9 +263,9 @@ namespace PasswordManager.Utilities
         {
             try
             {
-                ZipFile.ExtractToDirectory(@"C:\NewEraCache\downloaded.zip", @"C:\NewEraCache\extracted\");
-                DirectoryLib.CopyFilesRecursively(@"C:\NewEraCache\extracted\", appdata + @"\.minecraft\");
-                List<ModpackData> local = GetModpacks();
+                ZipFile.ExtractToDirectory(@"C:\AkulavLauncherCache\downloaded.zip", @"C:\AkulavLauncherCache\extracted\");
+                DirectoryLib.CopyFilesRecursively(@"C:\AkulavLauncherCache\extracted\", appdata + @"\.minecraft\");
+                List<ModpackData> local = Utility.GetModpacks();
                 foreach (ModpackData modpack in local)
                 {
                     if (name != modpack.Name)
@@ -286,5 +281,10 @@ namespace PasswordManager.Utilities
 
             }
         }
+
+        ///
+        ///END OF INSTALL BLOCK
+        ///
+
     }
 }

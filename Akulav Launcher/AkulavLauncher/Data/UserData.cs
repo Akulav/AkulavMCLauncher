@@ -1,4 +1,4 @@
-﻿namespace AkulavLauncher.Utilities
+﻿namespace AkulavLauncher
 {
     public class UserData
     {
