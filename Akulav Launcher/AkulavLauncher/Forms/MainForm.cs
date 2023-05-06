@@ -24,6 +24,7 @@ namespace AkulavLauncher
             Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
             GetUserData();
+            Utility.GetModpacks();
         }
 
         //Sets the UI using the json settings file, if doesnt exists sets default

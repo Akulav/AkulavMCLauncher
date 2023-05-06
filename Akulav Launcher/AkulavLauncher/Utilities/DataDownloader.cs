@@ -92,7 +92,7 @@ namespace AkulavLauncher
         {
             try
             {
-                List<ModpackData> data = Utility.GetModpacks();
+                List<ModpackData> data = Utility.modpacks;
                 foreach (ModpackData modpack in data)
                 {
                     if (versionBox.Text == modpack.Name)
@@ -115,7 +115,7 @@ namespace AkulavLauncher
         {
             if (File.Exists(Paths.localMetadata))
             {
-                List<ModpackData> data = Utility.GetModpacks();
+                List<ModpackData> data = Utility.modpacks;
                 List<ModpackData> local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
 
 
@@ -156,7 +156,7 @@ namespace AkulavLauncher
                 using (WebClient client = new WebClient())
                 {
 
-                    List<ModpackData> data = Utility.GetModpacks();
+                    List<ModpackData> data = Utility.modpacks;
                     foreach (var s in data)
                     {
                         versionBox.Items.Add(s.Name);
@@ -186,7 +186,7 @@ namespace AkulavLauncher
         public void StartDownload()
         {
             string url;
-            List<ModpackData> json = Utility.GetModpacks();
+            List<ModpackData> json = Utility.modpacks;
             foreach (var s in json)
             {
                 if (versionBox.Text == s.Name)
@@ -223,7 +223,7 @@ namespace AkulavLauncher
             mf.BeginInvoke((MethodInvoker)delegate
             {
                 DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache\extracted");
-                List<ModpackData> data = Utility.GetModpacks();
+                List<ModpackData> data = Utility.modpacks;
                 string name = "";
                 foreach (ModpackData modpack in data)
                 {
@@ -265,7 +265,7 @@ namespace AkulavLauncher
             {
                 ZipFile.ExtractToDirectory(@"C:\AkulavLauncherCache\downloaded.zip", @"C:\AkulavLauncherCache\extracted\");
                 DirectoryLib.CopyFilesRecursively(@"C:\AkulavLauncherCache\extracted\", appdata + @"\.minecraft\");
-                List<ModpackData> local = Utility.GetModpacks();
+                List<ModpackData> local = Utility.modpacks;
                 foreach (ModpackData modpack in local)
                 {
                     if (name != modpack.Name)

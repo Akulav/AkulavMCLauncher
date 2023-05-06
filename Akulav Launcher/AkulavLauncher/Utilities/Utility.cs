@@ -8,8 +8,9 @@ using System.Windows.Forms;
 
 namespace AkulavLauncher
 {
-    class Utility
+    public static class Utility
     {
+        public static List<ModpackData> modpacks = new List<ModpackData>();
         public static void EnforceAdminPrivilegesWorkaround()
         {
             RegistryKey rk;
@@ -33,13 +34,14 @@ namespace AkulavLauncher
                 MessageBox.Show("Please run as administrator");
                 Environment.Exit(1);
             }
+
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
             }
         }
 
-        public static List<ModpackData> GetModpacks()
+        public static void GetModpacks()
         {
             try
             {
@@ -47,14 +49,13 @@ namespace AkulavLauncher
                 {
 
                     string json = client.DownloadString(Paths.modpackList);
-                    List<ModpackData> data = JsonConvert.DeserializeObject<List<ModpackData>>(json);
-                    return data;
+                    modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(json);
                 }
             }
 
             catch
             {
-                return null;
+                modpacks = null;
             }
         }
 

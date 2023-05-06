@@ -55,7 +55,7 @@ namespace AkulavLauncher
             string version = game_version;
 
             DataDownloader data = new DataDownloader(mf);
-            List<ModpackData> json = Utility.GetModpacks();
+            List<ModpackData> json = Utility.modpacks;
             foreach (var modpack in json)
             {
 
