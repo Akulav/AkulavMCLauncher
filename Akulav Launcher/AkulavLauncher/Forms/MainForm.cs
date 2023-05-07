@@ -81,7 +81,6 @@ namespace AkulavLauncher
         {
             DataDownloader data = new DataDownloader(this);
             data.StartDownload();
-            data.StartInstall();
         }
 
         private void RamSlider_ValueChanged(object sender, EventArgs e)

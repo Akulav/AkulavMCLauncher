@@ -29,7 +29,7 @@ namespace AkulavLauncher
             IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
             ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
             Label consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
-            MinecraftPath path = new MinecraftPath();
+            MinecraftPath path = new MinecraftPath(Paths.mc + "\\" + game_version);
             CMLauncher launcher = new CMLauncher(path);
 
             launchButton.Enabled = false;
@@ -64,7 +64,6 @@ namespace AkulavLauncher
                     if (data.CheckLocal())
                     {
                         data.StartDownload();
-                        data.StartInstall();
                         goto end;
                     }
                     version = modpack.API;

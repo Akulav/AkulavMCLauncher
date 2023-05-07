@@ -7,7 +7,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows.Forms;
 
-namespace SeePassInstaller
+namespace AkulavLauncherInstaller
 {
     public partial class statusdLbl : Form
     {
@@ -25,7 +25,7 @@ namespace SeePassInstaller
 
             Directory.CreateDirectory(location);
 
-            File.WriteAllBytes(fileLocation, Properties.Resources.files);
+            File.WriteAllBytes(fileLocation, AkulavLauncherInstaller.Properties.Resources.files);
 
             using (ZipArchive source = ZipFile.Open(fileLocation, ZipArchiveMode.Read, null))
             {
@@ -120,6 +120,13 @@ namespace SeePassInstaller
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
         }
 
-
+        private void statusdLbl_Load(object sender, EventArgs e)
+        {
+            string dirpath = Directory.GetCurrentDirectory();
+            if(dirpath== "C:\\AkulavLauncher")
+            {
+                installBtn.PerformClick();
+            }
+        }
     }
 }

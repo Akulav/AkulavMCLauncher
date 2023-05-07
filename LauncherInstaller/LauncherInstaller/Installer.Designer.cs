@@ -1,4 +1,4 @@
-﻿namespace SeePassInstaller
+﻿namespace AkulavLauncherInstaller
 {
     partial class statusdLbl
     {
@@ -74,7 +74,8 @@
             this.Controls.Add(this.installBtn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "statusdLbl";
-            this.Text = "AkulavLauncher 4.0.0 - Made By Caty";
+            this.Text = "AkulavLauncher 5.0.0 - Made By Caty";
+            this.Load += new System.EventHandler(this.statusdLbl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

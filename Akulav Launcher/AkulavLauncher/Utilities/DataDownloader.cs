@@ -119,6 +119,7 @@ namespace AkulavLauncher
                 List<ModpackData> local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
 
 
+
                 if (local[GetListIndex(local, versionBox.Text)].Version != data[GetListIndex(data, versionBox.Text)].Version)
                 {
                     return true;
@@ -128,7 +129,7 @@ namespace AkulavLauncher
 
             }
 
-            return false;
+            return true;
 
         }
 
@@ -146,7 +147,6 @@ namespace AkulavLauncher
         public void GetVersions()
         {
             CheckUpdate();
-            Directory.CreateDirectory(Paths.skin);
             //MinecraftPath path = new MinecraftPath();
             //CMLauncher launcher = new CMLauncher(path);
             //MVersionCollection versions = await launcher.GetAllVersionsAsync();
@@ -234,7 +234,6 @@ namespace AkulavLauncher
                 }
                 ExtractInstall(name);
                 DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache");
-                GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             });
         }
 
@@ -246,35 +245,24 @@ namespace AkulavLauncher
         ///START OF INSTALLATION BLOCK FOR MODPACKS
         ///
 
-        public void StartInstall()
-        {
-            Thread thread = new Thread(() =>
-            {
-                for (int i = 0; i < Paths.deletion_list.Length; i++)
-                {
-                    DirectoryLib.DeleteFolder(Paths.deletion_list[i]);
-                }
-
-            });
-            thread.Start();
-        }
-
         public void ExtractInstall(string name)
         {
             try
             {
-                ZipFile.ExtractToDirectory(@"C:\AkulavLauncherCache\downloaded.zip", @"C:\AkulavLauncherCache\extracted\");
-                DirectoryLib.CopyFilesRecursively(@"C:\AkulavLauncherCache\extracted\", appdata + @"\.minecraft\");
-                List<ModpackData> local = Utility.modpacks;
-                foreach (ModpackData modpack in local)
+
+                for (int i = 0; i < Paths.deletion_list.Length; i++)
                 {
-                    if (name != modpack.Name)
-                    {
-                        modpack.Version = "0.0.0";
-                    }
+                    MessageBox.Show(Paths.mc + "\\" + name + "\\" + Paths.deletion_list[i]);
+                    DirectoryLib.DeleteFolder(Paths.mc + "\\" + name + "\\" + Paths.deletion_list[i]);
                 }
+
+                ZipFile.ExtractToDirectory(@"C:\AkulavLauncherCache\downloaded.zip", @"C:\AkulavLauncherCache\extracted\");
+                DirectoryLib.CopyFilesRecursively(@"C:\AkulavLauncherCache\extracted\", Paths.mc + "\\" + name + "\\");
+                List<ModpackData> local = Utility.modpacks;
+
                 string json = JsonConvert.SerializeObject(local, Formatting.Indented);
                 File.WriteAllText(Paths.localMetadata, json);
+                GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             }
             catch (IOException)
             {
@@ -284,7 +272,7 @@ namespace AkulavLauncher
 
         ///
         ///END OF INSTALL BLOCK
-        ///
+        /// 
 
     }
 }

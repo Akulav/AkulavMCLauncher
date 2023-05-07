@@ -1,10 +1,6 @@
 V5.0.0
 
-1 Proper UI/UX for auto-update
-2 Proper error handling
-3 Add logging
-4 Change Installer Project Names to match the launcher
-5 Different folders for modpacks
-6 Add caching for GetModpacks() request
-7 Add unit tests
-8 Final Cleanup and optimization
+1 Proper error handling
+2 Add logging
+3 Add unit tests
+4 Final Cleanup and optimization
