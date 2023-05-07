@@ -123,7 +123,7 @@ namespace AkulavLauncherInstaller
         private void statusdLbl_Load(object sender, EventArgs e)
         {
             string dirpath = Directory.GetCurrentDirectory();
-            if(dirpath== "C:\\AkulavLauncher")
+            if (dirpath == "C:\\AkulavLauncher")
             {
                 installBtn.PerformClick();
             }
