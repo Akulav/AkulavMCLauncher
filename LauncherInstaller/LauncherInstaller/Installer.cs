@@ -38,7 +38,7 @@ namespace AkulavLauncherInstaller
                         Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
                         // The boolean parameter determines whether an existing file that has the same name as the destination file should be overwritten
                         entry.ExtractToFile(fullPath, true);
-                        File.Delete(fileLocation);
+                        //File.Delete(fileLocation);
                     }
                 }
             }

@@ -16,7 +16,7 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "4.0.0";
+        public static readonly string client_version = "5.0.0";
 
         //Logic starts here
         public MainForm()
