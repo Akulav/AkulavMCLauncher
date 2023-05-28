@@ -12,7 +12,8 @@ namespace AkulavLauncher
         public static readonly string modpackList = "https://raw.githubusercontent.com/Akulav/AkulavMCLauncher/main/modpacks.json";
         public static readonly string[] deletion_list = {
             @"mods",
-            @"config"
+            @"config",
+            @"lightspeed-cache"
         };
         public static readonly string settings = appdata + @"\.minecraft\akulav_launcher_settings.json";
     }
