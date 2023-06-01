@@ -4,3 +4,6 @@ V5.0.0
 2 Add logging
 3 Add unit tests
 4 Final Cleanup and optimization
+5 Fix no .minecraft error
+6 Fix no forge version installed
+7 Better auto-update app system
