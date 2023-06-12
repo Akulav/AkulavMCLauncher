@@ -251,7 +251,7 @@ namespace AkulavLauncher
             {
 
                 for (int i = 0; i < Paths.deletion_list.Length; i++)
-                {        
+                {
                     DirectoryLib.DeleteFolder(Paths.mc + "\\" + name + "\\" + Paths.deletion_list[i]);
                 }
 

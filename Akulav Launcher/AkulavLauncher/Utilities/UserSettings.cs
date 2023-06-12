@@ -12,6 +12,10 @@ namespace AkulavLauncher
                 Ram = RamUI
             };
             string jsonString = JsonConvert.SerializeObject(ud, Formatting.Indented);
+            if (!Directory.Exists(Paths.mc))
+            {
+                Directory.CreateDirectory(Paths.mc);
+            }
             File.WriteAllText(Paths.settings, jsonString);
         }
     }
