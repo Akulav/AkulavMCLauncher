@@ -65,6 +65,7 @@ namespace AkulavLauncher
             // userLabel
             // 
             this.userLabel.AutoSize = true;
+            this.userLabel.BackColor = System.Drawing.Color.Transparent;
             this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.userLabel.Location = new System.Drawing.Point(103, -1);
@@ -87,6 +88,7 @@ namespace AkulavLauncher
             // lowerpanel
             // 
             this.lowerpanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.lowerpanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514;
             this.lowerpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lowerpanel.Controls.Add(this.versionLabel);
             this.lowerpanel.Controls.Add(this.statusText);
@@ -104,9 +106,10 @@ namespace AkulavLauncher
             // versionLabel
             // 
             this.versionLabel.AutoSize = true;
+            this.versionLabel.BackColor = System.Drawing.Color.Transparent;
             this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.versionLabel.Location = new System.Drawing.Point(363, -1);
+            this.versionLabel.Location = new System.Drawing.Point(353, -1);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(111, 20);
             this.versionLabel.TabIndex = 28;
@@ -159,7 +162,7 @@ namespace AkulavLauncher
             this.consoleLabel.AutoSize = true;
             this.consoleLabel.Font = new System.Drawing.Font("Yu Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.consoleLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.consoleLabel.Location = new System.Drawing.Point(862, 204);
+            this.consoleLabel.Location = new System.Drawing.Point(890, 204);
             this.consoleLabel.Name = "consoleLabel";
             this.consoleLabel.Size = new System.Drawing.Size(0, 18);
             this.consoleLabel.TabIndex = 28;
@@ -169,7 +172,7 @@ namespace AkulavLauncher
             this.ramLabel.AutoSize = true;
             this.ramLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ramLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.ramLabel.Location = new System.Drawing.Point(860, 72);
+            this.ramLabel.Location = new System.Drawing.Point(888, 72);
             this.ramLabel.Name = "ramLabel";
             this.ramLabel.Size = new System.Drawing.Size(71, 27);
             this.ramLabel.TabIndex = 26;
@@ -177,9 +180,9 @@ namespace AkulavLauncher
             // 
             // ramSlider
             // 
-            this.ramSlider.Location = new System.Drawing.Point(854, 102);
+            this.ramSlider.Location = new System.Drawing.Point(881, 102);
             this.ramSlider.Name = "ramSlider";
-            this.ramSlider.Size = new System.Drawing.Size(375, 45);
+            this.ramSlider.Size = new System.Drawing.Size(348, 45);
             this.ramSlider.TabIndex = 25;
             this.ramSlider.ValueChanged += new System.EventHandler(this.RamSlider_ValueChanged);
             // 
@@ -195,7 +198,7 @@ namespace AkulavLauncher
             this.packVersion.AutoSize = true;
             this.packVersion.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.packVersion.ForeColor = System.Drawing.Color.Gainsboro;
-            this.packVersion.Location = new System.Drawing.Point(860, 150);
+            this.packVersion.Location = new System.Drawing.Point(888, 150);
             this.packVersion.Name = "packVersion";
             this.packVersion.Size = new System.Drawing.Size(194, 27);
             this.packVersion.TabIndex = 21;
@@ -250,14 +253,14 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(241, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V5.0.0";
+            this.leftlabel.Text = "Akulav Launcher V6.0.0";
             // 
             // nameLabel
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.nameLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.nameLabel.Location = new System.Drawing.Point(860, 177);
+            this.nameLabel.Location = new System.Drawing.Point(888, 177);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(194, 27);
             this.nameLabel.TabIndex = 18;
@@ -265,10 +268,10 @@ namespace AkulavLauncher
             // 
             // centerPanel
             // 
-            this.centerPanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.keoj5led2dw61;
+            this.centerPanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.mainFormBackground;
             this.centerPanel.Location = new System.Drawing.Point(1, 51);
             this.centerPanel.Name = "centerPanel";
-            this.centerPanel.Size = new System.Drawing.Size(845, 519);
+            this.centerPanel.Size = new System.Drawing.Size(881, 519);
             this.centerPanel.TabIndex = 29;
             // 
             // MainForm

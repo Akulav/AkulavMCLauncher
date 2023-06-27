@@ -17,6 +17,11 @@ namespace AkulavLauncherInstaller
         public statusdLbl()
         {
             InitializeComponent();
+            string dirpath = Directory.GetCurrentDirectory();
+            if (dirpath == "C:\\AkulavLauncher")
+            {
+                installBtn.PerformClick();
+            }
             this.CenterToScreen();
         }
 

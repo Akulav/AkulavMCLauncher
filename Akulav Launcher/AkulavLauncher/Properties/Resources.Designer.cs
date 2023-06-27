@@ -63,9 +63,19 @@ namespace AkulavLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap keoj5led2dw61 {
+        internal static System.Drawing.Bitmap mainFormBackground {
             get {
-                object obj = ResourceManager.GetObject("keoj5led2dw61", resourceCulture);
+                object obj = ResourceManager.GetObject("mainFormBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514 {
+            get {
+                object obj = ResourceManager.GetObject("minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

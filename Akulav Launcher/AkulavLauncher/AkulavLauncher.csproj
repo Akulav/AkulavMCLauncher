@@ -160,6 +160,7 @@
     <None Include="ProjectSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\minecraft_dirt_wallpaper_by_thedevartist-d3l1qoj-3511026514.png" />
     <None Include="Resources\mining.ico" />
     <None Include="bin\Debug\FontAwesome.Sharp.dll" />
     <None Include="Resources\keoj5led2dw61.png" />
