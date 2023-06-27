@@ -92,6 +92,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\file.zip" />
     <None Include="Resources\files.zip" />
     <None Include="Resources\mining.ico" />
     <Content Include="mining.ico" />
