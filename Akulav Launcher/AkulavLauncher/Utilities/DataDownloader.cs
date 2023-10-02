@@ -25,6 +25,7 @@ namespace AkulavLauncher
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
         readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
         readonly ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
+        List<ModpackData> modpackData = Utility.modpacks;
         public DataDownloader(Form mainform)
         {
             mf = mainform;
@@ -52,7 +53,7 @@ namespace AkulavLauncher
                     {
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += Client_DownloadProgressChangedVersion;
-                        client.DownloadFileAsync(new Uri(metadata[1]), @"C:\AkulavLauncher\update.exe");
+                        client.DownloadFileAsync(new Uri(metadata[1]), Paths.update);
                     });
                     thread.Start();
 
@@ -60,7 +61,7 @@ namespace AkulavLauncher
 
                 else
                 {
-                    File.Delete(@"C:\AkulavLauncher\update.exe");
+                    File.Delete(Paths.update);
                 }
             }
 
@@ -78,7 +79,7 @@ namespace AkulavLauncher
             {
                 flag = false;
                 var p = new Process();
-                p.StartInfo.FileName = @"C:\AkulavLauncher\update.exe";
+                p.StartInfo.FileName = Paths.update;
                 p.Start();
                 Application.Exit();
             }
@@ -89,8 +90,7 @@ namespace AkulavLauncher
         {
             try
             {
-                List<ModpackData> data = Utility.modpacks;
-                foreach (ModpackData modpack in data)
+                foreach (ModpackData modpack in modpackData)
                 {
                     if (versionBox.Text == modpack.Name)
                     {
@@ -112,12 +112,12 @@ namespace AkulavLauncher
         {
             if (File.Exists(Paths.localMetadata))
             {
-                List<ModpackData> data = Utility.modpacks;
+
                 List<ModpackData> local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
 
 
 
-                if (local[GetListIndex(local, versionBox.Text)].Version != data[GetListIndex(data, versionBox.Text)].Version)
+                if (local[GetListIndex(local, versionBox.Text)].Version != modpackData[GetListIndex(modpackData, versionBox.Text)].Version)
                 {
                     return true;
                 }
@@ -144,17 +144,14 @@ namespace AkulavLauncher
         public void GetVersions()
         {
             CheckUpdate();
-            //MinecraftPath path = new MinecraftPath();
-            //CMLauncher launcher = new CMLauncher(path);
-            //MVersionCollection versions = await launcher.GetAllVersionsAsync();
 
             try
             {
                 using (WebClient client = new WebClient())
                 {
 
-                    List<ModpackData> data = Utility.modpacks;
-                    foreach (var s in data)
+
+                    foreach (var s in modpackData)
                     {
                         versionBox.Items.Add(s.Name);
                     }
@@ -177,8 +174,7 @@ namespace AkulavLauncher
         public void StartDownload()
         {
             string url;
-            List<ModpackData> json = Utility.modpacks;
-            foreach (var s in json)
+            foreach (var s in modpackData)
             {
                 if (versionBox.Text == s.Name)
                 {
@@ -189,7 +185,7 @@ namespace AkulavLauncher
                         WebClient client = new WebClient();
                         client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
                         client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
-                        client.DownloadFileAsync(new Uri(url), @"C:\AkulavLauncherCache\downloaded.zip");
+                        client.DownloadFileAsync(new Uri(url), Paths.downloaded);
                     });
                     thread.Start();
                 }
@@ -211,10 +207,9 @@ namespace AkulavLauncher
         {
             mf.BeginInvoke((MethodInvoker)delegate
             {
-                DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache\extracted");
-                List<ModpackData> data = Utility.modpacks;
+                DirectoryLib.DeleteFolder(Paths.extracted);
                 string name = "";
-                foreach (ModpackData modpack in data)
+                foreach (ModpackData modpack in modpackData)
                 {
                     if (modpack.Name == versionBox.Text)
                     {
@@ -222,7 +217,7 @@ namespace AkulavLauncher
                     }
                 }
                 ExtractInstall(name);
-                DirectoryLib.DeleteFolder(@"C:\AkulavLauncherCache");
+                DirectoryLib.DeleteFolder(Paths.cache);
             });
         }
 
@@ -244,11 +239,10 @@ namespace AkulavLauncher
                     DirectoryLib.DeleteFolder(Paths.mc + "\\" + name + "\\" + Paths.deletion_list[i]);
                 }
 
-                ZipFile.ExtractToDirectory(@"C:\AkulavLauncherCache\downloaded.zip", @"C:\AkulavLauncherCache\extracted\");
-                DirectoryLib.CopyFilesRecursively(@"C:\AkulavLauncherCache\extracted\", Paths.mc + "\\" + name + "\\");
-                List<ModpackData> local = Utility.modpacks;
+                ZipFile.ExtractToDirectory(Paths.downloaded, Paths.extracted);
+                DirectoryLib.CopyFilesRecursively(Paths.extracted, Paths.mc + "\\" + name + "\\");
 
-                string json = JsonConvert.SerializeObject(local, Formatting.Indented);
+                string json = JsonConvert.SerializeObject(modpackData, Formatting.Indented);
                 File.WriteAllText(Paths.localMetadata, json);
                 GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), mf);
             }

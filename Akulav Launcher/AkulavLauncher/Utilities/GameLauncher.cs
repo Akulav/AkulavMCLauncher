@@ -20,7 +20,6 @@ namespace AkulavLauncher
             this.username = username;
             this.game_version = game_version;
             this.mf = mf;
-
             LaunchGameAsync();
         }
 

@@ -21,7 +21,6 @@ namespace AkulavLauncher
         //Logic starts here
         public MainForm()
         {
-            Utility.EnforceAdminPrivilegesWorkaround();
             InitializeComponent();
             GetUserData();
             Utility.GetModpacks();
@@ -48,6 +47,7 @@ namespace AkulavLauncher
                 ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
                 ramSlider.Value = ramSlider.Maximum / 2;
                 ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
+                Username.Text = "Steve";
             }
         }
 
