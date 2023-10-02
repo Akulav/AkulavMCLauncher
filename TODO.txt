@@ -1,9 +1,16 @@
-V5.0.0
+V7.0.0
 
 1 Proper error handling
-2 Add logging
-3 Add unit tests
-4 Final Cleanup and optimization
-5 Fix no .minecraft error
-6 Fix no forge version installed
-7 Better auto-update app system
+2 Better auto-update UX
+5 Fix no forge version installed
+6 Fix possible "null" username/ram error
+7 Remove control references from DataDownloader and GameLauncher
+8 Better modpackList storage
+9 More oganized Launcher setting files
+10 Store all paths in Paths class
+11 Move GetUserData from mainform.cs
+12 Remove all redunancies
+
+==========================================
+This will be the last version. EOL Update.
+==========================================

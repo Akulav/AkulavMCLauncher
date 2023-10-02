@@ -63,9 +63,9 @@ namespace AkulavLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mainFormBackground {
+        internal static System.Drawing.Bitmap minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514 {
             get {
-                object obj = ResourceManager.GetObject("mainFormBackground", resourceCulture);
+                object obj = ResourceManager.GetObject("minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace AkulavLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514 {
+        internal static System.Drawing.Bitmap minecraft_great_cave_walls_forest_hd_mm9b3bqe6qc6s96f {
             get {
-                object obj = ResourceManager.GetObject("minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514", resourceCulture);
+                object obj = ResourceManager.GetObject("minecraft_great_cave_walls_forest_hd_mm9b3bqe6qc6s96f", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

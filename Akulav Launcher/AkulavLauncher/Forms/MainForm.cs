@@ -72,7 +72,8 @@ namespace AkulavLauncher
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
-            UserSettings.SetUserData(Username.Text, ramSlider.Value.ToString());
+            UserData ud = new UserData();
+            ud.SetUserData(Username.Text, ramSlider.Value.ToString());
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
 

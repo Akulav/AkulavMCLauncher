@@ -13,7 +13,6 @@ namespace AkulavLauncher
         public static readonly string[] deletion_list = {
             @"mods",
             @"config",
-            @"lightspeed-cache"
         };
         public static readonly string settings = appdata + @"\.minecraft\akulav_launcher_settings.json";
     }

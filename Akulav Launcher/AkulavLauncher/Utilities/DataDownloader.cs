@@ -1,5 +1,4 @@
 ﻿using AkulavLauncher.Data;
-using FontAwesome.Sharp;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,14 +16,12 @@ namespace AkulavLauncher
     internal sealed class DataDownloader
     {
         readonly private Form mf;
-        private readonly string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         bool flag = true;
 
         //References to controls from mainform
         readonly TextBox Username = Application.OpenForms["MainForm"].Controls.Find("Username", true)[0] as TextBox;
         readonly TrackBar ramSlider = Application.OpenForms["MainForm"].Controls.Find("ramSlider", true)[0] as TrackBar;
         readonly ComboBox versionBox = Application.OpenForms["MainForm"].Controls.Find("versionBox", true)[0] as ComboBox;
-        readonly IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
         readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
         readonly ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
@@ -171,12 +168,6 @@ namespace AkulavLauncher
             {
 
             }
-            /*
-            foreach (MVersionMetadata ver in versions)
-            {
-                versionBox.Items.Add(ver.Name);
-            }
-            */
         }
 
         /// <summary>
@@ -201,7 +192,6 @@ namespace AkulavLauncher
                         client.DownloadFileAsync(new Uri(url), @"C:\AkulavLauncherCache\downloaded.zip");
                     });
                     thread.Start();
-                    launchButton.Enabled = false;
                 }
             }
         }
@@ -213,7 +203,6 @@ namespace AkulavLauncher
                 double bytesIn = double.Parse(e.BytesReceived.ToString());
                 double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
                 double percentage = bytesIn / totalBytes * 100;
-                //progressLabel.Text = e.BytesReceived / 1000 / 1000 + "MB" + " " + " of " + e.TotalBytesToReceive / 1000 / 1000 + "MB";
                 downloadBar.Value = int.Parse(Math.Truncate(percentage).ToString());
             });
         }

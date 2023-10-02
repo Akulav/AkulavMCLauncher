@@ -126,7 +126,6 @@
     <Compile Include="Utilities\GameLauncher.cs" />
     <Compile Include="Utilities\Paths.cs" />
     <Compile Include="Data\UserData.cs" />
-    <Compile Include="Utilities\UserSettings.cs" />
     <Compile Include="Utilities\Utility.cs" />
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -160,10 +159,10 @@
     <None Include="ProjectSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\minecraft-great-cave-walls-forest-hd-mm9b3bqe6qc6s96f.jpg" />
     <None Include="Resources\minecraft_dirt_wallpaper_by_thedevartist-d3l1qoj-3511026514.png" />
     <None Include="Resources\mining.ico" />
     <None Include="bin\Debug\FontAwesome.Sharp.dll" />
-    <None Include="Resources\keoj5led2dw61.png" />
     <Content Include="mining.ico" />
   </ItemGroup>
   <ItemGroup>
