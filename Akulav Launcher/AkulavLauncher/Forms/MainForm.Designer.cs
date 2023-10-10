@@ -249,11 +249,11 @@ namespace AkulavLauncher
             this.leftlabel.AutoSize = true;
             this.leftlabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.leftlabel.ForeColor = System.Drawing.Color.White;
-            this.leftlabel.Location = new System.Drawing.Point(501, 13);
+            this.leftlabel.Location = new System.Drawing.Point(411, 13);
             this.leftlabel.Name = "leftlabel";
-            this.leftlabel.Size = new System.Drawing.Size(241, 27);
+            this.leftlabel.Size = new System.Drawing.Size(398, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V6.9.0";
+            this.leftlabel.Text = "Akulav Launcher V6.9.0 - End Of An Era";
             // 
             // nameLabel
             // 

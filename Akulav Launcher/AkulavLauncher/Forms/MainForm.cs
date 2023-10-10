@@ -16,9 +16,8 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "6.0.0";
+        public static readonly string client_version = "6.9.0";
 
-        //Logic starts here
         public MainForm()
         {
             InitializeComponent();
@@ -26,7 +25,6 @@ namespace AkulavLauncher
             Utility.GetModpacks();
         }
 
-        //Sets the UI using the json settings file, if doesnt exists sets default
         private void GetUserData()
         {
             try
@@ -77,7 +75,6 @@ namespace AkulavLauncher
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
 
-        //needs improvement
         private void RepairButton_Click(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
@@ -89,14 +86,13 @@ namespace AkulavLauncher
             ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
         }
 
-        //needs improvement
+
         private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
             data.GetData();
         }
 
-        //Optimized
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;

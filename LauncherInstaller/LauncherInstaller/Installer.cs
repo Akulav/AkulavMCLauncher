@@ -30,7 +30,7 @@ namespace AkulavLauncherInstaller
 
             Directory.CreateDirectory(location);
 
-            File.WriteAllBytes(fileLocation, AkulavLauncherInstaller.Properties.Resources.files);
+            File.WriteAllBytes(fileLocation, Properties.Resources.file);
 
             using (ZipArchive source = ZipFile.Open(fileLocation, ZipArchiveMode.Read, null))
             {

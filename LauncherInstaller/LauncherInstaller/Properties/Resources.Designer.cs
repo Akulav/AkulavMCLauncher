@@ -63,9 +63,9 @@ namespace AkulavLauncherInstaller.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] files {
+        internal static byte[] file {
             get {
-                object obj = ResourceManager.GetObject("files", resourceCulture);
+                object obj = ResourceManager.GetObject("file", resourceCulture);
                 return ((byte[])(obj));
             }
         }
