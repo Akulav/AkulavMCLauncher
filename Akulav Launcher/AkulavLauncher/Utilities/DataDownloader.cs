@@ -25,7 +25,7 @@ namespace AkulavLauncher
         readonly Label nameLabel = Application.OpenForms["MainForm"].Controls.Find("nameLabel", true)[0] as Label;
         readonly Label packVersion = Application.OpenForms["MainForm"].Controls.Find("packVersion", true)[0] as Label;
         readonly ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
-        List<ModpackData> modpackData = Utility.modpacks;
+        readonly List<ModpackData> modpackData = Utility.modpacks;
         public DataDownloader(Form mainform)
         {
             mf = mainform;

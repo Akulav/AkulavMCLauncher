@@ -10,8 +10,8 @@ namespace AkulavLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            MainForm lg = new MainForm();
-            lg.Show();
+            MainForm mf = new MainForm();
+            mf.Show();
             Application.Run();
         }
     }

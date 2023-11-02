@@ -8,7 +8,6 @@ namespace AkulavLauncher
     public static class Utility
     {
         public static List<ModpackData> modpacks = new List<ModpackData>();
-
         public static void GetModpacks()
         {
             try
