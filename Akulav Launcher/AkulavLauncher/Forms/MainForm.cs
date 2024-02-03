@@ -16,7 +16,7 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "6.9.0";
+        public static readonly string client_version = "6.9.1";
 
         public MainForm()
         {
@@ -78,6 +78,7 @@ namespace AkulavLauncher
         private void RepairButton_Click(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
+            launchButton.Enabled = false;
             data.StartDownload();
         }
 

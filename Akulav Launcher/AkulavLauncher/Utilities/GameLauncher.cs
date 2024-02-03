@@ -55,37 +55,40 @@ namespace AkulavLauncher
 
             DataDownloader data = new DataDownloader(mf);
             List<ModpackData> json = Utility.modpacks;
+            bool downloadStarted = false;
+
             foreach (var modpack in json)
             {
-
                 if (version == modpack.Name)
                 {
                     if (data.CheckLocal())
                     {
                         data.StartDownload();
-                        goto end;
+                        downloadStarted = true;
+                        break; // Exit the loop once download starts
                     }
+
                     version = modpack.API;
                 }
             }
 
-            var process = await launcher.CreateProcessAsync(version, launchOption);
-
-
-            process.Start();
-
-            mf.Visible = false;
-            mf.ShowInTaskbar = false;
-
-            while (!process.WaitForExit(1000))
+            if (!downloadStarted)
             {
+                var process = await launcher.CreateProcessAsync(version, launchOption);
 
+                process.Start();
+
+                mf.Visible = false;
+                mf.ShowInTaskbar = false;
+
+                while (!process.WaitForExit(1000))
+                {
+
+                }
+
+                Application.Restart();
             }
-
-            Application.Restart();
-        end:;
-
-
         }
+
     }
 }
