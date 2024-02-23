@@ -1,7 +1,6 @@
 ﻿using AkulavLauncher.Data;
 using CmlLib.Core;
 using CmlLib.Core.Auth;
-using FontAwesome.Sharp;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -25,7 +24,7 @@ namespace AkulavLauncher
 
         private async void LaunchGameAsync()
         {
-            IconButton launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as IconButton;
+            Button launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as Button;
             ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
             Label consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
             MinecraftPath path = new MinecraftPath(Paths.mc + "\\" + game_version);
@@ -42,7 +41,7 @@ namespace AkulavLauncher
                 consoleLabel.Text = "[" + e.FileKind.ToString() + "] " + e.FileName + " - " + e.ProgressedFileCount + "//" + e.TotalFileCount;
             };
 
-            var session = MSession.GetOfflineSession(username);
+            var session = MSession.CreateOfflineSession(username);
 
             var launchOption = new MLaunchOption
             {
@@ -81,7 +80,7 @@ namespace AkulavLauncher
                 mf.Visible = false;
                 mf.ShowInTaskbar = false;
 
-                while (!process.WaitForExit(1000))
+                while (!process.WaitForExit(1))
                 {
 
                 }

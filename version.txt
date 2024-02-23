@@ -1,2 +1,2 @@
-6.9.1
-https://github.com/Akulav/AkulavMCLauncher/releases/download/6.9.1/AkulavLauncherInstaller.exe
+6.9.2
+https://github.com/Akulav/AkulavMCLauncher/releases/download/6.9.2/AkulavLauncherInstaller.exe

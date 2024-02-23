@@ -60,9 +60,8 @@
             this.statusLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusLabel.Location = new System.Drawing.Point(0, 119);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(189, 13);
+            this.statusLabel.Size = new System.Drawing.Size(0, 13);
             this.statusLabel.TabIndex = 4;
-            this.statusLabel.Text = "*Any action will erase all data. Beware.";
             // 
             // statusdLbl
             // 
@@ -74,7 +73,7 @@
             this.Controls.Add(this.installBtn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "statusdLbl";
-            this.Text = "AkulavLauncher 6.9.1 - Made By Caty";
+            this.Text = "AkulavLauncher 6.9.2 - Made By Caty";
             this.Load += new System.EventHandler(this.statusdLbl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
