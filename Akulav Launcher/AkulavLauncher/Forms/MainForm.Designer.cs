@@ -34,6 +34,7 @@ namespace AkulavLauncher
             this.userLabel = new System.Windows.Forms.Label();
             this.statusText = new System.Windows.Forms.Label();
             this.lowerpanel = new System.Windows.Forms.Panel();
+            this.settingsButton = new System.Windows.Forms.Button();
             this.repairButton = new System.Windows.Forms.Button();
             this.launchButton = new System.Windows.Forms.Button();
             this.versionLabel = new System.Windows.Forms.Label();
@@ -49,7 +50,6 @@ namespace AkulavLauncher
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
-            this.settingsButton = new System.Windows.Forms.Button();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -104,6 +104,18 @@ namespace AkulavLauncher
             this.lowerpanel.Name = "lowerpanel";
             this.lowerpanel.Size = new System.Drawing.Size(1241, 55);
             this.lowerpanel.TabIndex = 17;
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.settingsButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.settingsButton.Location = new System.Drawing.Point(1109, 10);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(126, 40);
+            this.settingsButton.TabIndex = 32;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.UseVisualStyleBackColor = false;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // repairButton
             // 
@@ -245,9 +257,9 @@ namespace AkulavLauncher
             this.leftlabel.ForeColor = System.Drawing.Color.White;
             this.leftlabel.Location = new System.Drawing.Point(411, 13);
             this.leftlabel.Name = "leftlabel";
-            this.leftlabel.Size = new System.Drawing.Size(398, 27);
+            this.leftlabel.Size = new System.Drawing.Size(392, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V6.9.2 - End Of An Era";
+            this.leftlabel.Text = "Akulav Launcher V6.9.3- End Of An Era";
             // 
             // nameLabel
             // 
@@ -268,18 +280,6 @@ namespace AkulavLauncher
             this.centerPanel.Name = "centerPanel";
             this.centerPanel.Size = new System.Drawing.Size(881, 519);
             this.centerPanel.TabIndex = 29;
-            // 
-            // settingsButton
-            // 
-            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
-            this.settingsButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.settingsButton.Location = new System.Drawing.Point(1109, 10);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(126, 40);
-            this.settingsButton.TabIndex = 32;
-            this.settingsButton.Text = "Settings";
-            this.settingsButton.UseVisualStyleBackColor = false;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
             // 
             // MainForm
             // 

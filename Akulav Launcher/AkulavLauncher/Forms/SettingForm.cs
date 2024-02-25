@@ -1,7 +1,5 @@
-﻿using AkulavLauncher.Data;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -15,20 +13,28 @@ namespace AkulavLauncher.Forms
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        private string jsonFilePath = Paths.links;
-        private List<Link> links = new List<Link>();
-        public static Form main;
-        public SettingForm(Form original)
+        private readonly string jsonFilePath = Paths.links;
+        Form main;
+        public SettingForm(Form main)
         {
             InitializeComponent();
-            main = original;
-            links = Utility.links;
-            PopulateLinkList();
+            CenterToScreen();
+            string link = Utility.GetTextFromJson();
+            if (link != null)
+            {
+                textBoxNewLink.Text = link;
+                textBoxNewLink.Enabled = false;
+            }
+
+            this.main = main;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            main.Enabled = true;
+            //Application.Restart();
+            main.Close();
+            MainForm mf = new MainForm();
+            mf.Show();
             this.Close();
         }
 
@@ -38,89 +44,44 @@ namespace AkulavLauncher.Forms
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
-        private void SaveLinks()
+        //
+
+        private void AddTextToJson(string text)
         {
-            string json = JsonConvert.SerializeObject(links, Formatting.Indented);
-            File.WriteAllText(jsonFilePath, json);
+            var jsonData = JsonConvert.SerializeObject(text);
+            File.WriteAllText(jsonFilePath, jsonData);
         }
 
-
-        private void PopulateLinkList()
+        private void RemoveTextFromJson()
         {
-            //
-            listBoxLinks.Items.Clear();
-            foreach (var link in links)
+            if (File.Exists(jsonFilePath))
             {
-                listBoxLinks.Items.Add(link.Url);
-                string searchString = Utility.GetEnabledLink();
-                int index = listBoxLinks.Items.IndexOf(searchString);
-
-                if (index != -1)
-                {
-                    listBoxLinks.SelectedIndex = index;
-                    sourceLabel.Text = listBoxLinks.Items[index].ToString();
-                }
-                else
-                {
-                    // The string was not found
-                }
-
+                File.Delete(jsonFilePath);
             }
         }
 
 
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            string newUrl = textBoxNewLink.Text.Trim();
-            if (!string.IsNullOrEmpty(newUrl))
+            if (!string.IsNullOrWhiteSpace(textBoxNewLink.Text))
             {
-                links.Add(new Link { Url = newUrl, Enabled = false });
-                SaveLinks();
-                PopulateLinkList();
+                string textToAdd = textBoxNewLink.Text.Trim();
+                AddTextToJson(textToAdd);
+                textBoxNewLink.Enabled = false;
+            }
+            else
+            {
+
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (listBoxLinks.SelectedIndex != -1)
-            {
-                links.RemoveAt(listBoxLinks.SelectedIndex);
-                SaveLinks();
-                PopulateLinkList();
-            }
+            RemoveTextFromJson();
+            textBoxNewLink.Enabled = true;
+            textBoxNewLink.Clear();
         }
-
-        private void btnEnable_Click(object sender, EventArgs e)
-        {
-            if (listBoxLinks.SelectedIndex != -1)
-            {
-                // Disable all links first
-                links.ForEach(link => link.Enabled = false);
-                // Enable the selected one
-                links[listBoxLinks.SelectedIndex].Enabled = true;
-                SaveLinks();
-                PopulateLinkList();
-            }
-        }
-
-        private void LinkManagerForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveLinks();
-        }
-
-        private void disableBtn_Click(object sender, EventArgs e)
-        {
-            if (listBoxLinks.SelectedIndex != -1)
-            {
-                // Disable all links first
-                links.ForEach(link => link.Enabled = false);
-                // Enable the selected one
-                links[listBoxLinks.SelectedIndex].Enabled = false;
-                SaveLinks();
-                PopulateLinkList();
-            }
-        }
-        
     }
 
 }

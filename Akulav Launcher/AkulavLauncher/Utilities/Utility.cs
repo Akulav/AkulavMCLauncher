@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 
 namespace AkulavLauncher
@@ -10,34 +9,27 @@ namespace AkulavLauncher
     public static class Utility
     {
         public static List<ModpackData> modpacks = new List<ModpackData>();
-        public static List<Link> links = new List<Link>();
         public static void GetModpacks()
         {
             LoadAll();
-            LoadLinks();
-            string source = GetEnabledLink();
+            string source = GetTextFromJson();
+            string json;
             try
             {
 
-                if (source == "")
+                using (WebClient client = new WebClient())
                 {
-                    using (WebClient client = new WebClient())
+                    if (source != null)
                     {
-                        string json = client.DownloadString(Paths.modpackList);
-                        modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(json);
+                        json = client.DownloadString(source);
                     }
-                }
-
-                else
-                {
-                    using (WebClient client = new WebClient())
+                    else
                     {
-                        string json = client.DownloadString(source);
-                        modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(json);
+                        json = client.DownloadString(Paths.modpackList);
                     }
+
+                    modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(json);
                 }
-
-
             }
             catch
             {
@@ -45,17 +37,14 @@ namespace AkulavLauncher
             }
         }
 
-        private static void LoadLinks()
+        public static string GetTextFromJson()
         {
-            string jsonFilePath = Paths.links;
-            string json = File.ReadAllText(jsonFilePath);
-            links = JsonConvert.DeserializeObject<List<Link>>(json) ?? new List<Link>();
-        }
-
-        public static string GetEnabledLink()
-        {
-            var enabledLink = links.FirstOrDefault(link => link.Enabled);
-            return enabledLink?.Url ?? "";
+            if (File.Exists(Paths.links))
+            {
+                string jsonData = File.ReadAllText(Paths.links);
+                return JsonConvert.DeserializeObject<string>(jsonData);
+            }
+            return null;
         }
 
         private static void LoadAll()

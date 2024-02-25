@@ -73,7 +73,7 @@
             this.Controls.Add(this.installBtn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "statusdLbl";
-            this.Text = "AkulavLauncher 6.9.2 - Made By Caty";
+            this.Text = "AkulavLauncher 6.9.3 - Made By Caty";
             this.Load += new System.EventHandler(this.statusdLbl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

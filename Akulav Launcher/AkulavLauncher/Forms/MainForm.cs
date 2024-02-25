@@ -17,7 +17,7 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "6.9.2";
+        public static readonly string client_version = "6.9.3";
 
         public MainForm()
         {
@@ -103,11 +103,9 @@ namespace AkulavLauncher
         private void settingsButton_Click(object sender, EventArgs e)
         {
             SettingForm sf = new SettingForm(this);
-            int centerX = this.Location.X + (Screen.PrimaryScreen.Bounds.Width - sf.Width) / 2;
-            int centerY = this.Location.Y + (Screen.PrimaryScreen.Bounds.Height - sf.Height) / 2;
-            sf.Location = new System.Drawing.Point(centerX, centerY);
-            this.Enabled = false;
-            sf.Show();
+            sf.StartPosition = FormStartPosition.CenterParent;
+            sf.ShowDialog();
+
         }
     }
 }

@@ -35,16 +35,9 @@
             this.topNameLabel = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.textBoxNewLink = new System.Windows.Forms.TextBox();
-            this.listBoxLinks = new System.Windows.Forms.ListBox();
             this.btnDelete = new System.Windows.Forms.Button();
-            this.btnEnable = new System.Windows.Forms.Button();
-            this.disableBtn = new System.Windows.Forms.Button();
             this.linkLabel = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.enableLabel = new System.Windows.Forms.Label();
-            this.sourceLabel = new System.Windows.Forms.Label();
-            this.serparator = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -88,7 +81,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(554, 61);
+            this.btnAdd.Location = new System.Drawing.Point(480, 60);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 20);
             this.btnAdd.TabIndex = 1;
@@ -100,46 +93,18 @@
             // 
             this.textBoxNewLink.Location = new System.Drawing.Point(129, 61);
             this.textBoxNewLink.Name = "textBoxNewLink";
-            this.textBoxNewLink.Size = new System.Drawing.Size(419, 20);
+            this.textBoxNewLink.Size = new System.Drawing.Size(345, 20);
             this.textBoxNewLink.TabIndex = 2;
-            // 
-            // listBoxLinks
-            // 
-            this.listBoxLinks.FormattingEnabled = true;
-            this.listBoxLinks.Location = new System.Drawing.Point(12, 87);
-            this.listBoxLinks.Name = "listBoxLinks";
-            this.listBoxLinks.Size = new System.Drawing.Size(536, 82);
-            this.listBoxLinks.TabIndex = 3;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(554, 87);
+            this.btnDelete.Location = new System.Drawing.Point(561, 60);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.Size = new System.Drawing.Size(75, 20);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-            // 
-            // btnEnable
-            // 
-            this.btnEnable.Location = new System.Drawing.Point(554, 116);
-            this.btnEnable.Name = "btnEnable";
-            this.btnEnable.Size = new System.Drawing.Size(75, 23);
-            this.btnEnable.TabIndex = 5;
-            this.btnEnable.Text = "Enable";
-            this.btnEnable.UseVisualStyleBackColor = true;
-            this.btnEnable.Click += new System.EventHandler(this.btnEnable_Click);
-            // 
-            // disableBtn
-            // 
-            this.disableBtn.Location = new System.Drawing.Point(554, 145);
-            this.disableBtn.Name = "disableBtn";
-            this.disableBtn.Size = new System.Drawing.Size(75, 23);
-            this.disableBtn.TabIndex = 6;
-            this.disableBtn.Text = "Disable";
-            this.disableBtn.UseVisualStyleBackColor = true;
-            this.disableBtn.Click += new System.EventHandler(this.disableBtn_Click);
             // 
             // linkLabel
             // 
@@ -152,61 +117,15 @@
             this.linkLabel.TabIndex = 7;
             this.linkLabel.Text = "Modpack Source";
             // 
-            // enableLabel
-            // 
-            this.enableLabel.AutoSize = true;
-            this.enableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.enableLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.enableLabel.Location = new System.Drawing.Point(12, 172);
-            this.enableLabel.Name = "enableLabel";
-            this.enableLabel.Size = new System.Drawing.Size(68, 17);
-            this.enableLabel.TabIndex = 8;
-            this.enableLabel.Text = "Enabled: ";
-            // 
-            // sourceLabel
-            // 
-            this.sourceLabel.AutoSize = true;
-            this.sourceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.sourceLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.sourceLabel.Location = new System.Drawing.Point(86, 172);
-            this.sourceLabel.Name = "sourceLabel";
-            this.sourceLabel.Size = new System.Drawing.Size(0, 17);
-            this.sourceLabel.TabIndex = 9;
-            // 
-            // serparator
-            // 
-            this.serparator.Enabled = false;
-            this.serparator.Location = new System.Drawing.Point(12, 192);
-            this.serparator.Name = "serparator";
-            this.serparator.Size = new System.Drawing.Size(617, 10);
-            this.serparator.TabIndex = 10;
-            this.serparator.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(15, 208);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Disable";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(641, 376);
+            this.ClientSize = new System.Drawing.Size(641, 104);
             this.ControlBox = false;
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.serparator);
-            this.Controls.Add(this.sourceLabel);
-            this.Controls.Add(this.enableLabel);
             this.Controls.Add(this.linkLabel);
-            this.Controls.Add(this.disableBtn);
-            this.Controls.Add(this.btnEnable);
             this.Controls.Add(this.btnDelete);
-            this.Controls.Add(this.listBoxLinks);
             this.Controls.Add(this.textBoxNewLink);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.topPanel);
@@ -231,15 +150,8 @@
         private System.Windows.Forms.Button CloseButton;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.TextBox textBoxNewLink;
-        private System.Windows.Forms.ListBox listBoxLinks;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnEnable;
-        private System.Windows.Forms.Button disableBtn;
         private System.Windows.Forms.Label linkLabel;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.Label enableLabel;
-        private System.Windows.Forms.Label sourceLabel;
-        private System.Windows.Forms.Button serparator;
-        private System.Windows.Forms.Button button1;
     }
 }
