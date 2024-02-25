@@ -15,6 +15,7 @@ namespace AkulavLauncher
             @"config",
         };
         public static readonly string settings = appdata + @"\.minecraft\akulav_launcher_settings.json";
+        public static readonly string links = appdata + @"\.minecraft\links.json";
         public static readonly string update = @"C:\AkulavLauncher\update.exe";
         public static readonly string downloaded = @"C:\AkulavLauncherCache\downloaded.zip";
         public static readonly string extracted = @"C:\AkulavLauncherCache\extracted";

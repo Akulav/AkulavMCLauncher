@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AkulavLauncher.Forms;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -97,6 +98,16 @@ namespace AkulavLauncher
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+        }
+
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            SettingForm sf = new SettingForm(this);
+            int centerX = this.Location.X + (Screen.PrimaryScreen.Bounds.Width - sf.Width) / 2;
+            int centerY = this.Location.Y + (Screen.PrimaryScreen.Bounds.Height - sf.Height) / 2;
+            sf.Location = new System.Drawing.Point(centerX, centerY);
+            this.Enabled = false;
+            sf.Show();
         }
     }
 }

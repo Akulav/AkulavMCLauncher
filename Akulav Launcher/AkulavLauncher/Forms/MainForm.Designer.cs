@@ -49,6 +49,7 @@ namespace AkulavLauncher
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
+            this.settingsButton = new System.Windows.Forms.Button();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -90,6 +91,7 @@ namespace AkulavLauncher
             this.lowerpanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
             this.lowerpanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514;
             this.lowerpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lowerpanel.Controls.Add(this.settingsButton);
             this.lowerpanel.Controls.Add(this.repairButton);
             this.lowerpanel.Controls.Add(this.launchButton);
             this.lowerpanel.Controls.Add(this.versionLabel);
@@ -107,9 +109,9 @@ namespace AkulavLauncher
             // 
             this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
             this.repairButton.ForeColor = System.Drawing.Color.Gainsboro;
-            this.repairButton.Location = new System.Drawing.Point(1060, 10);
+            this.repairButton.Location = new System.Drawing.Point(932, 10);
             this.repairButton.Name = "repairButton";
-            this.repairButton.Size = new System.Drawing.Size(171, 40);
+            this.repairButton.Size = new System.Drawing.Size(175, 40);
             this.repairButton.TabIndex = 31;
             this.repairButton.Text = "Repair  and  Launch";
             this.repairButton.UseVisualStyleBackColor = false;
@@ -121,7 +123,7 @@ namespace AkulavLauncher
             this.launchButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.launchButton.Location = new System.Drawing.Point(533, 10);
             this.launchButton.Name = "launchButton";
-            this.launchButton.Size = new System.Drawing.Size(518, 40);
+            this.launchButton.Size = new System.Drawing.Size(398, 40);
             this.launchButton.TabIndex = 30;
             this.launchButton.Text = "Launch";
             this.launchButton.UseVisualStyleBackColor = false;
@@ -267,6 +269,18 @@ namespace AkulavLauncher
             this.centerPanel.Size = new System.Drawing.Size(881, 519);
             this.centerPanel.TabIndex = 29;
             // 
+            // settingsButton
+            // 
+            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.settingsButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.settingsButton.Location = new System.Drawing.Point(1109, 10);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(126, 40);
+            this.settingsButton.TabIndex = 32;
+            this.settingsButton.Text = "Settings";
+            this.settingsButton.UseVisualStyleBackColor = false;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -322,5 +336,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Button minimizeButton;
         private System.Windows.Forms.Button launchButton;
         private System.Windows.Forms.Button repairButton;
+        private System.Windows.Forms.Button settingsButton;
     }
 }
