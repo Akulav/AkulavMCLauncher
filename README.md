@@ -16,11 +16,6 @@
 4. Easy control over memory allocation. :heavy_check_mark:
 5. Low system requirements. :heavy_check_mark:
 6. Doesn't send any Logs or any form of Telemetry :heavy_check_mark:
-
-# Upcoming Features & Bug Fixes
-1. Integrated Launcher update
-2. Options for Online Login (microsoft)
-3. Complete Redesign
-4. Other
+7. Integrated updater :heavy_check_mark:
 
 Icons made by https://www.flaticon.com/authors/smashicons from https://www.flaticon.com/
