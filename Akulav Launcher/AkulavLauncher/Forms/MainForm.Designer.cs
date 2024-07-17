@@ -259,7 +259,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(392, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V6.9.3- End Of An Era";
+            this.leftlabel.Text = "Akulav Launcher V6.9.4- End Of An Era";
             // 
             // nameLabel
             // 
