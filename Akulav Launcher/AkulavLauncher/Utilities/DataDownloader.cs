@@ -128,7 +128,25 @@ namespace AkulavLauncher
                     versionBox.Items.Add(modpack.Name);
                 }
 
-                versionBox.SelectedIndex = 0;
+                string userdata = File.ReadAllText(Paths.settings);
+                UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
+
+                bool found = false;
+
+                for (int i = 0; i < versionBox.Items.Count; i++)
+                {
+                    if (versionBox.Items[i].ToString() == ud.SelectedModpack)
+                    {
+                        versionBox.SelectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found)
+                {
+                    versionBox.SelectedIndex = 0;
+                }
                 GetData();
             }
             catch { }

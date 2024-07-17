@@ -17,7 +17,7 @@ namespace AkulavLauncher
         [DllImport("kernel32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "6.9.3";
+        public static readonly string client_version = "6.9.4";
 
         public MainForm()
         {
@@ -72,7 +72,7 @@ namespace AkulavLauncher
         private void LaunchButton_Click(object sender, EventArgs e)
         {
             UserData ud = new UserData();
-            ud.SetUserData(Username.Text, ramSlider.Value.ToString());
+            ud.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
 
