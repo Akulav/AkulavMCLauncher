@@ -1,5 +1,7 @@
 ﻿using AkulavLauncher.Data;
+using Microsoft.VisualBasic.Devices;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -12,7 +14,7 @@ namespace AkulavLauncher
         public static void GetModpacks()
         {
             LoadAll();
-            string source = GetTextFromJson();
+            string source = DirectoryLib.GetTextFromJson();
             string json;
             try
             {
@@ -37,14 +39,17 @@ namespace AkulavLauncher
             }
         }
 
-        public static string GetTextFromJson()
+        public static int GetRAM()
         {
-            if (File.Exists(Paths.links))
-            {
-                string jsonData = File.ReadAllText(Paths.links);
-                return JsonConvert.DeserializeObject<string>(jsonData);
-            }
-            return null;
+            ComputerInfo computerInfo = new ComputerInfo();
+            // Convert bytes to kilobytes
+            return Convert.ToInt32(computerInfo.TotalPhysicalMemory / 1024 / 1024 / 1024);
+        }
+
+        public static void SetUserData(string username, string ram, string version)
+        {
+            UserData ud = new UserData();
+            ud.SetUserData(username, ram, version);
         }
 
         private static void LoadAll()

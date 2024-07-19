@@ -44,7 +44,7 @@
             // 
             // topPanel
             // 
-            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.topPanel.Controls.Add(this.CloseButton);
             this.topPanel.Controls.Add(this.topNameLabel);
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -52,13 +52,14 @@
             this.topPanel.Name = "topPanel";
             this.topPanel.Size = new System.Drawing.Size(641, 40);
             this.topPanel.TabIndex = 0;
-            this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.topPanel_MouseDown);
+            this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseDown);
             // 
             // CloseButton
             // 
             this.CloseButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CloseButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.CloseButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.CloseButton.Location = new System.Drawing.Point(604, 6);
             this.CloseButton.Margin = new System.Windows.Forms.Padding(0);
             this.CloseButton.Name = "CloseButton";
@@ -81,37 +82,43 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(480, 60);
+            this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnAdd.Location = new System.Drawing.Point(480, 46);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 20);
+            this.btnAdd.Size = new System.Drawing.Size(75, 34);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // textBoxNewLink
             // 
-            this.textBoxNewLink.Location = new System.Drawing.Point(129, 61);
+            this.textBoxNewLink.Location = new System.Drawing.Point(129, 54);
             this.textBoxNewLink.Name = "textBoxNewLink";
             this.textBoxNewLink.Size = new System.Drawing.Size(345, 20);
             this.textBoxNewLink.TabIndex = 2;
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(561, 60);
+            this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDelete.ForeColor = System.Drawing.Color.Gainsboro;
+            this.btnDelete.Location = new System.Drawing.Point(561, 46);
             this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 20);
+            this.btnDelete.Size = new System.Drawing.Size(75, 34);
             this.btnDelete.TabIndex = 4;
             this.btnDelete.Text = "Delete";
             this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.btnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // linkLabel
             // 
             this.linkLabel.AutoSize = true;
             this.linkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.linkLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.linkLabel.Location = new System.Drawing.Point(9, 62);
+            this.linkLabel.Location = new System.Drawing.Point(9, 55);
             this.linkLabel.Name = "linkLabel";
             this.linkLabel.Size = new System.Drawing.Size(114, 17);
             this.linkLabel.TabIndex = 7;
@@ -121,7 +128,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(641, 104);
             this.ControlBox = false;
             this.Controls.Add(this.linkLabel);

@@ -14,15 +14,14 @@ namespace AkulavLauncher.Forms
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
         private readonly string jsonFilePath = Paths.links;
-        Form main;
+        readonly Form main;
         public SettingForm(Form main)
         {
             InitializeComponent();
             CenterToScreen();
-            string link = Utility.GetTextFromJson();
-            if (link != null)
+            if (DirectoryLib.GetTextFromJson() != null)
             {
-                textBoxNewLink.Text = link;
+                textBoxNewLink.Text = DirectoryLib.GetTextFromJson();
                 textBoxNewLink.Enabled = false;
             }
 
@@ -35,16 +34,14 @@ namespace AkulavLauncher.Forms
             main.Close();
             MainForm mf = new MainForm();
             mf.Show();
-            this.Close();
+            Close();
         }
 
-        private void topPanel_MouseDown(object sender, MouseEventArgs e)
+        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
-
-        //
 
         private void AddTextToJson(string text)
         {
@@ -62,7 +59,7 @@ namespace AkulavLauncher.Forms
 
 
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        private void BtnAdd_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(textBoxNewLink.Text))
             {
@@ -70,13 +67,9 @@ namespace AkulavLauncher.Forms
                 AddTextToJson(textToAdd);
                 textBoxNewLink.Enabled = false;
             }
-            else
-            {
-
-            }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private void BtnDelete_Click(object sender, EventArgs e)
         {
             RemoveTextFromJson();
             textBoxNewLink.Enabled = true;

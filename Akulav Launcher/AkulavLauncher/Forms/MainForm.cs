@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -14,10 +15,9 @@ namespace AkulavLauncher
         private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
-        [DllImport("kernel32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
-        public static readonly string client_version = "6.9.4";
+
+        public static readonly string client_version = "7.0.0";
+        public static readonly int ram = Utility.GetRAM();
 
         public MainForm()
         {
@@ -30,24 +30,45 @@ namespace AkulavLauncher
         {
             try
             {
-                string userdata = File.ReadAllText(Paths.settings);
-                UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
-                Username.Text = ud.UserName;
-                GetPhysicallyInstalledSystemMemory(out long memKb);
-                ramSlider.Minimum = 1;
-                ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
-                ramSlider.Value = Int32.Parse(ud.Ram);
-                ramLabel.Text = ud.Ram + " GB of RAM";
+                UserData ud = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
+                UpdateUserDataUI(ud);
             }
-            catch (IOException)
+            catch
             {
-                GetPhysicallyInstalledSystemMemory(out long memKb);
-                ramSlider.Minimum = 1;
-                ramSlider.Maximum = Convert.ToInt32(memKb / 1024 / 1024);
-                ramSlider.Value = ramSlider.Maximum / 2;
-                ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
-                Username.Text = "Steve";
+                SetDefaultValues();
             }
+        }
+
+        private void UpdateUserDataUI(UserData userData)
+        {
+            Username.Text = userData.UserName;
+            int maxRam = ram;
+            ramSlider.Minimum = 1;
+            ramSlider.Maximum = maxRam + 1;
+            ramSlider.Value = ParseRam(userData.Ram, maxRam);
+            ramLabel.Text = userData.Ram + " GB of RAM";
+        }
+
+        private int ParseRam(string ram, int maxRam)
+        {
+            if (int.TryParse(ram, out int parsedRam))
+            {
+                return parsedRam;
+            }
+            else
+            {
+                // Default value if parsing fails
+                return maxRam / 2;
+            }
+        }
+
+        private void SetDefaultValues()
+        {
+            ramSlider.Minimum = 1;
+            ramSlider.Maximum = ram + 1;
+            ramSlider.Value = ram / 2;
+            ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
+            Username.Text = "Steve";
         }
 
 
@@ -62,7 +83,6 @@ namespace AkulavLauncher
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
-        //needs improvement
         private void MainForm_Load(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
@@ -71,16 +91,32 @@ namespace AkulavLauncher
         }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
-            UserData ud = new UserData();
-            ud.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
+            PlaySound();
+            Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
             GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
         }
+        private void PlaySound()
+        {
+            try
+            {
+                using (var player = new SoundPlayer(Properties.Resources.lever))
+                {
+                    player.Play();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error playing sound: " + ex.Message);
+            }
+        }
+
+
 
         private void RepairButton_Click(object sender, EventArgs e)
         {
             DataDownloader data = new DataDownloader(this);
-            launchButton.Enabled = false;
             data.StartDownload();
+            launchButton.Enabled = false;
         }
 
         private void RamSlider_ValueChanged(object sender, EventArgs e)
@@ -100,12 +136,10 @@ namespace AkulavLauncher
             WindowState = FormWindowState.Minimized;
         }
 
-        private void settingsButton_Click(object sender, EventArgs e)
+        private void SettingsButton_Click(object sender, EventArgs e)
         {
             SettingForm sf = new SettingForm(this);
-            sf.StartPosition = FormStartPosition.CenterParent;
             sf.ShowDialog();
-
         }
     }
 }

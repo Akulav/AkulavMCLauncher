@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace AkulavLauncher
@@ -17,6 +18,15 @@ namespace AkulavLauncher
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             });
 
+        }
+        public static string GetTextFromJson()
+        {
+            if (File.Exists(Paths.links))
+            {
+                string jsonData = File.ReadAllText(Paths.links);
+                return JsonConvert.DeserializeObject<string>(jsonData);
+            }
+            return null;
         }
 
 

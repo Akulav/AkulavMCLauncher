@@ -64,6 +64,7 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -165,8 +166,8 @@
     <None Include="ProjectSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\minecraft-great-cave-walls-forest-hd-mm9b3bqe6qc6s96f.jpg" />
-    <None Include="Resources\minecraft_dirt_wallpaper_by_thedevartist-d3l1qoj-3511026514.png" />
+    <None Include="Resources\lever.wav" />
+    <None Include="Resources\cube_4k_5k_hd_minecraft-5120x2880-1811929412.jpg" />
     <None Include="Resources\mining.ico" />
     <None Include="bin\Debug\FontAwesome.Sharp.dll" />
     <Content Include="mining.ico" />

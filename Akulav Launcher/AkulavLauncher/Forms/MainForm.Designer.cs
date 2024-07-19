@@ -67,11 +67,11 @@ namespace AkulavLauncher
             // 
             this.userLabel.AutoSize = true;
             this.userLabel.BackColor = System.Drawing.Color.Transparent;
-            this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.userLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.userLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.userLabel.Location = new System.Drawing.Point(103, -1);
             this.userLabel.Name = "userLabel";
-            this.userLabel.Size = new System.Drawing.Size(83, 20);
+            this.userLabel.Size = new System.Drawing.Size(91, 20);
             this.userLabel.TabIndex = 8;
             this.userLabel.Text = "Username";
             // 
@@ -89,7 +89,6 @@ namespace AkulavLauncher
             // lowerpanel
             // 
             this.lowerpanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
-            this.lowerpanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514;
             this.lowerpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lowerpanel.Controls.Add(this.settingsButton);
             this.lowerpanel.Controls.Add(this.repairButton);
@@ -107,7 +106,9 @@ namespace AkulavLauncher
             // 
             // settingsButton
             // 
-            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.settingsButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.settingsButton.Location = new System.Drawing.Point(1109, 10);
             this.settingsButton.Name = "settingsButton";
@@ -115,11 +116,13 @@ namespace AkulavLauncher
             this.settingsButton.TabIndex = 32;
             this.settingsButton.Text = "Settings";
             this.settingsButton.UseVisualStyleBackColor = false;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // repairButton
             // 
-            this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.repairButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.repairButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.repairButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.repairButton.Location = new System.Drawing.Point(932, 10);
             this.repairButton.Name = "repairButton";
@@ -131,7 +134,9 @@ namespace AkulavLauncher
             // 
             // launchButton
             // 
-            this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.launchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.launchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.launchButton.ForeColor = System.Drawing.Color.Gainsboro;
             this.launchButton.Location = new System.Drawing.Point(533, 10);
             this.launchButton.Name = "launchButton";
@@ -145,17 +150,18 @@ namespace AkulavLauncher
             // 
             this.versionLabel.AutoSize = true;
             this.versionLabel.BackColor = System.Drawing.Color.Transparent;
-            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.versionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.versionLabel.ForeColor = System.Drawing.Color.Gainsboro;
             this.versionLabel.Location = new System.Drawing.Point(353, -1);
             this.versionLabel.Name = "versionLabel";
-            this.versionLabel.Size = new System.Drawing.Size(111, 20);
+            this.versionLabel.Size = new System.Drawing.Size(123, 20);
             this.versionLabel.TabIndex = 28;
             this.versionLabel.Text = "Game Version";
             // 
             // versionBox
             // 
             this.versionBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.versionBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.versionBox.FormattingEnabled = true;
             this.versionBox.Location = new System.Drawing.Point(306, 23);
             this.versionBox.Name = "versionBox";
@@ -212,7 +218,7 @@ namespace AkulavLauncher
             // 
             // topPanel
             // 
-            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(51)))), ((int)(((byte)(73)))));
+            this.topPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(66)))), ((int)(((byte)(66)))), ((int)(((byte)(66)))));
             this.topPanel.Controls.Add(this.minimizeButton);
             this.topPanel.Controls.Add(this.CloseButton);
             this.topPanel.Controls.Add(this.leftlabel);
@@ -225,8 +231,9 @@ namespace AkulavLauncher
             // minimizeButton
             // 
             this.minimizeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.minimizeButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.minimizeButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.minimizeButton.Location = new System.Drawing.Point(1151, 5);
             this.minimizeButton.Margin = new System.Windows.Forms.Padding(0);
             this.minimizeButton.Name = "minimizeButton";
@@ -239,8 +246,9 @@ namespace AkulavLauncher
             // CloseButton
             // 
             this.CloseButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.CloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CloseButton.Font = new System.Drawing.Font("Verdana", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CloseButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.CloseButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.CloseButton.Location = new System.Drawing.Point(1191, 5);
             this.CloseButton.Margin = new System.Windows.Forms.Padding(0);
             this.CloseButton.Name = "CloseButton";
@@ -259,7 +267,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(392, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V6.9.4- End Of An Era";
+            this.leftlabel.Text = "Akulav Launcher V7.0.0- End Of An Era";
             // 
             // nameLabel
             // 
@@ -274,7 +282,7 @@ namespace AkulavLauncher
             // 
             // centerPanel
             // 
-            this.centerPanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.minecraft_great_cave_walls_forest_hd_mm9b3bqe6qc6s96f;
+            this.centerPanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.cube_4k_5k_hd_minecraft_5120x2880_1811929412;
             this.centerPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.centerPanel.Location = new System.Drawing.Point(1, 51);
             this.centerPanel.Name = "centerPanel";
@@ -285,7 +293,7 @@ namespace AkulavLauncher
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(1241, 629);
             this.ControlBox = false;
             this.Controls.Add(this.consoleLabel);

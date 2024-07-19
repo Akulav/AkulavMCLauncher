@@ -9,14 +9,21 @@ using System.Windows.Forms;
 
 namespace AkulavLauncherInstaller
 {
+
     public partial class statusdLbl : Form
     {
         readonly static string location = "C:\\AkulavLauncher\\";
         readonly string fileLocation = "C:\\AkulavLauncher\\file.zip";
 
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
         public statusdLbl()
         {
             InitializeComponent();
+            DoubleBuffered = true;
             string dirpath = Directory.GetCurrentDirectory();
             if (dirpath == "C:\\AkulavLauncher")
             {
@@ -132,6 +139,17 @@ namespace AkulavLauncherInstaller
             {
                 installBtn.PerformClick();
             }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void topPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(Handle, 0x112, 0xf012, 0);
         }
     }
 }

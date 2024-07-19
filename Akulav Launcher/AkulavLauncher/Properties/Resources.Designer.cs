@@ -63,20 +63,19 @@ namespace AkulavLauncher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514 {
+        internal static System.Drawing.Bitmap cube_4k_5k_hd_minecraft_5120x2880_1811929412 {
             get {
-                object obj = ResourceManager.GetObject("minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514", resourceCulture);
+                object obj = ResourceManager.GetObject("cube_4k_5k_hd_minecraft_5120x2880_1811929412", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.Drawing.Bitmap minecraft_great_cave_walls_forest_hd_mm9b3bqe6qc6s96f {
+        internal static System.IO.UnmanagedMemoryStream lever {
             get {
-                object obj = ResourceManager.GetObject("minecraft_great_cave_walls_forest_hd_mm9b3bqe6qc6s96f", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetStream("lever", resourceCulture);
             }
         }
         
