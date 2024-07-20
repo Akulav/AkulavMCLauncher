@@ -107,6 +107,7 @@ namespace AkulavLauncher
             // settingsButton
             // 
             this.settingsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.settingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.settingsButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.settingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.settingsButton.ForeColor = System.Drawing.Color.Gainsboro;
@@ -121,6 +122,7 @@ namespace AkulavLauncher
             // repairButton
             // 
             this.repairButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.repairButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.repairButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.repairButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.repairButton.ForeColor = System.Drawing.Color.Gainsboro;
@@ -135,6 +137,7 @@ namespace AkulavLauncher
             // launchButton
             // 
             this.launchButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
+            this.launchButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.launchButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.launchButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.launchButton.ForeColor = System.Drawing.Color.Gainsboro;

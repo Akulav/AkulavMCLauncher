@@ -1,14 +1,14 @@
-V7.0.0
+V8.0.0
 
-1 Proper error handling
+1 Fix no set username possible error
 2 Better auto-update UX
-3 More oganized Launcher setting files
-4 Remove all redunancies
-5 Add option to add your own modpack links
-6 Add option to enable / disable auto-update
+3 More organized Launcher setting files        DONE
+4 Remove all redundancies
+5 Add option to add your own mudpack links     DONE
+6 Add option to enable / disable auto-update  
 7 Final Optimizations + Cleanup
-8 Fleshed out settings tab
-9 Add export/import option for worlds
+8 Improved settings tab
+9 Improved customization
 
 ==========================================
 This will be the last version. EOL Update.

@@ -1,7 +1,5 @@
-﻿using AkulavLauncher.Data;
-using CmlLib.Core;
+﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
-using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace AkulavLauncher
@@ -10,35 +8,62 @@ namespace AkulavLauncher
     {
         private readonly int ram;
         private readonly string username;
-        private readonly string game_version;
-        private readonly Form mf;
+        private string gameVersion;
+        private readonly Form mainForm;
+        private readonly ProgressBar downloadProgressBar;
+        private bool downloadStarted;
 
-        public GameLauncher(int ram, string username, string game_version, Form mf)
+        public GameLauncher(int ram, string username, string gameVersion, Form mainForm, ProgressBar downloadProgressBar)
         {
             this.ram = ram;
             this.username = username;
-            this.game_version = game_version;
-            this.mf = mf;
+            this.gameVersion = gameVersion;
+            this.mainForm = mainForm;
+            this.downloadProgressBar = downloadProgressBar;
             LaunchGameAsync();
+        }
+
+        private string checkIfDownloaded()
+        {
+            DataDownloader dataDownloader = new DataDownloader(mainForm, username, ram, gameVersion, downloadProgressBar);
+
+            var modpacks = Utility.modpacks;
+            downloadStarted = false;
+
+            foreach (var modpack in modpacks)
+            {
+                if (gameVersion == modpack.Name)
+                {
+                    if (dataDownloader.CheckLocal())
+                    {
+                        dataDownloader.StartDownload();
+                        downloadStarted = true;
+                        break; // Exit the loop once download starts
+                    }
+
+                    return modpack.API;
+                }
+            }
+
+            return null;
         }
 
         private async void LaunchGameAsync()
         {
-            Button launchButton = Application.OpenForms["MainForm"].Controls.Find("launchButton", true)[0] as Button;
-            ProgressBar downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
-            Label consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
-            MinecraftPath path = new MinecraftPath(Paths.mc + "\\" + game_version);
-            CMLauncher launcher = new CMLauncher(path);
+            var downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
+            var consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
 
-            launchButton.Enabled = false;
-            launcher.ProgressChanged += (s, p) =>
+            var minecraftPath = new MinecraftPath(Paths.mc + "\\" + gameVersion);
+            var launcher = new CMLauncher(minecraftPath);
+
+            launcher.ProgressChanged += (sender, progressArgs) =>
             {
-                downloadBar.Value = p.ProgressPercentage;
+                downloadBar.Value = progressArgs.ProgressPercentage;
             };
 
-            launcher.FileChanged += (e) =>
+            launcher.FileChanged += (fileArgs) =>
             {
-                consoleLabel.Text = "[" + e.FileKind.ToString() + "] " + e.FileName + " - " + e.ProgressedFileCount + "//" + e.TotalFileCount;
+                consoleLabel.Text = $"[{fileArgs.FileKind}] {fileArgs.FileName} - {fileArgs.ProgressedFileCount}/{fileArgs.TotalFileCount}";
             };
 
             var session = MSession.CreateOfflineSession(username);
@@ -47,38 +72,18 @@ namespace AkulavLauncher
             {
                 MaximumRamMb = ram,
                 Session = session,
-                JVMArguments = null //curently bugged, set to null
+                JVMArguments = null // Currently bugged, set to null
             };
 
-            string version = game_version;
-
-            DataDownloader data = new DataDownloader(mf);
-            List<ModpackData> json = Utility.modpacks;
-            bool downloadStarted = false;
-
-            foreach (var modpack in json)
-            {
-                if (version == modpack.Name)
-                {
-                    if (data.CheckLocal())
-                    {
-                        data.StartDownload();
-                        downloadStarted = true;
-                        break; // Exit the loop once download starts
-                    }
-
-                    version = modpack.API;
-                }
-            }
+            gameVersion = checkIfDownloaded();
 
             if (!downloadStarted)
             {
-                var process = await launcher.CreateProcessAsync(version, launchOption);
-
+                var process = await launcher.CreateProcessAsync(gameVersion, launchOption);
                 process.Start();
 
-                mf.Visible = false;
-                mf.ShowInTaskbar = false;
+                mainForm.Visible = false;
+                mainForm.ShowInTaskbar = false;
 
                 while (!process.WaitForExit(1))
                 {
@@ -88,6 +93,5 @@ namespace AkulavLauncher
                 Application.Restart();
             }
         }
-
     }
 }

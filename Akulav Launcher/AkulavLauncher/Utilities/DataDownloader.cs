@@ -1,13 +1,12 @@
 ﻿using AkulavLauncher.Data;
+using AkulavLauncher.Utilities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace AkulavLauncher
@@ -15,100 +14,45 @@ namespace AkulavLauncher
     internal sealed class DataDownloader
     {
         private readonly Form mainForm;
-        private bool flag = true;
 
-        private readonly TextBox usernameTextBox;
-        private readonly TrackBar ramSlider;
-        private readonly ComboBox versionBox;
-        private readonly Label nameLabel;
-        private readonly Label packVersion;
-        private readonly ProgressBar downloadBar;
         private readonly List<ModpackData> modpackData;
 
-        public DataDownloader(Form mainForm)
+        private readonly string username;
+        private readonly string modpackName;
+        private readonly int ram;
+        private ProgressBar downloadBar;
+
+        public DataDownloader(Form mainForm, string username, int ram, string modpackName, ProgressBar downloadBar)
         {
-            this.mainForm = mainForm;
-            usernameTextBox = mainForm.Controls.Find("Username", true)[0] as TextBox;
-            ramSlider = mainForm.Controls.Find("ramSlider", true)[0] as TrackBar;
-            versionBox = mainForm.Controls.Find("versionBox", true)[0] as ComboBox;
-            nameLabel = mainForm.Controls.Find("nameLabel", true)[0] as Label;
-            packVersion = mainForm.Controls.Find("packVersion", true)[0] as Label;
-            downloadBar = mainForm.Controls.Find("downloadBar", true)[0] as ProgressBar;
+            this.ram = ram;
+            this.username = username;
             modpackData = Utility.modpacks;
-        }
-
-        private void CheckUpdate()
-        {
-            try
-            {
-                var metadata = new List<string>();
-                using (WebClient client = new WebClient())
-                {
-                    string updateData = client.DownloadString(Paths.versionUrl);
-                    metadata.AddRange(Regex.Split(updateData, "\r\n|\r|\n"));
-                }
-
-                if (MainForm.client_version != metadata[0])
-                {
-                    var client = new WebClient();
-                    client.DownloadProgressChanged += Client_DownloadProgressChangedVersion;
-                    client.DownloadFileAsync(new Uri(metadata[1]), Paths.update);
-                }
-                else
-                {
-                    File.Delete(Paths.update);
-                }
-            }
-            catch
-            {
-                nameLabel.Text = "Server could not be reached.";
-                packVersion.Text = "";
-            }
-        }
-
-        private void Client_DownloadProgressChangedVersion(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage == 100 && flag)
-            {
-                flag = false;
-                var p = new Process();
-                p.StartInfo.FileName = Paths.update;
-                p.Start();
-                Application.Exit();
-            }
-        }
-
-        public void GetData()
-        {
-            try
-            {
-                var selectedModpack = modpackData.Find(modpack => modpack.Name == versionBox.Text);
-                nameLabel.Text = selectedModpack != null ? "Modpack: " + selectedModpack.Name : "Server could not be reached.";
-                packVersion.Text = selectedModpack != null ? "Pack Version: " + selectedModpack.Version : "";
-            }
-            catch
-            {
-                nameLabel.Text = "Server could not be reached.";
-                packVersion.Text = "";
-            }
+            this.modpackName = modpackName;
+            this.mainForm = mainForm;
+            this.downloadBar = downloadBar;
         }
 
         public bool CheckLocal()
         {
+
             if (File.Exists(Paths.localMetadata))
             {
+
                 var local = JsonConvert.DeserializeObject<List<ModpackData>>(File.ReadAllText(Paths.localMetadata));
 
-                var localIndex = GetListIndex(local, versionBox.Text);
-                var modpackIndex = GetListIndex(modpackData, versionBox.Text);
+                var localIndex = GetListIndex(local, modpackName);
+
+                var modpackIndex = GetListIndex(modpackData, modpackName);
 
                 try
                 {
+
                     return local[localIndex].Version != modpackData[modpackIndex].Version;
                 }
 
                 catch
                 {
+
                     return true;
                 }
             }
@@ -118,45 +62,11 @@ namespace AkulavLauncher
 
         private int GetListIndex(List<ModpackData> list, string name) => list.FindIndex(item => item.Name == name);
 
-        public void GetVersions()
-        {
-            CheckUpdate();
-            try
-            {
-                foreach (var modpack in modpackData)
-                {
-                    versionBox.Items.Add(modpack.Name);
-                }
-
-                string userdata = File.ReadAllText(Paths.settings);
-                UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
-
-                bool found = false;
-
-                for (int i = 0; i < versionBox.Items.Count; i++)
-                {
-                    if (versionBox.Items[i].ToString() == ud.SelectedModpack)
-                    {
-                        versionBox.SelectedIndex = i;
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    versionBox.SelectedIndex = 0;
-                }
-                GetData();
-            }
-            catch { }
-        }
-
         public void StartDownload()
         {
             foreach (var modpack in modpackData)
             {
-                if (versionBox.Text == modpack.Name)
+                if (modpackName == modpack.Name)
                 {
                     var url = modpack.URL;
                     DirectoryLib.CreateFolder(Paths.temp);
@@ -171,12 +81,13 @@ namespace AkulavLauncher
 
         private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
+            UIManager ui = new UIManager();
             mainForm.BeginInvoke((MethodInvoker)delegate
             {
-                var bytesIn = double.Parse(e.BytesReceived.ToString());
-                var totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
-                var percentage = bytesIn / totalBytes * 100;
-                downloadBar.Value = int.Parse(Math.Truncate(percentage).ToString());
+                double bytesIn = double.Parse(e.BytesReceived.ToString());
+                double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
+                double percentage = bytesIn / totalBytes * 100;
+                ui.SetProgressBarValue(downloadBar, percentage);
             });
         }
 
@@ -185,24 +96,24 @@ namespace AkulavLauncher
             mainForm.BeginInvoke((MethodInvoker)delegate
             {
                 DirectoryLib.DeleteFolder(Paths.extracted);
-                var name = modpackData.Find(modpack => modpack.Name == versionBox.Text)?.Name;
-                ExtractInstall(name);
+                var name = modpackData.Find(modpack => modpack.Name == modpackName)?.Name;
+                ExtractInstall();
                 DirectoryLib.DeleteFolder(Paths.cache);
             });
         }
 
-        private void ExtractInstall(string name)
+        private void ExtractInstall()
         {
             try
             {
-                var data = modpackData.Find(modpack => modpack.Name == name);
+                var data = modpackData.Find(modpack => modpack.Name == modpackName);
                 foreach (var folder in Paths.deletion_list)
                 {
-                    DirectoryLib.DeleteFolder(Path.Combine(Paths.mc, name, folder));
+                    DirectoryLib.DeleteFolder(Path.Combine(Paths.mc, modpackName, folder));
                 }
 
                 ZipFile.ExtractToDirectory(Paths.downloaded, Paths.extracted);
-                DirectoryLib.CopyFilesRecursively(Paths.extracted, Path.Combine(Paths.mc, name));
+                DirectoryLib.CopyFilesRecursively(Paths.extracted, Path.Combine(Paths.mc, modpackName));
 
                 // Read existing JSON content
                 List<ModpackData> existingData = new List<ModpackData>();
@@ -213,7 +124,7 @@ namespace AkulavLauncher
                 }
 
                 // Check if the modpack already exists in local metadata
-                var existingModpack = existingData.Find(modpack => modpack.Name == name);
+                var existingModpack = existingData.Find(modpack => modpack.Name == modpackName);
                 if (existingModpack != null)
                 {
                     // If modpack already exists, update its data
@@ -222,7 +133,7 @@ namespace AkulavLauncher
                 else
                 {
                     // If modpack doesn't exist, add it to the list
-                    existingData.Add(new ModpackData { Name = name, Version = data.Version, API = data.API, URL = data.URL });
+                    existingData.Add(new ModpackData { Name = modpackName, Version = data.Version, API = data.API, URL = data.URL });
                 }
 
                 // Write the updated JSON content back to the file
@@ -230,7 +141,7 @@ namespace AkulavLauncher
                 File.WriteAllText(Paths.localMetadata, updatedJson);
 
                 // Launch the game
-                var gl = new GameLauncher(ramSlider.Value * 1024, usernameTextBox.Text, versionBox.SelectedItem.ToString(), mainForm);
+                var gl = new GameLauncher(ram, username, modpackName, mainForm, downloadBar);
             }
             catch (IOException) { }
         }

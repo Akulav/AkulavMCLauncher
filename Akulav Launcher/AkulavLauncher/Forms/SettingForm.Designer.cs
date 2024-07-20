@@ -38,6 +38,9 @@
             this.btnDelete = new System.Windows.Forms.Button();
             this.linkLabel = new System.Windows.Forms.Label();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.resetSettingsButton = new System.Windows.Forms.Button();
+            this.removeModpacksButton = new System.Windows.Forms.Button();
+            this.McFolderButton = new System.Windows.Forms.Button();
             this.topPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +53,7 @@
             this.topPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.topPanel.Location = new System.Drawing.Point(0, 0);
             this.topPanel.Name = "topPanel";
-            this.topPanel.Size = new System.Drawing.Size(641, 40);
+            this.topPanel.Size = new System.Drawing.Size(652, 40);
             this.topPanel.TabIndex = 0;
             this.topPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TopPanel_MouseDown);
             // 
@@ -82,6 +85,7 @@
             // 
             // btnAdd
             // 
+            this.btnAdd.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAdd.ForeColor = System.Drawing.Color.Gainsboro;
@@ -102,6 +106,7 @@
             // 
             // btnDelete
             // 
+            this.btnDelete.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDelete.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.ForeColor = System.Drawing.Color.Gainsboro;
@@ -124,13 +129,58 @@
             this.linkLabel.TabIndex = 7;
             this.linkLabel.Text = "Modpack Source";
             // 
+            // resetSettingsButton
+            // 
+            this.resetSettingsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.resetSettingsButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.resetSettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.resetSettingsButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.resetSettingsButton.Location = new System.Drawing.Point(12, 97);
+            this.resetSettingsButton.Name = "resetSettingsButton";
+            this.resetSettingsButton.Size = new System.Drawing.Size(200, 34);
+            this.resetSettingsButton.TabIndex = 8;
+            this.resetSettingsButton.Text = "Reset Settings";
+            this.resetSettingsButton.UseVisualStyleBackColor = true;
+            this.resetSettingsButton.Click += new System.EventHandler(this.resetSettingsButton_Click);
+            // 
+            // removeModpacksButton
+            // 
+            this.removeModpacksButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.removeModpacksButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.removeModpacksButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeModpacksButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.removeModpacksButton.Location = new System.Drawing.Point(436, 97);
+            this.removeModpacksButton.Name = "removeModpacksButton";
+            this.removeModpacksButton.Size = new System.Drawing.Size(200, 34);
+            this.removeModpacksButton.TabIndex = 9;
+            this.removeModpacksButton.Text = "Remove Modpacks";
+            this.removeModpacksButton.UseVisualStyleBackColor = true;
+            this.removeModpacksButton.Click += new System.EventHandler(this.removeModpacksButton_Click);
+            // 
+            // McFolderButton
+            // 
+            this.McFolderButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.McFolderButton.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(165)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.McFolderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.McFolderButton.ForeColor = System.Drawing.Color.Gainsboro;
+            this.McFolderButton.Location = new System.Drawing.Point(218, 97);
+            this.McFolderButton.Name = "McFolderButton";
+            this.McFolderButton.Size = new System.Drawing.Size(212, 34);
+            this.McFolderButton.TabIndex = 10;
+            this.McFolderButton.Text = "Open Minecraft Folder";
+            this.McFolderButton.UseVisualStyleBackColor = true;
+            this.McFolderButton.Click += new System.EventHandler(this.McFolderButton_Click);
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.ClientSize = new System.Drawing.Size(641, 104);
+            this.ClientSize = new System.Drawing.Size(652, 143);
             this.ControlBox = false;
+            this.Controls.Add(this.McFolderButton);
+            this.Controls.Add(this.removeModpacksButton);
+            this.Controls.Add(this.resetSettingsButton);
             this.Controls.Add(this.linkLabel);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.textBoxNewLink);
@@ -160,5 +210,8 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Label linkLabel;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.Button resetSettingsButton;
+        private System.Windows.Forms.Button removeModpacksButton;
+        private System.Windows.Forms.Button McFolderButton;
     }
 }

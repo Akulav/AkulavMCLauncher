@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -74,6 +75,21 @@ namespace AkulavLauncher.Forms
             RemoveTextFromJson();
             textBoxNewLink.Enabled = true;
             textBoxNewLink.Clear();
+        }
+
+        private void resetSettingsButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void McFolderButton_Click(object sender, EventArgs e)
+        {
+            Process.Start("explorer.exe", Paths.mc);
+        }
+
+        private void removeModpacksButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
