@@ -1,25 +1,77 @@
-﻿using Newtonsoft.Json;
+﻿using AkulavLauncher.Forms;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Media.Animation;
 
 namespace AkulavLauncher.Utilities
 {
     public class UIManager
     {
         public UIManager() { }
-        public void disableButton(Button button)
+        public void disableControl(Control control)
         {
-            button.BeginInvoke((MethodInvoker)(() => button.Enabled = false));
+            control.BeginInvoke((MethodInvoker)(() => control.Enabled = false));
+        }
+
+        public void enableControl(Control control)
+        {
+            control.BeginInvoke((MethodInvoker)(() => control.Enabled = true));
         }
 
         public void setRamLabel(Label ramLabel, TrackBar ramSlider)
         {
             setControlText(ramLabel, ramSlider.Value.ToString() + " GB of RAM");
+        }
+
+        public bool IsValidUsername(TextBox usernameTextBox)
+        {
+            string username = usernameTextBox.Text;
+            // Check if the username is empty
+            if (string.IsNullOrWhiteSpace(username))
+            {
+                MessageBox.Show("Username can't contain empty spaces or be empty.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Check if the username length is within the specified range
+            if (username.Length < 3 || username.Length > 16)
+            {
+                MessageBox.Show("Username must be between 3 and 16 characters.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            foreach (char c in username)
+            {
+                if (!char.IsLetterOrDigit(c) && c != '_')
+                {
+                    MessageBox.Show("Username needs to contain only alphanumeric characters.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void showSettingsForm(Panel settingsPanel)
+        {
+            SettingForm sf = new SettingForm();
+            sf.TopLevel = false;
+            sf.TopMost = true;
+            settingsPanel.Controls.Add(sf);
+            sf.Show();
+        }
+
+        public void hideSettingsForm(Panel settingsPanel)
+        {
+            settingsPanel.BeginInvoke((MethodInvoker)(() => settingsPanel.Controls.Clear()));
         }
 
         private void setControlText(Control control, string text)
@@ -135,6 +187,7 @@ namespace AkulavLauncher.Utilities
         {
             try
             {
+                versionBox.Items.Clear();
                 foreach (var modpack in Utility.modpacks)
                 {
                     AddComboBoxItems(versionBox, modpack.Name);
@@ -147,8 +200,6 @@ namespace AkulavLauncher.Utilities
 
                 for (int i = 0; i < versionBox.Items.Count; i++)
                 {
-                    MessageBox.Show(versionBox.Items[i].ToString());
-
                     if (versionBox.Items[i].ToString() == ud.SelectedModpack)
                     {
                         SetComboBoxIndex(versionBox, i);
@@ -181,7 +232,7 @@ namespace AkulavLauncher.Utilities
                 if (version != metadata[0])
                 {
                     var client = new WebClient();
-                    client.DownloadProgressChanged += Client_DownloadProgressChangedVersion;
+                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
                     client.DownloadFileAsync(new Uri(metadata[1]), Paths.update);
                 }
                 else
@@ -196,17 +247,14 @@ namespace AkulavLauncher.Utilities
             }
         }
 
-        private void Client_DownloadProgressChangedVersion(object sender, DownloadProgressChangedEventArgs e)
+        private void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            bool flag = true;
-            if (e.ProgressPercentage == 100 && flag)
-            {
-                flag = false;
+                File.WriteAllText(Paths.updateFlag, "INCOMING_UPDATE");
                 var p = new Process();
                 p.StartInfo.FileName = Paths.update;
                 p.Start();
                 Application.Exit();
-            }
+            
         }
 
     }

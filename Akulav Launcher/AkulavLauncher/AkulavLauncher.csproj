@@ -167,6 +167,7 @@
     <None Include="ProjectSettings\App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\minecraft_dirt_wallpaper_by_thedevartist-d3l1qoj-3511026514.png" />
     <None Include="Resources\lever.wav" />
     <None Include="Resources\cube_4k_5k_hd_minecraft-5120x2880-1811929412.jpg" />
     <None Include="Resources\mining.ico" />

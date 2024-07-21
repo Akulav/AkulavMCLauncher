@@ -14,6 +14,7 @@ namespace AkulavLauncherInstaller
     {
         readonly static string location = "C:\\AkulavLauncher\\";
         readonly string fileLocation = "C:\\AkulavLauncher\\file.zip";
+        readonly string updateFlag = "C:\\AkulavLauncher\\update.txt";
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
@@ -25,11 +26,11 @@ namespace AkulavLauncherInstaller
             InitializeComponent();
             DoubleBuffered = true;
             string dirpath = Directory.GetCurrentDirectory();
-            if (dirpath == "C:\\AkulavLauncher")
-            {
-                installBtn.PerformClick();
-            }
             this.CenterToScreen();
+            if (File.Exists(updateFlag))
+            {
+                installBtn.Text = "Update Launcher";
+            }
         }
 
         private void InstallBtn_Click(object sender, EventArgs e)

@@ -50,6 +50,7 @@ namespace AkulavLauncher
             this.leftlabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.centerPanel = new System.Windows.Forms.Panel();
+            this.settingsPanel = new System.Windows.Forms.Panel();
             this.lowerpanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ramSlider)).BeginInit();
             this.topPanel.SuspendLayout();
@@ -89,6 +90,7 @@ namespace AkulavLauncher
             // lowerpanel
             // 
             this.lowerpanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.lowerpanel.BackgroundImage = global::AkulavLauncher.Properties.Resources.minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514;
             this.lowerpanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lowerpanel.Controls.Add(this.settingsButton);
             this.lowerpanel.Controls.Add(this.repairButton);
@@ -270,7 +272,7 @@ namespace AkulavLauncher
             this.leftlabel.Name = "leftlabel";
             this.leftlabel.Size = new System.Drawing.Size(392, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V7.0.0- End Of An Era";
+            this.leftlabel.Text = "Akulav Launcher V8.0.0- End Of An Era";
             // 
             // nameLabel
             // 
@@ -292,6 +294,13 @@ namespace AkulavLauncher
             this.centerPanel.Size = new System.Drawing.Size(881, 519);
             this.centerPanel.TabIndex = 29;
             // 
+            // settingsPanel
+            // 
+            this.settingsPanel.Location = new System.Drawing.Point(882, 363);
+            this.settingsPanel.Name = "settingsPanel";
+            this.settingsPanel.Size = new System.Drawing.Size(359, 207);
+            this.settingsPanel.TabIndex = 30;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +308,7 @@ namespace AkulavLauncher
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
             this.ClientSize = new System.Drawing.Size(1241, 629);
             this.ControlBox = false;
+            this.Controls.Add(this.settingsPanel);
             this.Controls.Add(this.consoleLabel);
             this.Controls.Add(this.ramLabel);
             this.Controls.Add(this.nameLabel);
@@ -348,5 +358,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.Button launchButton;
         private System.Windows.Forms.Button repairButton;
         private System.Windows.Forms.Button settingsButton;
+        private System.Windows.Forms.Panel settingsPanel;
     }
 }

@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace AkulavLauncher.Forms
@@ -10,39 +9,18 @@ namespace AkulavLauncher.Forms
 
     public partial class SettingForm : Form
     {
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
         private readonly string jsonFilePath = Paths.links;
-        readonly Form main;
-        public SettingForm(Form main)
+
+        public SettingForm()
         {
             InitializeComponent();
-            CenterToScreen();
             if (DirectoryLib.GetTextFromJson() != null)
             {
                 textBoxNewLink.Text = DirectoryLib.GetTextFromJson();
                 textBoxNewLink.Enabled = false;
             }
-
-            this.main = main;
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            //Application.Restart();
-            main.Close();
-            MainForm mf = new MainForm();
-            mf.Show();
-            Close();
-        }
-
-        private void TopPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(Handle, 0x112, 0xf012, 0);
-        }
 
         private void AddTextToJson(string text)
         {
@@ -62,6 +40,7 @@ namespace AkulavLauncher.Forms
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
+            Utility.PlaySound();
             if (!string.IsNullOrWhiteSpace(textBoxNewLink.Text))
             {
                 string textToAdd = textBoxNewLink.Text.Trim();
@@ -72,6 +51,7 @@ namespace AkulavLauncher.Forms
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
+            Utility.PlaySound();
             RemoveTextFromJson();
             textBoxNewLink.Enabled = true;
             textBoxNewLink.Clear();
@@ -79,17 +59,26 @@ namespace AkulavLauncher.Forms
 
         private void resetSettingsButton_Click(object sender, EventArgs e)
         {
-
+            Utility.PlaySound();
+            if (File.Exists(Paths.settings))
+            {
+                File.Delete(Paths.settings);
+            }
         }
 
         private void McFolderButton_Click(object sender, EventArgs e)
         {
+            Utility.PlaySound();
             Process.Start("explorer.exe", Paths.mc);
         }
 
         private void removeModpacksButton_Click(object sender, EventArgs e)
         {
-
+            Utility.PlaySound();
+            if (File.Exists(Paths.localMetadata))
+            {
+                File.Delete(Paths.localMetadata);
+            }
         }
     }
 

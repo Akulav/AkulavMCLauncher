@@ -80,6 +80,16 @@ namespace AkulavLauncher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514 {
+            get {
+                object obj = ResourceManager.GetObject("minecraft_dirt_wallpaper_by_thedevartist_d3l1qoj_3511026514", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon mining {
