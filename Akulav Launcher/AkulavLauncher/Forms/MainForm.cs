@@ -13,7 +13,7 @@ namespace AkulavLauncher
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        private static readonly string client_version = "8.0.0";
+        private static readonly string client_version = "8.0.1";
         private static readonly int ram = Utility.GetRAM();
         UIManager ui = new UIManager();
         private bool settingsFlag = false;
@@ -38,8 +38,10 @@ namespace AkulavLauncher
         private void MainForm_Load(object sender, EventArgs e)
         {
             ui.GetVersions(versionBox, nameLabel, packVersion);
-            ui.CheckUpdate(client_version, nameLabel, packVersion);
+            ramSlider.Maximum = ram + 1;
+            ramSlider.Minimum = 1;
             ui.GetUserData(Username, ramSlider, ramLabel, ram, versionBox);
+            ui.CheckUpdate(client_version, nameLabel, packVersion);
             ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
         }
         private void LaunchButton_Click(object sender, EventArgs e)

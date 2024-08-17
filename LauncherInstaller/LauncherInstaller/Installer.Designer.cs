@@ -59,7 +59,7 @@
             this.uninstallBtn.ForeColor = System.Drawing.Color.Gainsboro;
             this.uninstallBtn.Location = new System.Drawing.Point(9, 106);
             this.uninstallBtn.Name = "uninstallBtn";
-            this.uninstallBtn.Size = new System.Drawing.Size(453, 52);
+            this.uninstallBtn.Size = new System.Drawing.Size(453, 46);
             this.uninstallBtn.TabIndex = 1;
             this.uninstallBtn.Text = "Uninstall";
             this.uninstallBtn.UseVisualStyleBackColor = true;
@@ -68,11 +68,11 @@
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.statusLabel.Location = new System.Drawing.Point(0, 155);
+            this.statusLabel.Location = new System.Drawing.Point(6, 158);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(0, 13);
+            this.statusLabel.Size = new System.Drawing.Size(52, 13);
             this.statusLabel.TabIndex = 4;
+            this.statusLabel.Text = "Waiting...";
             // 
             // topPanel
             // 
@@ -95,7 +95,7 @@
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(315, 20);
             this.nameLabel.TabIndex = 7;
-            this.nameLabel.Text = "Akulav\'s Launcher V8.0.0 - made by Caty";
+            this.nameLabel.Text = "Akulav\'s Launcher V8.0.1 - made by Caty";
             // 
             // exitButton
             // 
@@ -115,11 +115,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(26)))), ((int)(((byte)(26)))));
-            this.ClientSize = new System.Drawing.Size(471, 168);
+            this.ClientSize = new System.Drawing.Size(471, 180);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.uninstallBtn);
             this.Controls.Add(this.installBtn);
+            this.ForeColor = System.Drawing.Color.Gainsboro;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "statusdLbl";

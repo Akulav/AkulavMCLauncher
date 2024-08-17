@@ -143,15 +143,13 @@ namespace AkulavLauncher.Utilities
 
         public void GetUserData(TextBox Username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
         {
-            try
-            {
+            
                 UserData ud = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
                 UpdateUserDataUI(ud, Username, ramSlider, ramLabel, ram, comboBox);
-            }
-            catch
-            {
-                SetDefaultValues(ramSlider, ramLabel, ram, Username, comboBox);
-            }
+            
+            
+                //SetDefaultValues(ramSlider, ramLabel, ram, Username, comboBox);
+            
         }
 
         public void SetDataOnModpackSelect(ComboBox versionBox, Label nameLabel, Label packVersion)
