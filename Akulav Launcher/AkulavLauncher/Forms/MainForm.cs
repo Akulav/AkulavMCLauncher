@@ -47,7 +47,7 @@ namespace AkulavLauncher
         private void LaunchButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (ui.IsValidUsername(Username))
+            if (Utility.IsValidUsername(Username))
             {
                 Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
                 ui.disableControl(launchButton);

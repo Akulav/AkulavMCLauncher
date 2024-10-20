@@ -29,35 +29,6 @@ namespace AkulavLauncher.Utilities
             setControlText(ramLabel, ramSlider.Value.ToString() + " GB of RAM");
         }
 
-        public bool IsValidUsername(TextBox usernameTextBox)
-        {
-            string username = usernameTextBox.Text;
-            // Check if the username is empty
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                MessageBox.Show("Username can't contain empty spaces or be empty.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            // Check if the username length is within the specified range
-            if (username.Length < 3 || username.Length > 16)
-            {
-                MessageBox.Show("Username must be between 3 and 16 characters.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-
-            foreach (char c in username)
-            {
-                if (!char.IsLetterOrDigit(c) && c != '_')
-                {
-                    MessageBox.Show("Username needs to contain only alphanumeric characters.", "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
         public void showSettingsForm(Panel settingsPanel)
         {
             SettingForm sf = new SettingForm();
@@ -255,7 +226,5 @@ namespace AkulavLauncher.Utilities
             Application.Exit();
 
         }
-
     }
-
 }
