@@ -7,9 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
-using System.Windows.Media.Animation;
 
 namespace AkulavLauncher.Utilities
 {
@@ -143,13 +141,16 @@ namespace AkulavLauncher.Utilities
 
         public void GetUserData(TextBox Username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
         {
-            
+            try
+            {
                 UserData ud = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
                 UpdateUserDataUI(ud, Username, ramSlider, ramLabel, ram, comboBox);
-            
-            
-                //SetDefaultValues(ramSlider, ramLabel, ram, Username, comboBox);
-            
+            }
+
+            catch
+            {
+                SetDefaultValues(ramSlider, ramLabel, ram, Username, comboBox);
+            }
         }
 
         public void SetDataOnModpackSelect(ComboBox versionBox, Label nameLabel, Label packVersion)
@@ -247,12 +248,12 @@ namespace AkulavLauncher.Utilities
 
         private void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-                File.WriteAllText(Paths.updateFlag, "INCOMING_UPDATE");
-                var p = new Process();
-                p.StartInfo.FileName = Paths.update;
-                p.Start();
-                Application.Exit();
-            
+            File.WriteAllText(Paths.updateFlag, "INCOMING_UPDATE");
+            var p = new Process();
+            p.StartInfo.FileName = Paths.update;
+            p.Start();
+            Application.Exit();
+
         }
 
     }

@@ -114,5 +114,10 @@ namespace AkulavLauncher
 
             }
         }
+
+        private void Username_TextChanged(object sender, EventArgs e)
+        {
+            Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
+        }
     }
 }
