@@ -12,7 +12,7 @@ namespace AkulavLauncher
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        private static readonly string client_version = "8.0.1";
+        private static readonly string client_version = "8.1.0";
         private static readonly int ram = Utility.GetRAM();
         private UIManager ui = new UIManager();
         private bool settingsFlag = false;

@@ -95,7 +95,7 @@
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(315, 20);
             this.nameLabel.TabIndex = 7;
-            this.nameLabel.Text = "Akulav\'s Launcher V8.0.1 - made by Caty";
+            this.nameLabel.Text = "Akulav\'s Launcher V8.1.0 - made by Caty";
             // 
             // exitButton
             // 
