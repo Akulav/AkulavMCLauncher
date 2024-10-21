@@ -4,27 +4,29 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Windows.Forms;
 
 namespace AkulavLauncherInstaller
 {
+
     public partial class statusdLbl : Form
     {
-        private static readonly string basePath = "C:\\AkulavLauncher\\";
-        private static readonly string fileLocation = Path.Combine(basePath, "file.zip");
-        private static readonly string updateFlag = Path.Combine(basePath, "update.txt");
+        readonly static string location = "C:\\AkulavLauncher\\";
+        readonly string fileLocation = "C:\\AkulavLauncher\\file.zip";
+        readonly string updateFlag = "C:\\AkulavLauncher\\update.txt";
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private static extern void ReleaseCapture();
+        private extern static void ReleaseCapture();
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private static extern void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+        private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
         public statusdLbl()
         {
             InitializeComponent();
             DoubleBuffered = true;
-            CenterToScreen();
-
+            string dirpath = Directory.GetCurrentDirectory();
+            this.CenterToScreen();
             if (File.Exists(updateFlag))
             {
                 installBtn.Text = "Update Launcher";
@@ -33,43 +35,43 @@ namespace AkulavLauncherInstaller
 
         private void InstallBtn_Click(object sender, EventArgs e)
         {
-            Directory.CreateDirectory(basePath);
-            File.WriteAllBytes(fileLocation, Properties.Resources.file);
-            ExtractFilesFromZip(fileLocation, basePath);
-            CreateShortcut();
-            StartLauncher();
-            Application.Exit();
-        }
 
-        private void ExtractFilesFromZip(string zipPath, string extractPath)
-        {
-            using (ZipArchive archive = ZipFile.OpenRead(zipPath))
+            Directory.CreateDirectory(location);
+
+            File.WriteAllBytes(fileLocation, Properties.Resources.file);
+
+            using (ZipArchive source = ZipFile.Open(fileLocation, ZipArchiveMode.Read, null))
             {
-                foreach (ZipArchiveEntry entry in archive.Entries)
+                foreach (ZipArchiveEntry entry in source.Entries)
                 {
-                    if (!string.IsNullOrEmpty(entry.Name))
+                    string fullPath = Path.GetFullPath(Path.Combine(location, entry.FullName));
+
+                    if (Path.GetFileName(fullPath).Length != 0)
                     {
-                        string destinationPath = Path.Combine(extractPath, entry.FullName);
-                        Directory.CreateDirectory(Path.GetDirectoryName(destinationPath));
-                        entry.ExtractToFile(destinationPath, true);
+                        Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+                        // The boolean parameter determines whether an existing file that has the same name as the destination file should be overwritten
+                        entry.ExtractToFile(fullPath, true);
+                        //File.Delete(fileLocation);
                     }
                 }
             }
-        }
 
-        private void CreateShortcut()
-        {
             IShellLink link = (IShellLink)new ShellLink();
+
+            // setup shortcut information
             link.SetDescription("A MC Launcher");
-            link.SetPath(Path.Combine(basePath, "AkulavLauncher.exe"));
+            link.SetPath(@"C:\\AkulavLauncher\\AkulavLauncher.exe");
+
+            // save it
             IPersistFile file = (IPersistFile)link;
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             file.Save(Path.Combine(desktopPath, "AkulavLauncher.lnk"), false);
-        }
 
-        private void StartLauncher()
-        {
-            Process.Start(Path.Combine(basePath, "AkulavLauncher.exe"));
+            var p = new Process();
+            p.StartInfo.FileName = @"C:\AkulavLauncher\AkulavLauncher.exe";
+            p.Start();
+
+            Application.Exit();
         }
 
         private void UninstallBtn_Click(object sender, EventArgs e)
@@ -77,11 +79,12 @@ namespace AkulavLauncherInstaller
             try
             {
                 string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-                ForceDeleteDirectory(basePath);
-                Directory.Delete(basePath, true);
+                ForceDeleteDirectory(location);
+                Directory.Delete(location, true);
                 File.Delete(Path.Combine(desktopPath, "AkulavLauncher.lnk"));
                 statusLabel.Text = "Uninstallation done.";
             }
+
             catch
             {
                 statusLabel.Text = "Some files were not found.";
@@ -91,28 +94,49 @@ namespace AkulavLauncherInstaller
         public static void ForceDeleteDirectory(string path)
         {
             var directory = new DirectoryInfo(path) { Attributes = FileAttributes.Normal };
+
             foreach (var info in directory.GetFileSystemInfos("*", SearchOption.AllDirectories))
             {
                 info.Attributes = FileAttributes.Normal;
             }
         }
 
+
         [ComImport]
         [Guid("00021401-0000-0000-C000-000000000046")]
-        internal class ShellLink { }
+        internal class ShellLink
+        {
+        }
 
         [ComImport]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         [Guid("000214F9-0000-0000-C000-000000000046")]
         internal interface IShellLink
         {
-            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
+            void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out IntPtr pfd, int fFlags);
+            void GetIDList(out IntPtr ppidl);
+            void SetIDList(IntPtr pidl);
+            void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
             void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+            void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
+            void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+            void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
+            void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+            void GetHotkey(out short pwHotkey);
+            void SetHotkey(short wHotkey);
+            void GetShowCmd(out int piShowCmd);
+            void SetShowCmd(int iShowCmd);
+            void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
+            void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
+            void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
+            void Resolve(IntPtr hwnd, int fFlags);
+            void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
         }
 
         private void statusdLbl_Load(object sender, EventArgs e)
         {
-            if (Directory.GetCurrentDirectory() == basePath)
+            string dirpath = Directory.GetCurrentDirectory();
+            if (dirpath == "C:\\AkulavLauncher")
             {
                 installBtn.PerformClick();
             }
