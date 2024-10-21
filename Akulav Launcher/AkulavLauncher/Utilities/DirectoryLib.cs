@@ -8,33 +8,35 @@ namespace AkulavLauncher
     {
         public static void CopyFilesRecursively(string sourcePath, string targetPath)
         {
-            Parallel.ForEach(Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories), (dirPath) =>
+            if (!Directory.Exists(sourcePath)) return;
+
+            var directories = Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories);
+
+            Parallel.ForEach(directories, (dirPath) =>
             {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
             });
 
-            Parallel.ForEach(Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories), (newPath) =>
+            Parallel.ForEach(files, (filePath) =>
             {
-                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+                string targetFilePath = filePath.Replace(sourcePath, targetPath);
+                File.Copy(filePath, targetFilePath, true);
             });
-
         }
+
         public static string GetTextFromJson()
         {
-            if (File.Exists(Paths.links))
-            {
-                string jsonData = File.ReadAllText(Paths.links);
-                return JsonConvert.DeserializeObject<string>(jsonData);
-            }
-            return null;
+            return File.Exists(Paths.links)
+                ? JsonConvert.DeserializeObject<string>(File.ReadAllText(Paths.links))
+                : null;
         }
 
-
-        public static void DeleteFolder(string Path)
+        public static void DeleteFolder(string folderPath)
         {
-            if (Directory.Exists(Path))
+            if (Directory.Exists(folderPath))
             {
-                Directory.Delete(Path, true);
+                Directory.Delete(folderPath, true);
             }
         }
 

@@ -3,7 +3,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
 namespace AkulavLauncher
 {
     public partial class MainForm : Form
@@ -15,7 +14,7 @@ namespace AkulavLauncher
 
         private static readonly string client_version = "8.0.1";
         private static readonly int ram = Utility.GetRAM();
-        UIManager ui = new UIManager();
+        private UIManager ui = new UIManager();
         private bool settingsFlag = false;
 
         public MainForm()
@@ -24,9 +23,19 @@ namespace AkulavLauncher
             Utility.GetModpacks();
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            InitializeUI();
+        }
+
         private void CloseButton_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
         }
 
         private void TopPanel_MouseDown(object sender, MouseEventArgs e)
@@ -35,89 +44,113 @@ namespace AkulavLauncher
             SendMessage(Handle, 0x112, 0xf012, 0);
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            ui.GetVersions(versionBox, nameLabel, packVersion);
-            ramSlider.Maximum = ram + 1;
-            ramSlider.Minimum = 1;
-            ui.GetUserData(Username, ramSlider, ramLabel, ram, versionBox);
-            ui.CheckUpdate(client_version, nameLabel, packVersion);
-            ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
-        }
         private void LaunchButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (Utility.IsValidUsername(Username))
+            if (Utility.IsValidUsername(Username.Text))
             {
-                Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
-                ui.disableControl(launchButton);
-                ui.disableControl(repairButton);
-                ui.disableControl(settingsButton);
-                ui.disableControl(versionBox);
-                GameLauncher gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this, downloadBar);
+                SaveUserData();
+                DisableAllControls();
+                var gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this, downloadBar);
             }
         }
-
 
         private void RepairButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            DataDownloader data = new DataDownloader(this, Username.Text, ramSlider.Value * 1024, versionBox.Text, downloadBar);
-            data.StartDownload();
-            ui.disableControl(launchButton);
-            ui.disableControl(settingsButton);
-            ui.disableControl(repairButton);
+            StartRepairProcess();
         }
 
         private void RamSlider_ValueChanged(object sender, EventArgs e)
         {
-            Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
-            ui.setRamLabel(ramLabel, ramSlider);
+            UpdateUserData();
+            ui.SetRamLabel(ramLabel, ramSlider);
         }
-
 
         private void VersionBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
+            UpdateUserData();
             ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
-        }
-
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (!settingsFlag)
-            {
-                ui.disableControl(launchButton);
-                ui.disableControl(repairButton);
-                ui.disableControl(versionBox);
-                ui.disableControl(Username);
-                ui.showSettingsForm(settingsPanel);
-                settingsFlag = true;
-            }
-            else
-            {
-                ui.hideSettingsForm(settingsPanel);
-                Utility.GetModpacks();
-                ui.GetVersions(versionBox, nameLabel, packVersion);
-                ui.GetUserData(Username, ramSlider, ramLabel, ram, versionBox);
-                ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
-                ui.enableControl(launchButton);
-                ui.enableControl(repairButton);
-                ui.enableControl(versionBox);
-                ui.enableControl(Username);
-                settingsFlag = false;
-
-            }
+            ToggleSettingsForm();
         }
 
         private void Username_TextChanged(object sender, EventArgs e)
         {
+            UpdateUserData();
+        }
+
+        // Private helper methods
+
+        private void InitializeUI()
+        {
+            ui.GetVersions(versionBox, nameLabel, packVersion);
+            ramSlider.Minimum = 1;
+            ramSlider.Maximum = ram + 1;
+            ui.GetUserData(Username, ramSlider, ramLabel, ram, versionBox);
+            ui.CheckUpdate(client_version, nameLabel, packVersion);
+            ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
+        }
+
+        private void UpdateUserData()
+        {
             Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
+        }
+
+        private void SaveUserData()
+        {
+            Utility.SetUserData(Username.Text, ramSlider.Value.ToString(), versionBox.Text);
+        }
+
+        private void DisableAllControls()
+        {
+            ui.DisableControl(launchButton);
+            ui.DisableControl(repairButton);
+            ui.DisableControl(versionBox);
+            ui.DisableControl(Username);
+        }
+
+        private void EnableAllControls()
+        {
+            ui.EnableControl(launchButton);
+            ui.EnableControl(repairButton);
+            ui.EnableControl(versionBox);
+            ui.EnableControl(Username);
+        }
+
+        private void StartRepairProcess()
+        {
+            var data = new DataDownloader(this, Username.Text, ramSlider.Value * 1024, versionBox.Text, downloadBar);
+            data.StartDownload();
+            DisableAllControls();
+        }
+
+        private void ToggleSettingsForm()
+        {
+            if (!settingsFlag)
+            {
+                DisableAllControls();
+                ui.ShowSettingsForm(settingsPanel);
+            }
+            else
+            {
+                ui.HideSettingsForm(settingsPanel);
+                RefreshUIAfterSettings();
+                EnableAllControls();
+            }
+            settingsFlag = !settingsFlag;
+        }
+
+        private void RefreshUIAfterSettings()
+        {
+            Utility.GetModpacks();
+            ui.GetVersions(versionBox, nameLabel, packVersion);
+            ui.GetUserData(Username, ramSlider, ramLabel, ram, versionBox);
+            ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
         }
     }
 }

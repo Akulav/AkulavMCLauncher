@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace AkulavLauncher.Forms
 {
-
     public partial class SettingForm : Form
     {
         private readonly string jsonFilePath = Paths.links;
@@ -14,37 +13,34 @@ namespace AkulavLauncher.Forms
         public SettingForm()
         {
             InitializeComponent();
-            if (DirectoryLib.GetTextFromJson() != null)
+            var savedLink = DirectoryLib.GetTextFromJson();
+            if (savedLink != null)
             {
-                textBoxNewLink.Text = DirectoryLib.GetTextFromJson();
+                textBoxNewLink.Text = savedLink;
                 textBoxNewLink.Enabled = false;
             }
         }
 
-
-        private void AddTextToJson(string text)
+        private void SaveTextToJson(string text)
         {
-            var jsonData = JsonConvert.SerializeObject(text);
-            File.WriteAllText(jsonFilePath, jsonData);
+            File.WriteAllText(jsonFilePath, JsonConvert.SerializeObject(text));
         }
 
-        private void RemoveTextFromJson()
+        private void DeleteFileIfExists(string filePath)
         {
-            if (File.Exists(jsonFilePath))
+            if (File.Exists(filePath))
             {
-                File.Delete(jsonFilePath);
+                File.Delete(filePath);
             }
         }
-
-
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (!string.IsNullOrWhiteSpace(textBoxNewLink.Text))
+            var textToAdd = textBoxNewLink.Text.Trim();
+            if (!string.IsNullOrWhiteSpace(textToAdd))
             {
-                string textToAdd = textBoxNewLink.Text.Trim();
-                AddTextToJson(textToAdd);
+                SaveTextToJson(textToAdd);
                 textBoxNewLink.Enabled = false;
             }
         }
@@ -52,7 +48,7 @@ namespace AkulavLauncher.Forms
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            RemoveTextFromJson();
+            DeleteFileIfExists(jsonFilePath);
             textBoxNewLink.Enabled = true;
             textBoxNewLink.Clear();
         }
@@ -60,10 +56,7 @@ namespace AkulavLauncher.Forms
         private void resetSettingsButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (File.Exists(Paths.settings))
-            {
-                File.Delete(Paths.settings);
-            }
+            DeleteFileIfExists(Paths.settings);
         }
 
         private void McFolderButton_Click(object sender, EventArgs e)
@@ -75,11 +68,7 @@ namespace AkulavLauncher.Forms
         private void removeModpacksButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            if (File.Exists(Paths.localMetadata))
-            {
-                File.Delete(Paths.localMetadata);
-            }
+            DeleteFileIfExists(Paths.localMetadata);
         }
     }
-
 }

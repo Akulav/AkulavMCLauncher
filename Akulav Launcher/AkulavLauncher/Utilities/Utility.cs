@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.Devices;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Media;
 using System.Net;
 using System.Windows.Forms;
@@ -20,10 +21,9 @@ namespace AkulavLauncher
 
             try
             {
-                using (WebClient client = new WebClient())
+                using (var client = new WebClient())
                 {
-                    string json = client.DownloadString(source);
-                    modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(json);
+                    modpacks = JsonConvert.DeserializeObject<List<ModpackData>>(client.DownloadString(source));
                 }
             }
             catch
@@ -32,17 +32,9 @@ namespace AkulavLauncher
             }
         }
 
-        public static int GetRAM()
-        {
-            var computerInfo = new ComputerInfo();
-            // Return RAM in GB
-            return (int)(computerInfo.TotalPhysicalMemory / (1024 * 1024 * 1024));
-        }
+        public static int GetRAM() => (int)(new ComputerInfo().TotalPhysicalMemory / (1024 * 1024 * 1024));
 
-        public static int ParseRam(string ram, int maxRam)
-        {
-            return int.TryParse(ram, out int parsedRam) ? parsedRam : maxRam / 2;
-        }
+        public static int ParseRam(string ram, int maxRam) => int.TryParse(ram, out int parsedRam) ? parsedRam : maxRam / 2;
 
         public static void PlaySound()
         {
@@ -52,60 +44,29 @@ namespace AkulavLauncher
             }
         }
 
-        public static void SetUserData(string username, string ram, string version)
-        {
-            var userData = new UserData();
-            userData.SetUserData(username, ram, version);
-        }
+        public static void SetUserData(string username, string ram, string version) => new UserData().SetUserData(username, ram, version); // Compacting method call
 
         private static void LoadAll()
         {
-            string jsonFilePath = Paths.links;
-
-            if (!File.Exists(jsonFilePath))
+            if (!File.Exists(Paths.links))
             {
                 Directory.CreateDirectory(Paths.mc);
-                File.WriteAllText(jsonFilePath, string.Empty);
+                File.WriteAllText(Paths.links, string.Empty);
             }
         }
 
-        public static bool IsValidUsername(TextBox usernameTextBox)
+        public static bool IsValidUsername(string username)
         {
-            string username = usernameTextBox.Text;
-
-            if (string.IsNullOrWhiteSpace(username))
+            if (string.IsNullOrWhiteSpace(username) || username.Length < 3 || username.Length > 16 || !IsAlphanumericWithUnderscore(username))
             {
-                ShowWarning("Username can't contain empty spaces or be empty.");
+                ShowWarning("Invalid username. It should be 3-16 alphanumeric characters or underscores only.");
                 return false;
-            }
-
-            if (username.Length < 3 || username.Length > 16)
-            {
-                ShowWarning("Username must be between 3 and 16 characters.");
-                return false;
-            }
-
-            if (!IsAlphanumericWithUnderscore(username))
-            {
-                ShowWarning("Username needs to contain only alphanumeric characters.");
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool IsAlphanumericWithUnderscore(string username)
-        {
-            foreach (char c in username)
-            {
-                if (!char.IsLetterOrDigit(c) && c != '_') return false;
             }
             return true;
         }
 
-        private static void ShowWarning(string message)
-        {
-            MessageBox.Show(message, "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
+        private static bool IsAlphanumericWithUnderscore(string username) => username.All(c => char.IsLetterOrDigit(c) || c == '_'); // Optimizing loop into LINQ
+
+        private static void ShowWarning(string message) => MessageBox.Show(message, "Configuration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 }

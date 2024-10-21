@@ -14,65 +14,118 @@ namespace AkulavLauncher.Utilities
     public class UIManager
     {
         public UIManager() { }
-        public void disableControl(Control control)
-        {
-            control.BeginInvoke((MethodInvoker)(() => control.Enabled = false));
-        }
 
-        public void enableControl(Control control)
-        {
-            control.BeginInvoke((MethodInvoker)(() => control.Enabled = true));
-        }
+        // Public methods first
 
-        public void setRamLabel(Label ramLabel, TrackBar ramSlider)
-        {
-            setControlText(ramLabel, ramSlider.Value.ToString() + " GB of RAM");
-        }
+        public void DisableControl(Control control) => control.BeginInvoke((MethodInvoker)(() => control.Enabled = false));
 
-        public void showSettingsForm(Panel settingsPanel)
+        public void EnableControl(Control control) => control.BeginInvoke((MethodInvoker)(() => control.Enabled = true));
+
+        public void SetRamLabel(Label ramLabel, TrackBar ramSlider) => SetControlText(ramLabel, $"{ramSlider.Value} GB of RAM");
+
+        public void ShowSettingsForm(Panel settingsPanel)
         {
-            SettingForm sf = new SettingForm();
-            sf.TopLevel = false;
-            sf.TopMost = true;
+            var sf = new SettingForm { TopLevel = false, TopMost = true };
             settingsPanel.Controls.Add(sf);
             sf.Show();
         }
 
-        public void hideSettingsForm(Panel settingsPanel)
+        public void HideSettingsForm(Panel settingsPanel) => settingsPanel.BeginInvoke((MethodInvoker)(() => settingsPanel.Controls.Clear()));
+
+        public void SetProgressBarValue(ProgressBar bar, double value) => bar.BeginInvoke((MethodInvoker)(() => bar.Value = (int)Math.Truncate(value)));
+
+        public void GetUserData(TextBox username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
         {
-            settingsPanel.BeginInvoke((MethodInvoker)(() => settingsPanel.Controls.Clear()));
+            try
+            {
+                var userData = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
+                UpdateUserDataUI(userData, username, ramSlider, ramLabel, ram, comboBox);
+            }
+            catch
+            {
+                SetDefaultValues(ramSlider, ramLabel, ram, username, comboBox);
+            }
         }
 
-        private void setControlText(Control control, string text)
+        public void GetVersions(ComboBox versionBox, Label nameLabel, Label packVersion)
         {
-            control.BeginInvoke((MethodInvoker)(() => control.Text = text));
+            try
+            {
+                versionBox.Items.Clear();
+                foreach (var modpack in Utility.modpacks)
+                    AddComboBoxItems(versionBox, modpack.Name);
+
+                var userData = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
+                SelectModpackInComboBox(versionBox, userData.SelectedModpack);
+                SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
+            }
+            catch { }
         }
 
-        private void setRamSliderMinimum(TrackBar slider, int value)
+        public void CheckUpdate(string version, Label nameLabel, Label packVersion)
         {
-            slider.BeginInvoke((MethodInvoker)(() => slider.Minimum = value));
+            try
+            {
+                var metadata = DownloadUpdateMetadata();
+                if (version != metadata[0])
+                {
+                    var client = new WebClient();
+                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
+                    client.DownloadFileAsync(new Uri(metadata[1]), Paths.update);
+                }
+                else
+                {
+                    File.Delete(Paths.update);
+                }
+            }
+            catch
+            {
+                SetControlText(nameLabel, "Server could not be reached.");
+                SetControlText(packVersion, "");
+            }
         }
 
-        private void setRamSliderMaximum(TrackBar slider, int value)
+        public void SetDataOnModpackSelect(ComboBox versionBox, Label nameLabel, Label packVersion)
         {
-            slider.BeginInvoke((MethodInvoker)(() => slider.Maximum = value));
+            var selectedModpack = Utility.modpacks.Find(modpack => modpack.Name == versionBox.Text);
+            if (selectedModpack != null)
+            {
+                SetControlText(nameLabel, $"Modpack: {selectedModpack.Name}");
+                SetControlText(packVersion, $"Pack Version: {selectedModpack.Version}");
+            }
+            else
+            {
+                SetControlText(nameLabel, "Server could not be reached.");
+                SetControlText(packVersion, "");
+            }
         }
 
-        private void setRamSliderValue(TrackBar slider, int value)
-        {
-            slider.BeginInvoke((MethodInvoker)(() => slider.Value = value));
-        }
+        // Private methods below
 
-        private void UpdateUserDataUI(UserData userData, TextBox Username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
+        private void UpdateUserDataUI(UserData userData, TextBox username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
         {
-            setControlText(Username, userData.UserName);
-            setRamSliderMinimum(ramSlider, 1);
-            setRamSliderMaximum(ramSlider, ram + 1);
-            ramSlider.Value = Utility.ParseRam(userData.Ram, ram);
-            setControlText(ramLabel, userData.Ram + " GB of RAM");
-
-            // Call SelectItemByText on the UI thread
+            SetControlText(username, userData.UserName);
+            SetRamSliderProperties(ramSlider, 1, ram + 1, Utility.ParseRam(userData.Ram, ram));
+            SetControlText(ramLabel, $"{userData.Ram} GB of RAM");
             comboBox.BeginInvoke((MethodInvoker)(() => SelectItemByText(comboBox, userData.SelectedModpack)));
+        }
+
+        private void SetDefaultValues(TrackBar ramSlider, Label ramLabel, int ram, TextBox username, ComboBox versionBox)
+        {
+            SetRamSliderProperties(ramSlider, 1, ram + 1, (ram + 1) / 2);
+            SetControlText(ramLabel, $"{ramSlider.Value} GB of RAM");
+            SetControlText(username, "Steve");
+            SetComboBoxIndex(versionBox, 0);
+        }
+
+        private void SetRamSliderProperties(TrackBar slider, int min, int max, int value)
+        {
+            slider.BeginInvoke((MethodInvoker)(() =>
+            {
+                slider.Minimum = min;
+                slider.Maximum = max;
+                slider.Value = value;
+            }));
         }
 
         private void SelectItemByText(ComboBox comboBox, string targetText)
@@ -87,144 +140,43 @@ namespace AkulavLauncher.Utilities
             }
         }
 
-        private void SetComboBoxIndex(ComboBox versionbox, int index)
+        private void SetComboBoxIndex(ComboBox comboBox, int index) => comboBox.BeginInvoke((MethodInvoker)(() => comboBox.SelectedIndex = index));
+
+        private void SelectModpackInComboBox(ComboBox versionBox, string selectedModpack)
         {
-            versionbox.BeginInvoke((MethodInvoker)(() => versionbox.SelectedIndex = index));
-        }
-
-        public void SetProgressBarValue(ProgressBar bar, double value)
-        {
-            bar.BeginInvoke((MethodInvoker)(() => bar.Value = int.Parse(Math.Truncate(value).ToString())));
-
-        }
-
-
-        private void SetDefaultValues(TrackBar ramSlider, Label ramLabel, int ram, TextBox username, ComboBox versionBox)
-        {
-            setRamSliderMinimum(ramSlider, 1);
-            setRamSliderMaximum(ramSlider, ram + 1);
-            setRamSliderValue(ramSlider, (ram + 1) / 2);
-            ramLabel.Text = ramSlider.Value.ToString() + " GB of RAM";
-            setControlText(ramSlider, ramSlider.Value.ToString() + " GB of RAM");
-            setControlText(username, "Steve");
-            SetComboBoxIndex(versionBox, 0);
-        }
-
-        public void GetUserData(TextBox Username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
-        {
-            try
+            bool found = false;
+            for (int i = 0; i < versionBox.Items.Count; i++)
             {
-                UserData ud = JsonConvert.DeserializeObject<UserData>(File.ReadAllText(Paths.settings));
-                UpdateUserDataUI(ud, Username, ramSlider, ramLabel, ram, comboBox);
-            }
-
-            catch
-            {
-                SetDefaultValues(ramSlider, ramLabel, ram, Username, comboBox);
-            }
-        }
-
-        public void SetDataOnModpackSelect(ComboBox versionBox, Label nameLabel, Label packVersion)
-        {
-            try
-            {
-                var selectedModpack = Utility.modpacks.Find(modpack => modpack.Name == versionBox.Text);
-                if (selectedModpack != null)
+                if (versionBox.Items[i].ToString() == selectedModpack)
                 {
-                    setControlText(nameLabel, "Modpack: " + selectedModpack.Name);
-                    setControlText(packVersion, "Pack Version: " + selectedModpack.Version);
-                }
-                else
-                {
-                    setControlText(nameLabel, "Server could not be reached.");
-                    setControlText(packVersion, "");
-                }
-
-            }
-            catch
-            {
-                setControlText(nameLabel, "Server could not be reached.");
-                setControlText(packVersion, "");
-            }
-        }
-
-        private void AddComboBoxItems(ComboBox versionbox, string value)
-        {
-            versionbox.BeginInvoke((MethodInvoker)(() => versionbox.Items.Add(value)));
-        }
-
-        public void GetVersions(ComboBox versionBox, Label nameLabel, Label packVersion)
-        {
-            try
-            {
-                versionBox.Items.Clear();
-                foreach (var modpack in Utility.modpacks)
-                {
-                    AddComboBoxItems(versionBox, modpack.Name);
-                }
-
-                string userdata = File.ReadAllText(Paths.settings);
-                UserData ud = JsonConvert.DeserializeObject<UserData>(userdata);
-
-                bool found = false;
-
-                for (int i = 0; i < versionBox.Items.Count; i++)
-                {
-                    if (versionBox.Items[i].ToString() == ud.SelectedModpack)
-                    {
-                        SetComboBoxIndex(versionBox, i);
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    SetComboBoxIndex(versionBox, 0);
-                }
-                UIManager ui = new UIManager();
-                ui.SetDataOnModpackSelect(versionBox, nameLabel, packVersion);
-            }
-            catch { }
-        }
-
-        public void CheckUpdate(string version, Label nameLabel, Label packVersion)
-        {
-            try
-            {
-                var metadata = new List<string>();
-                using (WebClient client = new WebClient())
-                {
-                    string updateData = client.DownloadString(Paths.versionUrl);
-                    metadata.AddRange(Regex.Split(updateData, "\r\n|\r|\n"));
-                }
-
-                if (version != metadata[0])
-                {
-                    var client = new WebClient();
-                    client.DownloadFileCompleted += Client_DownloadFileCompleted;
-                    client.DownloadFileAsync(new Uri(metadata[1]), Paths.update);
-                }
-                else
-                {
-                    File.Delete(Paths.update);
+                    SetComboBoxIndex(versionBox, i);
+                    found = true;
+                    break;
                 }
             }
-            catch
+            if (!found)
+                SetComboBoxIndex(versionBox, 0);
+        }
+
+        private void AddComboBoxItems(ComboBox versionBox, string value) => versionBox.BeginInvoke((MethodInvoker)(() => versionBox.Items.Add(value)));
+
+        private void SetControlText(Control control, string text) => control.BeginInvoke((MethodInvoker)(() => control.Text = text));
+
+        private List<string> DownloadUpdateMetadata()
+        {
+            using (var client = new WebClient())
             {
-                setControlText(nameLabel, "Server could not be reached.");
-                setControlText(packVersion, "");
+                var updateData = client.DownloadString(Paths.versionUrl);
+                return new List<string>(Regex.Split(updateData, "\r\n|\r|\n"));
             }
         }
 
         private void Client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             File.WriteAllText(Paths.updateFlag, "INCOMING_UPDATE");
-            var p = new Process();
-            p.StartInfo.FileName = Paths.update;
-            p.Start();
+            var process = new Process { StartInfo = { FileName = Paths.update } };
+            process.Start();
             Application.Exit();
-
         }
     }
 }
