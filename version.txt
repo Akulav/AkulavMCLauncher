@@ -1,2 +1,2 @@
 8.0.1
-https://github.com/Akulav/AkulavMCLauncher/releases/download/8.0.1/AkulavLauncherInstaller.exe
+https://github.com/Akulav/AkulavMCLauncher/releases/download/8.1.0/AkulavLauncherInstaller.exe
