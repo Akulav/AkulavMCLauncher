@@ -22,5 +22,11 @@
     "Version": "1.0.0",
     "API": "1.20.1-forge-47.2.20",
     "URL": "https://www.dropbox.com/scl/fi/s8usvadsdt9gjodpkl57r/endera_up.zip?rlkey=is1u28iwfq3pubtj6m57h8czz&st=qku1uwgl&dl=1"
+  },
+  {
+    "Name": "IceEra - CanadaEdition",
+    "Version": "1.0.0",
+    "API": "1.20.1-fabric-0.16.9",
+    "URL": "https://www.dropbox.com/scl/fi/pgf3ekfdp62297tysjk9s/iceera.zip?rlkey=uuqmy0sh5wf65d0x437iysmpg&st=kgdnsjmo&dl=1"
   }
 ]
