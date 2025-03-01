@@ -28,5 +28,11 @@
     "Version": "1.0.1",
     "API": "fabric-loader-0.16.9-1.20.1",
     "URL": "https://www.dropbox.com/scl/fi/b77ayprtavkelz72vfx5b/flowerEra.zip?rlkey=yvkikxc532uoj7z3bphn2pcqv&st=4gefi8so&dl=1"
+  },
+  {
+    "Name": "GoldenEra",
+    "Version": "1.0.0",
+    "API": "neoforge-21.1.128",
+    "URL": "https://www.dropbox.com/scl/fi/chj93rimhxhwtwdzscf1h/Gold.zip?rlkey=tchioohcwps53m816nrqngaln&st=zmqc56j4&dl=1"
   }
 ]
