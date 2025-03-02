@@ -1,36 +1,6 @@
 [
   {
-    "Name": "NewEraUltimate",
-    "Version": "8.1.0",
-    "API": "1.19.2-forge-43.2.8",
-    "URL": "https://www.dropbox.com/s/jeaj0zgrt44xj2p/NewEraU8.1.zip?dl=1"
-  },
-  {
-    "Name": "NewAdventure",
-    "Version": "13.2",
-    "API": "1.19.2-forge-43.2.8",
-    "URL": "https://www.dropbox.com/scl/fi/a0fwr39wiutfxasw9rrc6/NewAdventure13.1.zip?rlkey=albj2gl4mlx9lluvlgot8ppt2&dl=1"
-  },
-  {
-    "Name": "EndOfAnEra",
-    "Version": "1.0.0",
-    "API": "1.20.1-forge-47.2.20",
-    "URL": "https://www.dropbox.com/scl/fi/tbam6vp90nosstfiodirp/endera.zip?rlkey=adssznsbt0ion9vwkw7vkdkkz&st=ef2536tw&dl=1"
-  },
-  {
-    "Name": "EndOfAnEraTESTV",
-    "Version": "1.0.0",
-    "API": "1.20.1-forge-47.2.20",
-    "URL": "https://www.dropbox.com/scl/fi/s8usvadsdt9gjodpkl57r/endera_up.zip?rlkey=is1u28iwfq3pubtj6m57h8czz&st=qku1uwgl&dl=1"
-  },
-  {
-    "Name": "FlowerEra",
-    "Version": "1.0.1",
-    "API": "fabric-loader-0.16.9-1.20.1",
-    "URL": "https://www.dropbox.com/scl/fi/b77ayprtavkelz72vfx5b/flowerEra.zip?rlkey=yvkikxc532uoj7z3bphn2pcqv&st=4gefi8so&dl=1"
-  },
-  {
-    "Name": "GoldenEra",
+    "Name": "GoldenEra - Rebooted",
     "Version": "1.0.0",
     "API": "neoforge-21.1.128",
     "URL": "https://www.dropbox.com/scl/fi/d5mx9yk7pdsjoin73kdbm/goldenera.zip?rlkey=xk2h95440elcd0ch6o4pqwuz4&st=kyqdubuz&dl=1"
