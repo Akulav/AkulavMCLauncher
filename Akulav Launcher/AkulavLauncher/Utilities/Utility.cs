@@ -51,6 +51,7 @@ namespace AkulavLauncher
             if (!File.Exists(Paths.links))
             {
                 Directory.CreateDirectory(Paths.mc);
+                Directory.CreateDirectory(Paths.akulav_launcher_config);
                 File.WriteAllText(Paths.links, string.Empty);
             }
         }

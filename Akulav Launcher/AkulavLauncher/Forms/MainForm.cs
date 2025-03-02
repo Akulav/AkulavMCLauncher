@@ -12,7 +12,7 @@ namespace AkulavLauncher
         [DllImport("user32.DLL", EntryPoint = "SendMessage")]
         private extern static void SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
 
-        private static readonly string client_version = "8.1.0";
+        private static readonly string client_version = "9.0.0";
         private static readonly int ram = Utility.GetRAM();
         private UIManager ui = new UIManager();
         private bool settingsFlag = false;
@@ -51,7 +51,7 @@ namespace AkulavLauncher
             {
                 SaveUserData();
                 DisableAllControls();
-                var gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this, downloadBar);
+                var gl = new GameLauncher(ramSlider.Value * 1024, Username.Text, versionBox.SelectedItem.ToString(), this);
             }
         }
 
@@ -124,7 +124,7 @@ namespace AkulavLauncher
 
         private void StartRepairProcess()
         {
-            var data = new DataDownloader(this, Username.Text, ramSlider.Value * 1024, versionBox.Text, downloadBar);
+            var data = new DataDownloader(this, Username.Text, ramSlider.Value * 1024, versionBox.Text, consoleLabel);
             data.StartDownload();
             DisableAllControls();
         }

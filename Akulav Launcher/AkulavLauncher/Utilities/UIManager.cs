@@ -21,6 +21,8 @@ namespace AkulavLauncher.Utilities
 
         public void EnableControl(Control control) => control.BeginInvoke((MethodInvoker)(() => control.Enabled = true));
 
+        public void ClearControl(TextBox text) => text.BeginInvoke((MethodInvoker)(() => text.Clear()));
+
         public void SetRamLabel(Label ramLabel, TrackBar ramSlider) => SetControlText(ramLabel, $"{ramSlider.Value} GB of RAM");
 
         public void ShowSettingsForm(Panel settingsPanel)
@@ -31,8 +33,6 @@ namespace AkulavLauncher.Utilities
         }
 
         public void HideSettingsForm(Panel settingsPanel) => settingsPanel.BeginInvoke((MethodInvoker)(() => settingsPanel.Controls.Clear()));
-
-        public void SetProgressBarValue(ProgressBar bar, double value) => bar.BeginInvoke((MethodInvoker)(() => bar.Value = (int)Math.Truncate(value)));
 
         public void GetUserData(TextBox username, TrackBar ramSlider, Label ramLabel, int ram, ComboBox comboBox)
         {
@@ -87,16 +87,26 @@ namespace AkulavLauncher.Utilities
 
         public void SetDataOnModpackSelect(ComboBox versionBox, Label nameLabel, Label packVersion)
         {
-            var selectedModpack = Utility.modpacks.Find(modpack => modpack.Name == versionBox.Text);
-            if (selectedModpack != null)
+            try
             {
-                SetControlText(nameLabel, $"Modpack: {selectedModpack.Name}");
-                SetControlText(packVersion, $"Pack Version: {selectedModpack.Version}");
+                var selectedModpack = Utility.modpacks.Find(modpack => modpack.Name == versionBox.Text);
+
+
+                if (selectedModpack != null)
+                {
+                    SetControlText(nameLabel, $"Modpack: {selectedModpack.Name}");
+                    SetControlText(packVersion, $"Pack Version: {selectedModpack.Version}");
+                }
+                else
+                {
+                    SetControlText(nameLabel, "Server could not be reached.");
+                    SetControlText(packVersion, "");
+                }
             }
-            else
+
+            catch
             {
-                SetControlText(nameLabel, "Server could not be reached.");
-                SetControlText(packVersion, "");
+
             }
         }
 

@@ -24,6 +24,13 @@ namespace AkulavLauncher
                 File.Copy(filePath, targetFilePath, true);
             });
         }
+        public static void DeleteFileIfExists(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
 
         public static string GetTextFromJson()
         {

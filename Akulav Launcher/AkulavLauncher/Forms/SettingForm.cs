@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AkulavLauncher.Utilities;
+using Newtonsoft.Json;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -9,7 +10,7 @@ namespace AkulavLauncher.Forms
     public partial class SettingForm : Form
     {
         private readonly string jsonFilePath = Paths.links;
-
+        UIManager ui = new UIManager();
         public SettingForm()
         {
             InitializeComponent();
@@ -17,21 +18,13 @@ namespace AkulavLauncher.Forms
             if (savedLink != null)
             {
                 textBoxNewLink.Text = savedLink;
-                textBoxNewLink.Enabled = false;
+                ui.DisableControl(textBoxNewLink);
             }
         }
 
         private void SaveTextToJson(string text)
         {
             File.WriteAllText(jsonFilePath, JsonConvert.SerializeObject(text));
-        }
-
-        private void DeleteFileIfExists(string filePath)
-        {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
         }
 
         private void BtnAdd_Click(object sender, EventArgs e)
@@ -41,22 +34,22 @@ namespace AkulavLauncher.Forms
             if (!string.IsNullOrWhiteSpace(textToAdd))
             {
                 SaveTextToJson(textToAdd);
-                textBoxNewLink.Enabled = false;
+                ui.DisableControl(textBoxNewLink);
             }
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            DeleteFileIfExists(jsonFilePath);
-            textBoxNewLink.Enabled = true;
-            textBoxNewLink.Clear();
+            DirectoryLib.DeleteFileIfExists(jsonFilePath);
+            ui.EnableControl(textBoxNewLink);
+            ui.ClearControl(textBoxNewLink);
         }
 
         private void resetSettingsButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            DeleteFileIfExists(Paths.settings);
+            DirectoryLib.DeleteFileIfExists(Paths.settings);
         }
 
         private void McFolderButton_Click(object sender, EventArgs e)
@@ -68,7 +61,7 @@ namespace AkulavLauncher.Forms
         private void removeModpacksButton_Click(object sender, EventArgs e)
         {
             Utility.PlaySound();
-            DeleteFileIfExists(Paths.localMetadata);
+            DirectoryLib.DeleteFileIfExists(Paths.localMetadata);
         }
     }
 }

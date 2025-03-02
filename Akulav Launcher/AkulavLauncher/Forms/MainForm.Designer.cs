@@ -42,7 +42,6 @@ namespace AkulavLauncher
             this.consoleLabel = new System.Windows.Forms.Label();
             this.ramLabel = new System.Windows.Forms.Label();
             this.ramSlider = new System.Windows.Forms.TrackBar();
-            this.downloadBar = new System.Windows.Forms.ProgressBar();
             this.packVersion = new System.Windows.Forms.Label();
             this.topPanel = new System.Windows.Forms.Panel();
             this.minimizeButton = new System.Windows.Forms.Button();
@@ -178,11 +177,11 @@ namespace AkulavLauncher
             // consoleLabel
             // 
             this.consoleLabel.AutoSize = true;
-            this.consoleLabel.Font = new System.Drawing.Font("Yu Gothic", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.consoleLabel.Font = new System.Drawing.Font("Yu Gothic", 15.75F);
             this.consoleLabel.ForeColor = System.Drawing.Color.Gainsboro;
-            this.consoleLabel.Location = new System.Drawing.Point(890, 204);
+            this.consoleLabel.Location = new System.Drawing.Point(888, 204);
             this.consoleLabel.Name = "consoleLabel";
-            this.consoleLabel.Size = new System.Drawing.Size(0, 18);
+            this.consoleLabel.Size = new System.Drawing.Size(0, 27);
             this.consoleLabel.TabIndex = 28;
             // 
             // ramLabel
@@ -203,13 +202,6 @@ namespace AkulavLauncher
             this.ramSlider.Size = new System.Drawing.Size(348, 45);
             this.ramSlider.TabIndex = 25;
             this.ramSlider.ValueChanged += new System.EventHandler(this.RamSlider_ValueChanged);
-            // 
-            // downloadBar
-            // 
-            this.downloadBar.Location = new System.Drawing.Point(1, 570);
-            this.downloadBar.Name = "downloadBar";
-            this.downloadBar.Size = new System.Drawing.Size(1240, 10);
-            this.downloadBar.TabIndex = 24;
             // 
             // packVersion
             // 
@@ -271,9 +263,9 @@ namespace AkulavLauncher
             this.leftlabel.ForeColor = System.Drawing.Color.White;
             this.leftlabel.Location = new System.Drawing.Point(411, 13);
             this.leftlabel.Name = "leftlabel";
-            this.leftlabel.Size = new System.Drawing.Size(392, 27);
+            this.leftlabel.Size = new System.Drawing.Size(398, 27);
             this.leftlabel.TabIndex = 16;
-            this.leftlabel.Text = "Akulav Launcher V8.1.0- End Of An Era";
+            this.leftlabel.Text = "Akulav Launcher V9.0.0 - End Of An Era";
             // 
             // nameLabel
             // 
@@ -297,9 +289,9 @@ namespace AkulavLauncher
             // 
             // settingsPanel
             // 
-            this.settingsPanel.Location = new System.Drawing.Point(882, 363);
+            this.settingsPanel.Location = new System.Drawing.Point(888, 357);
             this.settingsPanel.Name = "settingsPanel";
-            this.settingsPanel.Size = new System.Drawing.Size(359, 207);
+            this.settingsPanel.Size = new System.Drawing.Size(348, 207);
             this.settingsPanel.TabIndex = 30;
             // 
             // MainForm
@@ -318,7 +310,6 @@ namespace AkulavLauncher
             this.Controls.Add(this.centerPanel);
             this.Controls.Add(this.topPanel);
             this.Controls.Add(this.lowerpanel);
-            this.Controls.Add(this.downloadBar);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -350,7 +341,6 @@ namespace AkulavLauncher
         private System.Windows.Forms.TrackBar ramSlider;
         private System.Windows.Forms.Label ramLabel;
         private System.Windows.Forms.ComboBox versionBox;
-        private System.Windows.Forms.ProgressBar downloadBar;
         private System.Windows.Forms.Label consoleLabel;
         private System.Windows.Forms.Label versionLabel;
         private System.Windows.Forms.Label leftlabel;

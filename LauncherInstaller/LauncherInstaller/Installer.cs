@@ -29,6 +29,7 @@ namespace AkulavLauncherInstaller
             this.CenterToScreen();
             if (File.Exists(updateFlag))
             {
+                nameLabel.Text = "AkulavLauncher - new update detected.";
                 installBtn.Text = "Update Launcher";
             }
         }

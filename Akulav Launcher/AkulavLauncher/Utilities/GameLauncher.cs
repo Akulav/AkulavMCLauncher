@@ -1,5 +1,7 @@
 ﻿using CmlLib.Core;
 using CmlLib.Core.Auth;
+using CmlLib.Core.ProcessBuilder;
+using System;
 using System.Windows.Forms;
 
 namespace AkulavLauncher
@@ -10,22 +12,21 @@ namespace AkulavLauncher
         private readonly string username;
         private string gameVersion;
         private readonly Form mainForm;
-        private readonly ProgressBar downloadProgressBar;
         private bool downloadStarted;
 
-        public GameLauncher(int ram, string username, string gameVersion, Form mainForm, ProgressBar downloadProgressBar)
+        public GameLauncher(int ram, string username, string gameVersion, Form mainForm)
         {
             this.ram = ram;
             this.username = username;
             this.gameVersion = gameVersion;
             this.mainForm = mainForm;
-            this.downloadProgressBar = downloadProgressBar;
             LaunchGameAsync();
         }
 
         private string checkIfDownloaded()
         {
-            DataDownloader dataDownloader = new DataDownloader(mainForm, username, ram, gameVersion, downloadProgressBar);
+            var consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
+            DataDownloader dataDownloader = new DataDownloader(mainForm, username, ram, gameVersion, consoleLabel);
 
             var modpacks = Utility.modpacks;
             downloadStarted = false;
@@ -50,29 +51,29 @@ namespace AkulavLauncher
 
         private async void LaunchGameAsync()
         {
-            var downloadBar = Application.OpenForms["MainForm"].Controls.Find("downloadBar", true)[0] as ProgressBar;
+
             var consoleLabel = Application.OpenForms["MainForm"].Controls.Find("consoleLabel", true)[0] as Label;
 
             var minecraftPath = new MinecraftPath(Paths.mc + "\\" + gameVersion);
-            var launcher = new CMLauncher(minecraftPath);
+            var launcher = new MinecraftLauncher(minecraftPath);
 
-            launcher.ProgressChanged += (sender, progressArgs) =>
+
+
+            launcher.ByteProgressChanged += (sender, args) =>
             {
-                downloadBar.Value = progressArgs.ProgressPercentage;
+                if (args.TotalBytes > 0)
+                {
+                    int progressPercentage = (int)((args.ProgressedBytes * 100) / args.TotalBytes);
+                    consoleLabel.Text = $"Game is launching: {progressPercentage}%"; // Show only the percentage
+                }
             };
-
-            launcher.FileChanged += (fileArgs) =>
-            {
-                consoleLabel.Text = $"[{fileArgs.FileKind}] {fileArgs.FileName} - {fileArgs.ProgressedFileCount}/{fileArgs.TotalFileCount}";
-            };
-
+            
             var session = MSession.CreateOfflineSession(username);
 
             var launchOption = new MLaunchOption
             {
                 MaximumRamMb = ram,
-                Session = session,
-                JVMArguments = null // Currently bugged, set to null
+                Session = session
             };
 
             gameVersion = checkIfDownloaded();

@@ -17,17 +17,18 @@ namespace AkulavLauncher
         private readonly string username;
         private readonly string modpackName;
         private readonly int ram;
-        private readonly ProgressBar downloadBar;
         private WebClient client;
+        private Label consoleLabel;
 
-        public DataDownloader(Form mainForm, string username, int ram, string modpackName, ProgressBar downloadBar)
+        public DataDownloader(Form mainForm, string username, int ram, string modpackName, Label consoleLabel)
         {
             this.mainForm = mainForm;
             this.username = username;
             this.ram = ram;
             this.modpackData = Utility.modpacks;
             this.modpackName = modpackName;
-            this.downloadBar = downloadBar;
+            this.consoleLabel = consoleLabel;
+            this.consoleLabel = consoleLabel;
         }
 
         public bool CheckLocal()
@@ -60,7 +61,7 @@ namespace AkulavLauncher
             mainForm.BeginInvoke((MethodInvoker)delegate
             {
                 double percentage = (double)e.BytesReceived / e.TotalBytesToReceive * 100;
-                downloadBar.Value = (int)percentage;
+                consoleLabel.Text = $"Downloading modpack: {(int)percentage}%"; // Show only the percentage
             });
         }
 
@@ -119,7 +120,7 @@ namespace AkulavLauncher
 
         private void LaunchGame()
         {
-            new GameLauncher(ram, username, modpackName, mainForm, downloadBar);
+            new GameLauncher(ram, username, modpackName, mainForm);
         }
     }
 }
