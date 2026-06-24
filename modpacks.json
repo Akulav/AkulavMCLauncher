@@ -1,8 +1,8 @@
 [
   {
     "Name": "GoldenEra - Ultimate",
-    "Version": "6.2.0",
+    "Version": "6.2.1",
     "API": "neoforge-21.1.232",
-    "URL": "https://www.dropbox.com/scl/fi/1pcf4p6zkiqf4rj7l89v0/ultimate62.zip?rlkey=6dvfnn6367ra82mdvb6fttsz8&st=e8gmb1h1&dl=1"
+    "URL": "http://192.168.88.100:8080/ultimate62.zip"
   }
 ]
